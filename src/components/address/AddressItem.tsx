@@ -54,7 +54,7 @@ const AddressItem: React.FC<Props> = (props: Props) => {
             <Image source={icon} className="m-3 h-6 w-6" />
           ) : (
             <View className="h-3">
-              <RadioButton value={id} color={colors.primary} />
+              <RadioButton.Android value={id} color={colors.primary} />
             </View>
           )}
           <View>

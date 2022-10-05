@@ -7,9 +7,13 @@ import FilterBtn from '../../components/buttons/FilterBtn';
 import SearchBtnHome from '../../components/buttons/SearchBtnHome';
 import CategoriesContainer from '../../components/categories/CategoriesContainer';
 import ProductsContainer from '../../components/product/ProductsContainer';
+import useGetCategories from '../../hooks/categories/useGetCategories';
 import {data} from '../home/HomeScreen';
 
 const CategoriesScreen: React.FC = () => {
+  const fn = useGetCategories();
+  fn();
+
   return (
     <SafeAreaView className="bg-white mb-20 h-full">
       <View className="flex-row mx-3 my-2">

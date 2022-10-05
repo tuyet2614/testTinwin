@@ -4,7 +4,7 @@ import AddressScreen from '../screens/account/AddressScreen';
 import OnboardingScreen from '../screens/OnboardingScreen';
 import Splash from '../screens/Splash';
 import TabBar from './TabBar';
-// import AddNewAddressScreen from '../screens/account/AddNewAddressScreen';
+import AddNewAddressScreen from '../screens/account/AddNewAddressScreen';
 import ProductDetailScreen from '../screens/ProductDetail/ProductDetailScreen';
 import RatingScreen from '../screens/ProductDetail/RatingScreen';
 import FilterScreen from '../screens/categories/FilterScreen';
@@ -66,7 +66,11 @@ const Navigator: React.FC = () => {
           component={FormForgotPassword}
           options={options}
         />
-        <Stack.Screen name="TabBar" component={TabBar} options={options} />
+        <Stack.Screen
+          name="TabBar"
+          component={TabBar}
+          options={screenOptions}
+        />
         <Stack.Screen
           name="OrderSuccess"
           component={OrderSuccess}
@@ -100,11 +104,11 @@ const Navigator: React.FC = () => {
           component={AddressScreen}
           options={screenOptions}
         />
-        {/* <Stack.Screen
+        <Stack.Screen
           name="AddNewAddress"
           component={AddNewAddressScreen}
           options={screenOptions}
-        /> */}
+        />
         <Stack.Screen
           name="ProductDetail"
           component={ProductDetailScreen}
