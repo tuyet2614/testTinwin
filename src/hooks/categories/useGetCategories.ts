@@ -8,11 +8,11 @@ const useGetCategories = () => {
     const options = {
         method: 'POST',
         url: 'https://45.76.152.56/auth/connect/token',
-        // headers: {
-        //   'Content-Type': 'application/json',
-        //   'Accept': 'text/plain'
-        //   // Authorization: 'Bearer ' + token,
-        // },
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'text/plain'
+          // Authorization: 'Bearer ' + token,
+        },
         data: {
           "username": "0332727355",
           "password": "12345678Aa@",
