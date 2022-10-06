@@ -40,7 +40,7 @@ const FilterContainer: React.FC<Props> = (props: Props) => {
               setValue={setValue}
             />
             <TouchableOpacity className="mx-3" onPress={clearSearchText}>
-              <Text className="text-orange-primary text-lg">Xoá</Text>
+              <Text className="text-orange-400 text-lg">Xoá</Text>
             </TouchableOpacity>
           </View>
           <CheckBoxItem text="Sữa trẻ em" />

@@ -1,14 +1,14 @@
-import { useState } from 'react';
-import { faCartArrowDown } from '@fortawesome/free-solid-svg-icons';
-import { useNavigation } from '@react-navigation/native';
-import { TouchableOpacity, Image, Text, View } from 'react-native';
-import { Rating } from 'react-native-ratings';
+import {useState} from 'react';
+import {faCartArrowDown} from '@fortawesome/free-solid-svg-icons';
+import {useNavigation} from '@react-navigation/native';
+import {TouchableOpacity, Image, Text, View} from 'react-native';
+import {Rating} from 'react-native-ratings';
 import useConvertToVND from '../../hooks/useConvertToVND';
 import useAddToWishlist from '../../hooks/wishlist/useAddToWishlist';
 import BtnIcon from '../BtnIcon';
 import useShowNotification from '../../hooks/useShowNotification';
-import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
-import { NAVIGATE_PRODUCT_DETAIL } from '../../navigation/navigate';
+import {faCheckCircle} from '@fortawesome/free-regular-svg-icons';
+import {NAVIGATE_PRODUCT_DETAIL} from '../../navigation/navigate';
 import tw from 'tailwind-react-native-classnames';
 
 interface Props {
@@ -17,16 +17,16 @@ interface Props {
 
 const ProductCard: React.FC<Props> = (props: Props) => {
   const navigation = useNavigation();
-  const { item } = props;
+  const {item} = props;
 
   const dispatchAddToWishlist = useAddToWishlist();
 
   const navigateProductDetail = () => {
-    navigation.navigate(NAVIGATE_PRODUCT_DETAIL, { id: item.id });
+    navigation.navigate(NAVIGATE_PRODUCT_DETAIL, {id: item.id});
   };
 
   const addToCart = () => {
-    dispatchAddToWishlist({ ...item, quantity: 1 });
+    dispatchAddToWishlist({...item, quantity: 1});
   };
 
   return (
@@ -44,7 +44,7 @@ const ProductCard: React.FC<Props> = (props: Props) => {
         readonly
         ratingCount={5}
       />
-      <Text className="text-orange-primary text-xl font-bold my-2">
+      <Text className="text-orange-400 text-xl font-bold my-2">
         {useConvertToVND(item.price)}
       </Text>
       <View className="flex-row justify-between">

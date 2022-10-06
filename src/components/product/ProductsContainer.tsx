@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { FlatList, ImageSourcePropType, View } from 'react-native';
+import {useState} from 'react';
+import {FlatList, ImageSourcePropType, View} from 'react-native';
 import HomeTitle from '../home/HomeTitle';
 import ProductCard from './ProductCard';
 
@@ -12,11 +12,11 @@ interface Props {
 }
 
 const ProductsContainer: React.FC<Props> = (props: Props) => {
-  const { data, icon, title, flatlistStyle, textBtn } = props;
+  const {data, icon, title, flatlistStyle, textBtn} = props;
 
   const [isEnd, setIsEnd] = useState(false);
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({item}) => (
     <View className={`${title === 'Sản phẩm nổi bật' ? 'ml-3' : ''}`}>
       <ProductCard item={item} />
     </View>
@@ -40,12 +40,14 @@ const ProductsContainer: React.FC<Props> = (props: Props) => {
       {title === 'Sản phẩm nổi bật' && (
         <View className="bg-gray-200 w-8 h-1 flex-row rounded-full my-5 self-center">
           <View
-            className={`bg-${!isEnd ? 'orange-primary' : 'gray-200'
-              } w-1/2 h-1 rounded-full`}
+            className={`bg-${
+              !isEnd ? 'orange-400' : 'gray-200'
+            } w-1/2 h-1 rounded-full`}
           />
           <View
-            className={`bg-${isEnd ? 'orange-primary' : 'gray-200'
-              } w-1/2 h-1 rounded-full`}
+            className={`bg-${
+              isEnd ? 'orange-400' : 'gray-200'
+            } w-1/2 h-1 rounded-full`}
           />
         </View>
       )}

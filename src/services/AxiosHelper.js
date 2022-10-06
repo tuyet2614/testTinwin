@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {useEffect} from 'react';
 import {useNavigate} from 'react-router';
-import {baseUrl} from 'Utils/Constant';
+const baseUrl = 'http://45.76.152.56/webbff';
 
 export const get = (path, params) => {
   //   const token = localStorage.getItem('token');

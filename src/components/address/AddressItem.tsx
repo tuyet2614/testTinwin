@@ -93,16 +93,16 @@ const AddressItem: React.FC<Props> = (props: Props) => {
             </View>
             <View className="h-0.5 bg-gray-200 mb-2"></View>
             <View className="m-3 h-3/4 justify-evenly">
-              <TouchableOpacity className="p-3 border-orange-primary border-2 rounded-lg">
-                <Text className="text-orange-primary">Đặt làm mặc định</Text>
+              <TouchableOpacity className="p-3 border-orange-400 border-2 rounded-lg">
+                <Text className="text-orange-400">Đặt làm mặc định</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                className="p-3 border-orange-primary border-2 rounded-lg"
+                className="p-3 border-orange-400 border-2 rounded-lg"
                 onPress={changeAddress}>
-                <Text className="text-orange-primary">Chỉnh sửa</Text>
+                <Text className="text-orange-400">Chỉnh sửa</Text>
               </TouchableOpacity>
-              <TouchableOpacity className="p-3 border-orange-primary border-2 rounded-lg">
-                <Text className="text-orange-primary">Xoá</Text>
+              <TouchableOpacity className="p-3 border-orange-400 border-2 rounded-lg">
+                <Text className="text-orange-400">Xoá</Text>
               </TouchableOpacity>
             </View>
           </View>

@@ -1,6 +1,6 @@
-import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { useState } from 'react';
+import {faAngleDown} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {useState} from 'react';
 import {
   FlatList,
   ImageSourcePropType,
@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import HomeTitle from '../home/HomeTitle';
 import StallCard from '../home/StallCard';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import CategoryCard from './CategoryCard';
 
 interface Props {
@@ -22,10 +22,10 @@ interface Props {
 }
 
 const CategoriesContainer: React.FC<Props> = (props: Props) => {
-  const { data, icon, title, flatlistStyle, textBtn } = props;
+  const {data, icon, title, flatlistStyle, textBtn} = props;
 
   const [isEnd, setIsEnd] = useState(false);
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   const end = () => {
     setIsEnd(false);
@@ -35,14 +35,12 @@ const CategoriesContainer: React.FC<Props> = (props: Props) => {
     setIsEnd(true);
   };
 
-  const renderItem = ({ item }) =>
+  const renderItem = ({item}) =>
     title === 'Ngành hàng' ? (
       <CategoryCard image={item.image} text={item.name} />
     ) : (
       <StallCard image={item.image} text={item.name} />
     );
-
-
 
   return (
     <View>
@@ -66,15 +64,17 @@ const CategoriesContainer: React.FC<Props> = (props: Props) => {
       {flatlistStyle.num === undefined ? (
         <View className="bg-gray-200 w-8 h-1 flex-row rounded-full my-5 self-center">
           <View
-            className={`bg-${!isEnd ? 'orange-primary' : 'gray-200'
-              } w-1/2 h-1 rounded-full`}></View>
+            className={`bg-${
+              !isEnd ? 'orange-400' : 'gray-200'
+            } w-1/2 h-1 rounded-full`}></View>
           <View
-            className={`bg-${isEnd ? 'orange-primary' : 'gray-200'
-              } w-1/2 h-1 rounded-full`}></View>
+            className={`bg-${
+              isEnd ? 'orange-400' : 'gray-200'
+            } w-1/2 h-1 rounded-full`}></View>
         </View>
       ) : (
         <TouchableOpacity className="flex-row items-center self-center my-3">
-          <Text className="text-orange-primary mr-2">Hiển thị thêm</Text>
+          <Text className="text-orange-400 mr-2">Hiển thị thêm</Text>
           <FontAwesomeIcon icon={faAngleDown} color="#FD7D00" />
         </TouchableOpacity>
       )}

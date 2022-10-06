@@ -24,6 +24,7 @@ import OTP from '../screens/Authentication/OTPAuthen';
 import FormForgotPassword from '../screens/Authentication/FormResetPassword';
 import FormRegister from '../screens/Authentication/FormRegister';
 import Order from '../screens/StatusOrder/Order';
+import AddressDetailScreen from '../screens/account/AddressDetailScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -132,6 +133,11 @@ const Navigator: React.FC = () => {
         <Stack.Screen
           name="UpdateInfo"
           component={UpdateInfoScreen}
+          options={screenOptions}
+        />
+        <Stack.Screen
+          name="AddressDetail"
+          component={AddressDetailScreen}
           options={screenOptions}
         />
       </Stack.Navigator>

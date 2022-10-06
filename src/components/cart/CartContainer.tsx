@@ -36,7 +36,7 @@ const CartContainer: React.FC<Props> = (props: Props) => {
       />
       <View className="flex-row mx-5 justify-between my-2">
         <Text>Tổng tiền hàng</Text>
-        <Text className="text-orange-primary font-bold">
+        <Text className="text-orange-400 font-bold">
           {useConvertToVND(totalPrice)}
         </Text>
       </View>

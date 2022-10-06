@@ -1,13 +1,13 @@
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { useNavigation } from '@react-navigation/native';
-import { Image, SafeAreaView, View, Text, Alert } from 'react-native';
+import {faArrowRight} from '@fortawesome/free-solid-svg-icons';
+import {useNavigation} from '@react-navigation/native';
+import {Image, SafeAreaView, View, Text, Alert} from 'react-native';
 import Onboarding from 'react-native-onboarding-swiper';
 import BtnBorder from '../components/BtnBorder';
 import BtnIcon from '../components/BtnIcon';
 import ImageOnboarding from '../components/onboarding/ImageOnboarding';
 import SubTitleOnboarding from '../components/onboarding/SubTitleOnboarding';
 import TitleOnboarding from '../components/onboarding/TitleOnboarding';
-import { NAVIGATE_HOME, NAVIGATE_LOGIN } from '../navigation/navigate';
+import {NAVIGATE_HOME, NAVIGATE_LOGIN} from '../navigation/navigate';
 
 const pages: object[] = [
   {
@@ -36,11 +36,12 @@ const pages: object[] = [
   },
 ];
 
-const Square: React.FC = ({ isLight, selected }) => {
+const Square: React.FC = ({isLight, selected}) => {
   return (
     <View
-      className={`rounded-full w-2 h-2 mx-1 ${selected ? 'bg-orange-primary' : 'bg-gray-200'
-        }`}
+      className={`rounded-full w-2 h-2 mx-1 ${
+        selected ? 'bg-orange-400' : 'bg-gray-200'
+      }`}
     />
   );
 };
@@ -51,9 +52,9 @@ const OnboardingScreen: React.FC = () => {
     navigation.navigate(NAVIGATE_LOGIN);
   };
 
-  const NextButtonComponent = ({ isLight, ...props }) => (
+  const NextButtonComponent = ({isLight, ...props}) => (
     <View className="mr-8">
-      <BtnIcon icon={faArrowRight} style="p-3" prop={{ ...props }} />
+      <BtnIcon icon={faArrowRight} style="p-3" prop={{...props}} />
     </View>
   );
 

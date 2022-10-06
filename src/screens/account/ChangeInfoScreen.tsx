@@ -94,9 +94,7 @@ const ChangeInfoScreen: React.FC = () => {
         <Image className="h-44 w-44 rounded-full bg-cover" source={avatar} />
         <View className="absolute items-center items-center justify-center h-full">
           <FontAwesomeIcon icon={faPen} color={colors.primary} />
-          <Text className="text-orange-primary text-xs mt-3">
-            Chạm để thay đổi
-          </Text>
+          <Text className="text-orange-400 text-xs mt-3">Chạm để thay đổi</Text>
         </View>
       </TouchableOpacity>
 

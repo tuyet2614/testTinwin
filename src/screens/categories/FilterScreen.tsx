@@ -30,13 +30,13 @@ const FilterScreen: React.FC = () => {
   };
 
   const renderThumb = () => (
-    <View className="w-4 h-4 rounded-full bg-orange-primary" />
+    <View className="w-4 h-4 rounded-full bg-orange-400" />
   );
   const renderRail = () => (
     <View className="h-0.5 flex-1 rounded-lg bg-gray-400" />
   );
   const renderRailSelected = () => (
-    <View className="h-0.5 flex-1 rounded-lg bg-orange-primary" />
+    <View className="h-0.5 flex-1 rounded-lg bg-orange-400" />
   );
   const renderView = () => <View />;
   const onValueChanged = (low, high, fromUser) => {

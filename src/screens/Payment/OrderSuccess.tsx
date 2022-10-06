@@ -29,9 +29,9 @@ const OrderSuccess = (props: Props) => {
           <Text style={styles.textCode}>VNA123</Text>
         </View>
         <TouchableOpacity
-          className={`border-orange-primary rounded-md`}
+          className={`border-orange-400 rounded-md`}
           style={styles.textBuyAgain}>
-          <Text className={`text-orange-primary`}>Tiếp tục mua hàng</Text>
+          <Text className={`text-orange-400`}>Tiếp tục mua hàng</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

@@ -40,13 +40,13 @@ const CartItem: React.FC<Props> = (props: Props) => {
             {item.name}
           </Text>
           <Text className="text-xs">Mã SP: {item.id}</Text>
-          <Text className="text-orange-primary my-2">
+          <Text className="text-orange-400 my-2">
             {useConvertToVND(item.price)}
           </Text>
           <View className="flex-row items-center justify-between">
             <Quantity quantity={item.quantity} item={item} />
             <TouchableOpacity onPress={() => dispatchDeleteFromWishlist(item)}>
-              <Text className="text-orange-primary">Xoá</Text>
+              <Text className="text-orange-400">Xoá</Text>
             </TouchableOpacity>
           </View>
         </View>

@@ -22,14 +22,13 @@ const AccountInfo: React.FC = () => {
         <Image className="h-16 w-16 rounded-full" source={userInfo.avatar} />
 
         <View
-          className={`absolute bg-orange-primary h-6 w-6 bottom-0 right-0 rounded-full items-center justify-center`}>
+          className={`absolute bg-orange-400 h-6 w-6 bottom-0 right-0 rounded-full items-center justify-center`}>
           <FontAwesomeIcon icon={faPen} color="white" size={10} />
         </View>
       </TouchableOpacity>
       <View className="">
         <Text className="uppercase text-black font-bold">{userInfo.name}</Text>
-        <View
-          className={`bg-orange-primary w-24 items-center p-1 rounded-full`}>
+        <View className={`bg-orange-400 w-24 items-center p-1 rounded-full`}>
           <Text className="text-white text-xs">Khách hàng</Text>
         </View>
         <Text className="py-2">{userInfo.phoneNumber}</Text>
