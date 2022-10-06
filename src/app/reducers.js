@@ -1,4 +1,5 @@
 import {combineReducers} from 'redux';
+import authReducer from '../redux/authentication/reducers';
 import defaultAddressReducer from '../redux/defaultAddress/reducers';
 import notificationReducer from '../redux/notification/reducers';
 import userReducer from '../redux/user/reducers';
@@ -9,6 +10,7 @@ const rootReducer = combineReducers({
   wishlist: wishlistReducer,
   showNotification: notificationReducer,
   defaultAddress: defaultAddressReducer,
+  auth: authReducer,
 });
 
 export default rootReducer;

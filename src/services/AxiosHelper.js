@@ -1,8 +1,8 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import {useEffect} from 'react';
-import {useNavigate} from 'react-router';
-import {baseUrl} from 'Utils/Constant';
+import {baseUrl} from '../Ultis/Constant/const';
 
+const headersFormUrl = 'application/x-www-form-urlencoded';
 export const get = (path, params) => {
   //   const token = localStorage.getItem('token');
   if (params !== undefined) {
@@ -35,7 +35,7 @@ export const get = (path, params) => {
 };
 
 export const post = (path, postData) => {
-  //   const token = localStorage.getItem('token');
+  const token = AsyncStorage.getItem('token');
   return axios
     .post(baseUrl + path, postData, {
       headers: {
@@ -55,7 +55,24 @@ export const post = (path, postData) => {
       });
     });
 };
-
+export const postHeadersUrl = (path, postData) => {
+  return axios
+    .post(baseUrl + path, postData, {
+      headers: {
+        'Content-Type': headersFormUrl,
+      },
+    })
+    .then(res => {
+      return new Promise(resolve => {
+        resolve(res);
+      });
+    })
+    .catch(err => {
+      return new Promise(resolve => {
+        resolve(err.response);
+      });
+    });
+};
 export const deleteMethod = (path, id) => {
   //   const token = localStorage.getItem('token');
   return axios
