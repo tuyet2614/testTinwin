@@ -10,6 +10,9 @@ const ShippingServices = {
   getDistricts(params) {
     return get('/api/app/district', params);
   },
+  getWards(params) {
+    return get('/api/app/ward', params);
+  },
 };
 
 export default ShippingServices;
