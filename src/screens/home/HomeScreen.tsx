@@ -1,15 +1,23 @@
-import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import {Image, SafeAreaView, ScrollView, Text, View} from 'react-native';
 import tw from 'tailwind-react-native-classnames';
-import { colors } from '../../assets/colors';
+import {colors} from '../../assets/colors';
 import CartBtn from '../../components/buttons/CartBtn';
 import SearchBtnHome from '../../components/buttons/SearchBtnHome';
 import CategoriesContainer from '../../components/categories/CategoriesContainer';
 import HomeHeader from '../../components/home/HomeHeader';
 import WalletCard from '../../components/home/WalletCard';
 import ProductsContainer from '../../components/product/ProductsContainer';
-import { LOGO_TINWIN_PRIMARY, Industry_icon, stall_icon, outstanding_icon } from '../../assets/images';
-import { NAVIGATE_SEARCH_SCREEN } from '../../navigation/navigate';
-import { useNavigation } from '@react-navigation/native';
+import {
+  LOGO_TINWIN_PRIMARY,
+  Industry_icon,
+  stall_icon,
+  outstanding_icon,
+} from '../../assets/images';
+import {NAVIGATE_SEARCH_SCREEN} from '../../navigation/navigate';
+import {useNavigation} from '@react-navigation/native';
+import useGetCategories from '../../hooks/categories/useGetCategories';
+import useGetCategoriesForHome from '../../hooks/home/useGetCategoriesForHome';
+import useGetProductForHome from '../../hooks/home/useGetProductForHome';
 
 export const data = [
   {
@@ -70,14 +78,16 @@ export const data = [
   },
 ];
 
-
 const HomeScreen: React.FC = () => {
   const navigation = useNavigation();
   const onPressRoute = () => {
-    navigation.navigate(NAVIGATE_SEARCH_SCREEN)
-  }
-  return (
+    navigation.navigate(NAVIGATE_SEARCH_SCREEN);
+  };
 
+  const categories = useGetCategoriesForHome();
+  const products = useGetProductForHome();
+
+  return (
     <SafeAreaView className="bg-white h-full">
       <HomeHeader />
       <View className="flex-row mx-3 mb-3">
@@ -92,15 +102,15 @@ const HomeScreen: React.FC = () => {
 
         <CategoriesContainer
           textBtn=""
-          flatlistStyle={[tw`flex-wrap`, { width: 500 }]}
+          flatlistStyle={[tw`flex-wrap`, {width: 500}]}
           title="Ngành hàng"
           icon={Industry_icon}
-          data={data}
+          data={categories}
         />
 
         <CategoriesContainer
           textBtn="Xem thêm"
-          flatlistStyle={[tw`flex-wrap`, { width: 750 }]}
+          flatlistStyle={[tw`flex-wrap`, {width: 750}]}
           title="Gian hàng nổi bật"
           icon={stall_icon}
           data={data}
@@ -108,7 +118,7 @@ const HomeScreen: React.FC = () => {
 
         <ProductsContainer
           textBtn="Xem thêm"
-          data={data}
+          data={products}
           title="Sản phẩm nổi bật"
           icon={outstanding_icon}
         />
@@ -116,7 +126,7 @@ const HomeScreen: React.FC = () => {
         <ProductsContainer
           flatlistStyle={tw`justify-evenly`}
           textBtn="Xem thêm"
-          data={data}
+          data={products}
           title="Tìm kiếm hàng đầu"
           icon={Industry_icon}
         />

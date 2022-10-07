@@ -3,6 +3,7 @@ import {SafeAreaView, View} from 'react-native';
 import AddressContainer from '../../components/address/AddressContainer';
 import BtnPrimary from '../../components/BtnPrimary';
 import HeaderStack from '../../components/HeaderStack';
+import useGetAddress from '../../hooks/address/useGetAddress';
 import {NAVIGATE_ADD_NEW_ADDRESS} from '../../navigation/navigate';
 
 export const dataAddress: object[] = [
@@ -28,6 +29,10 @@ export const dataAddress: object[] = [
 
 const AddressScreen: React.FC = () => {
   const navigation = useNavigation();
+  const fn = useGetAddress();
+  fn();
+  // console.log(dataAddress);
+
   const onPress = () => {
     navigation.navigate(NAVIGATE_ADD_NEW_ADDRESS, {
       title: 'Địa chỉ giao hàng',

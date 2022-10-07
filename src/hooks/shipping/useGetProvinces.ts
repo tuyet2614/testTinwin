@@ -1,20 +1,25 @@
-import { useEffect, useState } from "react"
-import ShippingServices from "../../services/ShippingServices"
+import {useEffect, useState} from 'react';
+import ShippingServices from '../../services/ShippingServices';
 
 const useGetProvinces = () => {
-    const [res, setRes] = useState()
+  const [res, setRes] = useState();
 
-    const params = {
-      headers: { 
-        'Accept': 'text/plain'
-      }
-    }
+  const params = {
+    headers: {
+      Accept: 'text/plain',
+    },
+  };
 
-    useEffect(() => {
-        ShippingServices.getProvinces(params).then(res => setRes(res.data)).catch(err => console.log(err.response.data))
-    }, [])
+  useEffect(() => {
+    ShippingServices.getProvinces(params)
+      .then(res => {
+        setRes(res.data);
+        console.log(res);
+      })
+      .catch(err => console.log(err.response.data));
+  }, []);
 
-return res
-}
+  return res;
+};
 
-export default useGetProvinces
+export default useGetProvinces;

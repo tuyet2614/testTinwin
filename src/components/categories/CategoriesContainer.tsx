@@ -37,9 +37,9 @@ const CategoriesContainer: React.FC<Props> = (props: Props) => {
 
   const renderItem = ({item}) =>
     title === 'Ngành hàng' ? (
-      <CategoryCard image={item.image} text={item.name} />
+      <CategoryCard image={item.avatar} text={item.name} />
     ) : (
-      <StallCard image={item.image} text={item.name} />
+      <StallCard image={item.avatar} text={item.name} />
     );
 
   return (

@@ -1,10 +1,11 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {useEffect} from 'react';
 import {useNavigate} from 'react-router';
 const baseUrl = 'http://45.76.152.56/webbff';
 
-export const get = (path, params) => {
-  //   const token = localStorage.getItem('token');
+export const get = async (path, params) => {
+  const token = await AsyncStorage.getItem('token');
   if (params !== undefined) {
     if (params instanceof Object) {
       path +=
@@ -20,7 +21,7 @@ export const get = (path, params) => {
     .get(baseUrl + path, {
       headers: {
         'Content-Type': 'application/json',
-        // 'Authorization': Bearer ${token},
+        Authorization: `Bearer ${token}`,
       },
     })
     .then(res => {
@@ -50,6 +51,25 @@ export const post = (path, postData) => {
     })
     .catch(err => {
       // handleErr(err)
+      return new Promise(resolve => {
+        resolve(err.response);
+      });
+    });
+};
+
+export const postHeadersUrl = async (path, postData) => {
+  return await axios
+    .post(baseUrl + path, postData, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    })
+    .then(res => {
+      return new Promise(resolve => {
+        resolve(res);
+      });
+    })
+    .catch(err => {
       return new Promise(resolve => {
         resolve(err.response);
       });

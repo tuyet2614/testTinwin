@@ -1,12 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import {
-  Image,
-  SafeAreaView,
-  Text,
-  TouchableOpacity,
-  View,
-  ImageSourcePropType,
-} from 'react-native';
+import {Image, SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
 import AccountContainer from '../../components/account/AccountContainer';
 import AccountHeader from '../../components/account/AccountHeader';
 import AccountInfo from '../../components/account/AccountInfo';

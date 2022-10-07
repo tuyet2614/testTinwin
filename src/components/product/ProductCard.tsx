@@ -22,7 +22,7 @@ const ProductCard: React.FC<Props> = (props: Props) => {
   const dispatchAddToWishlist = useAddToWishlist();
 
   const navigateProductDetail = () => {
-    navigation.navigate(NAVIGATE_PRODUCT_DETAIL, {id: item.id});
+    navigation.navigate(NAVIGATE_PRODUCT_DETAIL, {product: item});
   };
 
   const addToCart = () => {
@@ -33,13 +33,24 @@ const ProductCard: React.FC<Props> = (props: Props) => {
     <TouchableOpacity
       onPress={navigateProductDetail}
       className="p-3 border border-gray-200 rounded-lg mb-3 w-44">
-      <Image source={item.image} className={`w-full h-32`} />
-      <Text className="text-lg font-bold text-black">{item.name}</Text>
+      <Image
+        source={
+          item.image !== null
+            ? {uri: item.image[0]}
+            : require('../../assets/logoTinwinPrimary.png')
+        }
+        className={`w-full h-32`}
+      />
+      <Text
+        className="text-lg font-bold text-black h-16 my-2"
+        numberOfLines={2}>
+        {item.name}
+      </Text>
       <Text>Đã bán 200</Text>
       <Rating
         style={tw`items-start mt-3`}
         type="star"
-        startingValue={item.rating}
+        startingValue={item.ratingAvg}
         imageSize={10}
         readonly
         ratingCount={5}

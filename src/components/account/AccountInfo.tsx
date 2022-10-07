@@ -3,12 +3,15 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {useNavigation} from '@react-navigation/native';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {useSelector} from 'react-redux';
+import useGetUser from '../../hooks/user/useGetUser';
 import {NAVIGATE_CHANGE_INFO} from '../../navigation/navigate';
 import {getUserState} from '../../redux/user/selectors';
 
 const AccountInfo: React.FC = () => {
-  const userInfo = useSelector(getUserState);
+  // const userInfo = useSelector(getUserState);
   const navigation = useNavigation();
+
+  const userInfo = useGetUser();
 
   const navigateChangeInfo = () => {
     navigation.navigate(NAVIGATE_CHANGE_INFO);
@@ -19,7 +22,10 @@ const AccountInfo: React.FC = () => {
       <TouchableOpacity
         className="relative mr-5 h-16"
         onPress={navigateChangeInfo}>
-        <Image className="h-16 w-16 rounded-full" source={userInfo.avatar} />
+        <Image
+          className="h-16 w-16 rounded-full"
+          source={{uri: userInfo.picture}}
+        />
 
         <View
           className={`absolute bg-orange-400 h-6 w-6 bottom-0 right-0 rounded-full items-center justify-center`}>

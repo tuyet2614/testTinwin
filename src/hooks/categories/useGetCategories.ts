@@ -1,8 +1,12 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import ShippingServices from "../../services/ShippingServices";
+import {useState} from 'react';
+import HomeServices from '../../services/HomeServices';
 
 const useGetCategories = () => {
-}
+  //   const [res, setRes] = useState();
+  //   HomeServices.getCategories()
+  //     .then(res => setRes(res.data))
+  //     .catch(err => console.log(err));
+  //   return res;
+};
 
-export default useGetCategories
+export default useGetCategories;

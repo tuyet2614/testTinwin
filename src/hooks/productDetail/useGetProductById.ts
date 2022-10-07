@@ -1,6 +1,22 @@
-const useGetProductById = (id: number, data: object[]) => {
+import {useEffect, useState} from 'react';
+import ProductServices from '../../services/ProductServices';
 
-   return data.filter(item => item.id === id)[0]
-}
+const useGetProductById = (id: string) => {
+  const [res, setRes] = useState();
 
-export default useGetProductById
+  const params = {
+    ids: id,
+  };
+
+  useEffect(() => {
+    ProductServices.getProductDetail(params)
+      .then(res => {
+        setRes(res.data[0]);
+      })
+      .catch(err => console.log(err));
+  }, []);
+
+  return res;
+};
+
+export default useGetProductById;

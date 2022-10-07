@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-import { useRoute } from '@react-navigation/native';
-import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import {useState} from 'react';
+import {faInfoCircle} from '@fortawesome/free-solid-svg-icons';
+import {useRoute} from '@react-navigation/native';
+import {Image, SafeAreaView, ScrollView, Text, View} from 'react-native';
 import BtnBorder from '../../components/BtnBorder';
 import BtnPrimary from '../../components/BtnPrimary';
 import CartBtn from '../../components/buttons/CartBtn';
@@ -13,24 +13,25 @@ import RatingContainer from '../../components/productDetail/RatingContainer';
 import StallAccount from '../../components/stall/StallAccount';
 import useAddToWishlist from '../../hooks/wishlist/useAddToWishlist';
 import useGetProductById from '../../hooks/productDetail/useGetProductById';
-import { data } from '../home/HomeScreen';
+import {SliderBox} from 'react-native-image-slider-box';
+import {colors} from '../../assets/colors';
 
 const ProductDetailScreen: React.FC = () => {
   const route = useRoute();
-  const { id } = route.params;
+  const {product} = route.params;
   const dispatchAddToWishlist = useAddToWishlist();
-  const product = useGetProductById(id, data);
+  console.log(product);
 
   const arr = [
     {
       id: 1,
       text: 'Thương hiệu',
-      value: 'Xiaomi',
+      value: product.brandName,
     },
     {
       id: 2,
       text: 'Nhà sản xuất',
-      value: 'Xiaomi',
+      value: product.brandName,
     },
     {
       id: 3,
@@ -40,22 +41,28 @@ const ProductDetailScreen: React.FC = () => {
     {
       id: 4,
       text: 'Kích thước đóng gói',
-      value: '24 x 24 x 53 cm',
+      value:
+        product.packingSize.height +
+        ' x ' +
+        product.packingSize.width +
+        ' x ' +
+        product.packingSize.length +
+        'cm',
     },
     {
       id: 5,
       text: 'Trọng lượng sản phẩm',
-      value: '7kg',
+      value: product.weight,
     },
     {
       id: 6,
       text: 'Đơn vị',
-      value: 'Chiếc',
+      value: product.unit,
     },
   ];
 
   const addToCart = () => {
-    dispatchAddToWishlist({ ...product, quantity: 1 });
+    dispatchAddToWishlist({...product, quantity: 1});
   };
 
   return (
@@ -77,19 +84,43 @@ const ProductDetailScreen: React.FC = () => {
             />
           </View>
         </View>
-        <Image
-          source={require('../../assets/logoTinwinPrimary.png')}
-          className="w-full h-80 bg-blue-400"
+        <SliderBox
+          // onCurrentImagePressed={() => {
+          //   setIsShowFullScreenImage(true);
+          // }}
+          autoplay={true}
+          circleLoop={true}
+          images={product.image}
+          inactiveDotColor={colors.gray}
+          ImageComponentStyle={{
+            borderRadius: 15,
+            width: '97%',
+            flex: 0.5,
+            marginTop: 5,
+          }}
+          dotColor={colors.primary}
+          sliderBoxHeight={400}
+          resizeMethod={'resize'}
+          resizeMode={'cover'}
+          // paginationBoxStyle={{
+          //   position: 'relative',
+          //   bottom: 0,
+          //   padding: 0,
+          //   alignItems: 'center',
+          //   alignSelf: 'center',
+          //   justifyContent: 'center',
+          //   paddingVertical: 10,
+          // }}
         />
-        <ProductInfoContainer />
-        <StallAccount />
+        <ProductInfoContainer item={product} />
+        <StallAccount item={product} />
         <ProductDetailContainer
           arr={arr}
           icon={faInfoCircle}
           title="Thông tin chi tiết"
         />
         <ProductDetailContainer
-          text="Mô tả sản phẩm"
+          text={product.description}
           icon={faInfoCircle}
           title="Mô tả sản phẩm"
         />
