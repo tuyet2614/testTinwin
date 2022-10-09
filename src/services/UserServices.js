@@ -1,4 +1,4 @@
-import {get, post, postHeadersUrl} from './AxiosHelper';
+import {get, post, postHeadersUrl, put, putUpload} from './AxiosHelper';
 
 const UserServices = {
   getUser(params) {
@@ -6,6 +6,12 @@ const UserServices = {
   },
   login(postData) {
     return postHeadersUrl('/auth/connect/token', postData);
+  },
+  uploadAvatar(putData) {
+    return putUpload('/auth/api/account/my-profile/update-avatar', putData);
+  },
+  updateInfo(putData) {
+    return put('/auth/api/account/my-profile/update-profile', putData);
   },
 };
 

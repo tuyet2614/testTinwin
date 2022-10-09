@@ -10,6 +10,7 @@ import useShowNotification from '../../hooks/useShowNotification';
 import {faCheckCircle} from '@fortawesome/free-regular-svg-icons';
 import {NAVIGATE_PRODUCT_DETAIL} from '../../navigation/navigate';
 import tw from 'tailwind-react-native-classnames';
+import useAddToCart from '../../hooks/cart/useAddToCart';
 
 interface Props {
   item: object;
@@ -19,14 +20,15 @@ const ProductCard: React.FC<Props> = (props: Props) => {
   const navigation = useNavigation();
   const {item} = props;
 
-  const dispatchAddToWishlist = useAddToWishlist();
+  const {cart, addToCart} = useAddToCart();
 
   const navigateProductDetail = () => {
     navigation.navigate(NAVIGATE_PRODUCT_DETAIL, {product: item});
   };
 
-  const addToCart = () => {
-    dispatchAddToWishlist({...item, quantity: 1});
+  const onAddToCart = () => {
+    // dispatchAddToWishlist({...item, quantity: 1});
+    addToCart(item);
   };
 
   return (
@@ -62,7 +64,11 @@ const ProductCard: React.FC<Props> = (props: Props) => {
         <TouchableOpacity className=" rounded-lg px-4 py-2 bg-orange-100">
           <Text className="text-black">Mua ngay</Text>
         </TouchableOpacity>
-        <BtnIcon icon={faCartArrowDown} style="py-2 px-4" onPress={addToCart} />
+        <BtnIcon
+          icon={faCartArrowDown}
+          style="py-2 px-4"
+          onPress={onAddToCart}
+        />
       </View>
     </TouchableOpacity>
   );

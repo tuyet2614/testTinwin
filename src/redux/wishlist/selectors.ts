@@ -1,1 +1,1 @@
-export const getWishlistState = (state: any) => state.wishlist
+export const getWishlistState = (state: any) => state.wishlist.wishlist;

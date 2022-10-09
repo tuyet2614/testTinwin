@@ -11,14 +11,15 @@ interface Props {
   style?: string;
   onChange?: void;
   icon?: IconProp;
+  isCheck: boolean;
+  setIsCheck: React.Dispatch<React.SetStateAction<any>>;
 }
 
 const CheckBoxItem: React.FC<Props> = (props: Props) => {
-  const {text, style, onChange, icon} = props;
-  const [isChecked, setIsChecked] = useState(false);
+  const {text, style, onChange, icon, isCheck, setIsCheck} = props;
 
   const onChangeCheck = () => {
-    setIsChecked(!isChecked);
+    setIsCheck(!isCheck);
     onChange !== undefined && onChange();
   };
 
@@ -28,7 +29,7 @@ const CheckBoxItem: React.FC<Props> = (props: Props) => {
         boxType="square"
         style={tw`mr-1`}
         onChange={onChangeCheck}
-        value={isChecked}
+        value={isCheck}
         tintColor={colors.primary}
         tintColors={{true: colors.primary, false: colors.disable}}
       />

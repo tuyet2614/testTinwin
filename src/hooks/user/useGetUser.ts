@@ -1,9 +1,16 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {setUser} from '../../redux/user/actions';
+import {getUserState} from '../../redux/user/selectors';
 import UserServices from '../../services/UserServices';
 
 const useGetUser = () => {
-  const [userInfo, setUserInfo] = useState({});
+  const userInfo = useSelector(getUserState);
+  const dispatchRedux = useDispatch();
+  const dispatchSetUser = (data: object) => {
+    dispatchRedux(setUser(data));
+  };
 
   var qs = require('qs');
   var data = qs.stringify({
@@ -14,19 +21,22 @@ const useGetUser = () => {
     password: '12345678Aa@',
   });
 
-  const fn = async () => {
-    await UserServices.login(data)
-      .then(res => {
-        AsyncStorage.setItem('token', res.data.access_token);
-      })
-      .catch(err => console.log(err));
-    await UserServices.getUser()
-      .then(res => {
-        setUserInfo(res.data);
-      })
-      .catch(err => console.log(err));
-  };
-  fn();
+  useEffect(() => {
+    const fn = async () => {
+      await UserServices.login(data)
+        .then(res => {
+          AsyncStorage.setItem('token', res.data.access_token);
+        })
+        .catch(err => console.log(err));
+      await UserServices.getUser()
+        .then(res => {
+          dispatchSetUser(res.data);
+          console.log(res);
+        })
+        .catch(err => console.log(err));
+    };
+    fn();
+  }, []);
 
   return userInfo;
 };

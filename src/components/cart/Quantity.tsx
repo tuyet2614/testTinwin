@@ -25,12 +25,12 @@ const Quantity: React.FC<Props> = (props: Props) => {
 
   const dispatchUpdateQuantity = useUpdateQuantity();
   const onMinus = () => {
-    dispatchUpdateQuantity({id: item.id, quantity: value - 1});
+    dispatchUpdateQuantity({id: item.productId, quantity: value - 1});
     setValue(value - 1);
   };
 
   const onPlus = () => {
-    dispatchUpdateQuantity({id: item.id, quantity: value + 1});
+    dispatchUpdateQuantity({id: item.productId, quantity: value + 1});
     setValue(value + 1);
   };
 

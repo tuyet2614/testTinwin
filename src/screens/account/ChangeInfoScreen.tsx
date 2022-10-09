@@ -10,6 +10,7 @@ import AccountContainer from '../../components/account/AccountContainer';
 import GenderModal from '../../components/account/GenderModal';
 import HeaderStack from '../../components/HeaderStack';
 import UpdateAvatarModal from '../../components/updateAvatar/UpdateAvatarModal';
+import useUpdateInfoUser from '../../hooks/user/useUpdateInfoUser';
 import useUpdateInfo from '../../hooks/useUpdateInfo';
 import {NAVIGATE_UPDATE_INFO} from '../../navigation/navigate';
 import {getUserState} from '../../redux/user/selectors';
@@ -32,14 +33,21 @@ const ChangeInfoScreen: React.FC = () => {
   const [phone, setPhone] = useState<string>('');
   const [email, setEmail] = useState<string>('');
 
+  const type =
+    userInfo.gender === '2' ? 'Khác' : userInfo.gender === '1' ? 'Nữ' : 'Nam';
+
   useEffect(() => {
-    setAvatar(userInfo.avatar);
+    setAvatar(userInfo.picture);
     setName(userInfo.name);
-    setGender(userInfo.gender);
-    setDob(userInfo.dob);
+    setGender(type);
+    setDob(
+      userInfo.birthday
+        .slice(0, 10)
+        .replace(/(\d{4})-(\d{2})-(\d{2})/, '$3/$2/$1'),
+    );
     setPhone(userInfo.phoneNumber);
     setEmail(userInfo.email);
-  }, []);
+  }, [userInfo]);
 
   const showModal = () => {
     setModalVisible(true);
@@ -67,16 +75,24 @@ const ChangeInfoScreen: React.FC = () => {
   };
 
   const {dispatchUpdateInfo} = useUpdateInfo();
+  const update = useUpdateInfoUser();
   const updateInfo = () => {
     dispatchUpdateInfo({
       id: '1',
       name: name,
-      gender: gender,
-      dob: dob,
+      gender: gender === 'Khác' ? '2' : gender === 'Nam' ? '0' : '1',
+      birthday: dob,
       email: email,
       phoneNumber: phone,
-      avatar: avatar,
+      picture: avatar,
     });
+    update(
+      name,
+      dob.replace(/(\d{2})[/](\d{2})[/](\d{4})/, '$3-$2-$1'),
+      gender === 'Khác' ? 2 : gender === 'Nam' ? 0 : 1,
+      phone,
+      email,
+    );
   };
 
   return (
@@ -91,7 +107,10 @@ const ChangeInfoScreen: React.FC = () => {
       <TouchableOpacity
         className="relative items-center my-5"
         onPress={showModal}>
-        <Image className="h-44 w-44 rounded-full bg-cover" source={avatar} />
+        <Image
+          className="h-44 w-44 rounded-full bg-cover"
+          source={{uri: avatar}}
+        />
         <View className="absolute items-center items-center justify-center h-full">
           <FontAwesomeIcon icon={faPen} color={colors.primary} />
           <Text className="text-orange-400 text-xs mt-3">Chạm để thay đổi</Text>

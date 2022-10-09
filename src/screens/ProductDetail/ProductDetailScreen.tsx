@@ -12,15 +12,13 @@ import ProductInfoContainer from '../../components/productDetail/ProductInfoCont
 import RatingContainer from '../../components/productDetail/RatingContainer';
 import StallAccount from '../../components/stall/StallAccount';
 import useAddToWishlist from '../../hooks/wishlist/useAddToWishlist';
-import useGetProductById from '../../hooks/productDetail/useGetProductById';
-import {SliderBox} from 'react-native-image-slider-box';
-import {colors} from '../../assets/colors';
+// import Carousel from 'react-native-snap-carousel';
+// import {SliderBox} from 'react-native-image-slider-box';
 
 const ProductDetailScreen: React.FC = () => {
   const route = useRoute();
   const {product} = route.params;
   const dispatchAddToWishlist = useAddToWishlist();
-  console.log(product);
 
   const arr = [
     {
@@ -84,34 +82,13 @@ const ProductDetailScreen: React.FC = () => {
             />
           </View>
         </View>
-        <SliderBox
-          // onCurrentImagePressed={() => {
-          //   setIsShowFullScreenImage(true);
-          // }}
-          autoplay={true}
-          circleLoop={true}
-          images={product.image}
-          inactiveDotColor={colors.gray}
-          ImageComponentStyle={{
-            borderRadius: 15,
-            width: '97%',
-            flex: 0.5,
-            marginTop: 5,
-          }}
-          dotColor={colors.primary}
-          sliderBoxHeight={400}
-          resizeMethod={'resize'}
-          resizeMode={'cover'}
-          // paginationBoxStyle={{
-          //   position: 'relative',
-          //   bottom: 0,
-          //   padding: 0,
-          //   alignItems: 'center',
-          //   alignSelf: 'center',
-          //   justifyContent: 'center',
-          //   paddingVertical: 10,
-          // }}
-        />
+        {/* {product.image !== null && (
+          <Carousel
+            data={product.image}
+            keyExtractor={key => key}
+            renderItem={renderItem}
+          />
+        )} */}
         <ProductInfoContainer item={product} />
         <StallAccount item={product} />
         <ProductDetailContainer

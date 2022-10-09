@@ -1,17 +1,24 @@
-import { useSelector } from "react-redux"
-import { getWishlistState } from "../../redux/wishlist/selectors"
-import useDeleteFromWishlist from "./useDeleteFromWishlist"
+import {useDispatch, useSelector} from 'react-redux';
+import {setWishlist} from '../../redux/wishlist/actions';
+import {getWishlistState} from '../../redux/wishlist/selectors';
+import useDeleteFromWishlist from './useDeleteFromWishlist';
 
 const useDeleteAllWishlist = () => {
-    const wishlistSelector = useSelector(getWishlistState)
-    const wishlist = wishlistSelector.wishlist
-    const dispatchDeleteFromWishlist = useDeleteFromWishlist()
+  const wishlist = useSelector(getWishlistState);
 
-    const deleteAllWishlist = () => {
-        wishlist.forEach((item: object) => dispatchDeleteFromWishlist(item))
-    }
+  //   const wishlist = wishlistSelector.wishlist;
+  const dispatchDeleteFromWishlist = useDeleteFromWishlist();
+  const dispatchRedux = useDispatch();
+  const dispatchCart = (data: object[]) => {
+    dispatchRedux(setWishlist(data));
+  };
 
-    return deleteAllWishlist
-}
+  const deleteAllWishlist = () => {
+    // wishlist.forEach((item: object) => dispatchDeleteFromWishlist(item));
+    dispatchCart([]);
+  };
 
-export default useDeleteAllWishlist
+  return deleteAllWishlist;
+};
+
+export default useDeleteAllWishlist;

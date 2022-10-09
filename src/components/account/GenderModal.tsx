@@ -52,6 +52,10 @@ const GenderModal: React.FC<Props> = (props: Props) => {
               <RadioButton.Android value="Nữ" color={colors.primary} />
               <Text>Nữ</Text>
             </View>
+            <View className="flex-row items-center">
+              <RadioButton.Android value="Khác" color={colors.primary} />
+              <Text>Khác</Text>
+            </View>
           </RadioButton.Group>
         </View>
       </Modal>

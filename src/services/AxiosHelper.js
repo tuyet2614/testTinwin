@@ -57,6 +57,50 @@ export const post = (path, postData) => {
     });
 };
 
+export const putUpload = async (path, putData) => {
+  const token = await AsyncStorage.getItem('token');
+  return axios
+    .put(baseUrl + path, putData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then(res => {
+      return new Promise(resolve => {
+        resolve(res);
+      });
+    })
+    .catch(err => {
+      // handleErr(err)
+      return new Promise(resolve => {
+        resolve(err.response);
+      });
+    });
+};
+
+export const put = async (path, putData) => {
+  const token = await AsyncStorage.getItem('token');
+  return axios
+    .put(baseUrl + path, putData, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then(res => {
+      return new Promise(resolve => {
+        resolve(res);
+      });
+    })
+    .catch(err => {
+      // handleErr(err)
+      return new Promise(resolve => {
+        resolve(err.response);
+      });
+    });
+};
+
 export const postHeadersUrl = async (path, postData) => {
   return await axios
     .post(baseUrl + path, postData, {
