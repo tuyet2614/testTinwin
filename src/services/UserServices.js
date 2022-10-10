@@ -1,8 +1,8 @@
-const {get} = require('./axiosHelper');
+import {get} from './AxiosHelper';
 
 const UserServices = {
-  getUser(params) {
-    return get('/', params);
+  getUser() {
+    return get('/auth/connect/userinfo');
   },
 };
 

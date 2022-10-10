@@ -11,3 +11,11 @@ export const validatePass = (pass: string) => {
     pass,
   );
 };
+export function formatDate(date: Date) {
+  let day = date.toLocaleString('en-GB').split(',')[0];
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  return `${('00' + hours).slice(-2)}:${('00' + minutes).slice(
+    -2,
+  )}       ${day}`;
+}

@@ -43,6 +43,9 @@ import {
   isVietnamesePhoneNumber,
   validatePass,
 } from '../../Ultis/commons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {getUserSelector} from '../../redux/dataUser/selectors';
+import {getUser} from '../../redux/dataUser/actions';
 
 const Login: React.FC = ({}) => {
   const navigation = useNavigation();
@@ -50,14 +53,20 @@ const Login: React.FC = ({}) => {
   const [isPasswordSecure, setIsPasswordSecure] = useState(true);
   const [userName, setUserName] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [securityUsername, setSecurityUsername] = useState();
-  const [securityPassword, setSecurityPassword] = useState();
+  const [securityUsername, setSecurityUsername] = useState<boolean>();
+  const [securityPassword, setSecurityPassword] = useState<boolean>();
   const dispatch = useDispatch();
   const data = useSelector(getAuth);
+  const user = useSelector(getUserSelector);
   useEffect(() => {
     Keyboard.dismiss();
-    return () => {};
+    dispatch(getUser());
   }, []);
+  useEffect(() => {
+    if (user.currentUser !== {}) {
+      navigation.navigate('TabBar');
+    }
+  }, [navigation, user]);
 
   const setUser = (text: string) => {
     setUserName(text);
@@ -80,7 +89,7 @@ const Login: React.FC = ({}) => {
   const navigateRegister = () => {
     navigation.navigate('Register');
   };
-  const loginDefault = () => {
+  const loginDefault = async () => {
     if (userName === '') {
       setSecurityUsername(false);
       return;
@@ -110,8 +119,9 @@ const Login: React.FC = ({}) => {
         password: password,
       }),
     );
-    console.log(data);
-    if (data.errorMsg !== '') {
+    const token = await AsyncStorage.getItem('token');
+
+    if (!token) {
       setVisible(false);
       return;
     }
@@ -240,7 +250,7 @@ const Login: React.FC = ({}) => {
       <ModalAuthen
         modalVisible={visible}
         setModalVisible={setVisible}
-        content={data.errorMsg}
+        content={data?.errorMsg}
       />
     </ScrollView>
   );

@@ -66,7 +66,11 @@ const Navigator: React.FC = () => {
           component={FormForgotPassword}
           options={options}
         />
-        <Stack.Screen name="TabBar" component={TabBar} options={options} />
+        <Stack.Screen
+          name="TabBar"
+          component={TabBar}
+          options={screenOptions}
+        />
         <Stack.Screen
           name="OrderSuccess"
           component={OrderSuccess}

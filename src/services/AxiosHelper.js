@@ -3,8 +3,9 @@ import axios from 'axios';
 import {baseUrl} from '../Ultis/Constant/const';
 
 const headersFormUrl = 'application/x-www-form-urlencoded';
-export const get = (path, params) => {
-  //   const token = localStorage.getItem('token');
+export const get = async (path, params) => {
+  const token = await AsyncStorage.getItem('token');
+  // console.log(token);
   if (params !== undefined) {
     if (params instanceof Object) {
       path +=
@@ -16,11 +17,11 @@ export const get = (path, params) => {
       path += '/' + params;
     }
   }
-  return axios
+  return await axios
     .get(baseUrl + path, {
       headers: {
-        'Content-Type': 'application/json',
-        // 'Authorization': Bearer ${token},
+        'Content-Type': 'text/plain',
+        Authorization: `Bearer ${token}`,
       },
     })
     .then(res => {
@@ -34,13 +35,13 @@ export const get = (path, params) => {
     });
 };
 
-export const post = (path, postData) => {
+export const post = async (path, postData) => {
   const token = AsyncStorage.getItem('token');
-  return axios
+  return await axios
     .post(baseUrl + path, postData, {
       headers: {
         'Content-Type': 'application/json',
-        // 'Authorization': Bearer ${token},
+        Authorization: `Bearer ${token}`,
       },
     })
     .then(res => {
@@ -55,8 +56,8 @@ export const post = (path, postData) => {
       });
     });
 };
-export const postHeadersUrl = (path, postData) => {
-  return axios
+export const postHeadersUrl = async (path, postData) => {
+  return await axios
     .post(baseUrl + path, postData, {
       headers: {
         'Content-Type': headersFormUrl,
@@ -73,13 +74,13 @@ export const postHeadersUrl = (path, postData) => {
       });
     });
 };
-export const deleteMethod = (path, id) => {
-  //   const token = localStorage.getItem('token');
-  return axios
+export const deleteMethod = async (path, id) => {
+  const token = await AsyncStorage.getItem('token');
+  return await axios
     .delete(baseUrl + path + '?id=' + id, {
       headers: {
         'Content-Type': 'application/json',
-        // 'Authorization': Bearer ${token},
+        Accept: undefined,
       },
     })
     .then(res => {
@@ -90,6 +91,36 @@ export const deleteMethod = (path, id) => {
     .catch(err => {
       // handleErr(err)
       // console.log(err);
+    });
+};
+export const put = async (path, params) => {
+  const token = await AsyncStorage.getItem('token');
+  console.log(token);
+  if (params !== undefined) {
+    if (params instanceof Object) {
+      path +=
+        '?' +
+        Object.keys(params)
+          .map(key => key + '=' + params[key])
+          .join('&');
+    } else {
+      path += '/' + params;
+    }
+  }
+  return axios
+    .put(baseUrl + path, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then(res => {
+      return new Promise(resolve => {
+        resolve(res);
+      });
+    })
+    .catch(err => {
+      // handleErr(err)
+      console.log(err);
     });
 };
 
