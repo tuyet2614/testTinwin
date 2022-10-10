@@ -7,8 +7,6 @@ import {
   Text,
   View,
 } from 'react-native';
-import {useSelector} from 'react-redux';
-import {colors} from '../../assets/colors';
 import AddressItem from '../../components/address/AddressItem';
 import BtnPrimary from '../../components/BtnPrimary';
 import CartContainer from '../../components/cart/CartContainer';
@@ -26,7 +24,7 @@ const CartScreen: React.FC = () => {
   const {defaultAddress} = useDefaultAddress();
 
   const {cart, loading} = useGetCart();
-  // console.log(cart);
+  console.log(cart);
 
   const navigateCartAddress = () => {
     navigation.navigate(NAVIGATE_CART_ADDRESS);

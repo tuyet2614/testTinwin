@@ -23,7 +23,7 @@ const CartContainer: React.FC<Props> = (props: Props) => {
 
   // const totalPrice = useTotalPrice();
 
-  return !loading && data[0] !== undefined ? (
+  return !loading ? (
     <View>
       <SelectAllCartItem
         title={title}

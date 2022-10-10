@@ -11,9 +11,11 @@ const useGetProductById = () => {
   const getProduct = (id: string) => {
     ProductServices.getProductDetail(id)
       .then(res => {
-        cart.push(res.data);
+        let arr = cart;
+        arr.push(res.data);
         // console.log(cart);
-        setRes(cart);
+        console.log(arr);
+        setRes(arr);
       })
       .catch(err => console.log(err));
   };
