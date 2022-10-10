@@ -125,7 +125,9 @@ const Login: React.FC = ({}) => {
       setVisible(false);
       return;
     }
-    navigateTabBar();
+    if (user.currentUser !== {}) {
+      navigateTabBar();
+    }
   };
   return (
     <ScrollView>
