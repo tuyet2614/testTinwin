@@ -26,6 +26,7 @@ const CartScreen: React.FC = () => {
   const {defaultAddress} = useDefaultAddress();
 
   const {cart, loading} = useGetCart();
+  // console.log(cart);
 
   const navigateCartAddress = () => {
     navigation.navigate(NAVIGATE_CART_ADDRESS);

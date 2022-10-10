@@ -41,7 +41,7 @@ const UpdateAvatarModal: React.FC<Props> = (props: Props) => {
         if (response.errorCode !== undefined) {
           Alert.alert(response.errorCode);
         } else if (response.didCancel != true) {
-          setValue({uri: response.assets[0].uri});
+          upload(response.assets[0].uri);
           setModalVisible(false);
         }
       },

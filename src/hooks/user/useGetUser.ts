@@ -31,7 +31,6 @@ const useGetUser = () => {
       await UserServices.getUser()
         .then(res => {
           dispatchSetUser(res.data);
-          console.log(res);
         })
         .catch(err => console.log(err));
     };

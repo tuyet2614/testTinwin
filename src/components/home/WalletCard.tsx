@@ -10,6 +10,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {colors} from '../../assets/colors';
 import useConvertToVND from '../../hooks/useConvertToVND';
 import useGetWallet from '../../hooks/wallet/useGetWallet';
+import Loading from '../Loading';
 
 const WalletCard: React.FC = () => {
   const {wallet, userInfo} = useGetWallet();
@@ -23,7 +24,7 @@ const WalletCard: React.FC = () => {
     uri: userInfo.picture,
   };
 
-  return (
+  return wallet !== undefined ? (
     <LinearGradient
       className={`rounded-lg p-3 mx-3 mb-3`}
       colors={[colors.primary, colors.primaryToGradient, colors.primary]}
@@ -72,6 +73,8 @@ const WalletCard: React.FC = () => {
         </TouchableOpacity>
       </View>
     </LinearGradient>
+  ) : (
+    <Loading style="h-40" />
   );
 };
 

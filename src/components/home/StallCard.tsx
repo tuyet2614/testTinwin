@@ -1,7 +1,6 @@
 import {Image, ImageSourcePropType, Text, TouchableOpacity} from 'react-native';
 
 interface Props {
-  id: number;
   image: ImageSourcePropType;
   text: string;
   onPress?: () => void;
@@ -15,7 +14,7 @@ const StallCard: React.FC<Props> = (props: Props) => {
         source={{uri: image}}
         className="bg-blue-300 h-28 w-40 rounded-lg"
       />
-      <Text className="text-black">{text}</Text>
+      <Text className="text-black mt-3">{text}</Text>
     </TouchableOpacity>
   );
 };

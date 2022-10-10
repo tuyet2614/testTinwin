@@ -13,7 +13,7 @@ import useGetCategoriesForHome from '../../hooks/home/useGetCategoriesForHome';
 import {data} from '../home/HomeScreen';
 
 const CategoriesScreen: React.FC = () => {
-  const categories = useGetCategoriesForHome();
+  const {categories, loadingCategories} = useGetCategoriesForHome();
   const products = useGetTopSearch();
 
   return (

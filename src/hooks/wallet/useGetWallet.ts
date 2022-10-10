@@ -11,13 +11,13 @@ const useGetWallet = () => {
   };
 
   useEffect(() => {
-    WalletServices.getWallet(params)
-      .then(res => {
-        setWallet(res.data);
-        console.log(res);
-      })
-      .catch(err => console.log(err));
-  }, []);
+    userInfo !== undefined &&
+      WalletServices.getWallet(params)
+        .then(res => {
+          setWallet(res.data);
+        })
+        .catch(err => console.log(err));
+  }, [userInfo]);
 
   return {
     wallet,

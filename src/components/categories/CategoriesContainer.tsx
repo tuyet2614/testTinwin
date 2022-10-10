@@ -19,13 +19,13 @@ interface Props {
   icon: ImageSourcePropType;
   flatlistStyle?: object;
   textBtn: string;
+  loadingCategories: boolean;
 }
 
 const CategoriesContainer: React.FC<Props> = (props: Props) => {
-  const {data, icon, title, flatlistStyle, textBtn} = props;
+  const {data, icon, title, flatlistStyle, textBtn, loadingCategories} = props;
 
   const [isEnd, setIsEnd] = useState(false);
-  const navigation = useNavigation();
 
   const end = () => {
     setIsEnd(false);
@@ -36,10 +36,17 @@ const CategoriesContainer: React.FC<Props> = (props: Props) => {
   };
 
   const renderItem = ({item}) =>
-    title === 'Ngành hàng' ? (
-      <CategoryCard image={item.avatar} text={item.name} />
+    !loadingCategories ? (
+      title === 'Ngành hàng' ? (
+        <CategoryCard image={item.avatar} text={item.name} />
+      ) : (
+        <StallCard image={item.avatar} text={item.name} />
+      )
     ) : (
-      <StallCard image={item.avatar} text={item.name} />
+      <View className="items-center justify-center h-40 w-40">
+        <View className="h-24 w-24 bg-gray-200"></View>
+        <View className="h-5 w-24 bg-gray-200"></View>
+      </View>
     );
 
   return (

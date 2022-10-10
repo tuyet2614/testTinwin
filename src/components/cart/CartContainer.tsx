@@ -6,6 +6,7 @@ import useConvertToVND from '../../hooks/useConvertToVND';
 import useTotalPrice from '../../hooks/wishlist/useTotalPrice';
 import CartItem from './CartItem';
 import SelectAllCartItem from './SelectAllCartItem';
+import Loading from '../Loading';
 
 interface Props {
   title: string;
@@ -20,9 +21,9 @@ const CartContainer: React.FC<Props> = (props: Props) => {
   const [isCheck, setIsCheck] = useState(false);
   const renderItem = ({item}) => <CartItem item={item} isCheckAll={isCheck} />;
 
-  const totalPrice = useTotalPrice();
+  // const totalPrice = useTotalPrice();
 
-  return (
+  return !loading && data[0] !== undefined ? (
     <View>
       <SelectAllCartItem
         title={title}
@@ -35,18 +36,20 @@ const CartContainer: React.FC<Props> = (props: Props) => {
       <FlatList
         contentContainerStyle={tw`mx-5`}
         data={data}
-        keyExtractor={key => key.productId}
+        keyExtractor={key => key.id}
         renderItem={renderItem}
       />
-      <View className="flex-row mx-5 justify-between my-2">
-        <Text>Tổng tiền hàng</Text>
-        {!loading && (
-          <Text className="text-orange-400 font-bold">
-            {useConvertToVND(totalPrice)}
-          </Text>
-        )}
-      </View>
+      {/* <View className="flex-row mx-5 justify-between my-2">
+    <Text>Tổng tiền hàng</Text>
+    {!loading && (
+      <Text className="text-orange-400 font-bold">
+        {useConvertToVND(totalPrice)}
+      </Text>
+    )}
+  </View> */}
     </View>
+  ) : (
+    <Loading />
   );
 };
 

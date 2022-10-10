@@ -18,6 +18,7 @@ import {useNavigation} from '@react-navigation/native';
 import useGetCategories from '../../hooks/categories/useGetCategories';
 import useGetCategoriesForHome from '../../hooks/home/useGetCategoriesForHome';
 import useGetProductForHome from '../../hooks/home/useGetProductForHome';
+import useGetSupplier from '../../hooks/home/useGetSupplier';
 
 export const data = [
   {
@@ -84,8 +85,9 @@ const HomeScreen: React.FC = () => {
     navigation.navigate(NAVIGATE_SEARCH_SCREEN);
   };
 
-  const categories = useGetCategoriesForHome();
+  const {categories, loadingCategories} = useGetCategoriesForHome();
   const products = useGetProductForHome();
+  const suppliers = useGetSupplier();
 
   return (
     <SafeAreaView className="bg-white h-full">
@@ -113,7 +115,16 @@ const HomeScreen: React.FC = () => {
           flatlistStyle={[tw`flex-wrap`, {width: 750}]}
           title="Gian hàng nổi bật"
           icon={stall_icon}
-          data={data}
+          data={
+            suppliers !== undefined &&
+            suppliers.map((item: object) => {
+              return {
+                id: item.id,
+                name: item.storeName,
+                avatar: item.logo,
+              };
+            })
+          }
         />
 
         <ProductsContainer

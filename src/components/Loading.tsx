@@ -7,9 +7,15 @@ import {
 } from 'react-native';
 import {colors} from '../assets/colors';
 
-const Loading: React.FC = () => {
+interface Props {
+  style?: string;
+}
+
+const Loading: React.FC<Props> = (props: Props) => {
+  const {style} = props;
+
   return (
-    <View className="flex-1 items-center justify-center">
+    <View className={`flex-1 items-center justify-center ${style}`}>
       <ActivityIndicator size="large" color={colors.primary} />
     </View>
   );

@@ -7,6 +7,9 @@ const HomeServices = {
   getProductForHome(params) {
     return get('/sales/api/app/product/home-for-customer', params);
   },
+  getSupplier(params) {
+    return get('/partnership/api/app/supplier/all', params);
+  },
 };
 
 export default HomeServices;

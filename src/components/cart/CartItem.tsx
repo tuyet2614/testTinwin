@@ -17,8 +17,8 @@ const CartItem: React.FC<Props> = (props: Props) => {
   const {item, onChange, isCheckAll} = props;
   const [isChecked, setIsChecked] = useState<boolean>(false);
 
-  const product = useGetProductById(item.productId);
   const dispatchDeleteFromWishlist = useDeleteFromWishlist();
+  // console.log(item);
 
   const checked = () => {
     setIsChecked(!isChecked);
@@ -30,7 +30,7 @@ const CartItem: React.FC<Props> = (props: Props) => {
   }, [isCheckAll]);
 
   return (
-    product !== undefined && (
+    item !== undefined && (
       <View>
         <TouchableOpacity className="flex-row py-3">
           <CheckBox
@@ -43,18 +43,18 @@ const CartItem: React.FC<Props> = (props: Props) => {
           />
           <View>
             <View className="border border-gray-200 p-2 rounded-lg">
-              <Image source={{uri: product.image[0]}} className="w-16 h-16" />
+              <Image source={{uri: item.image[0]}} className="w-16 h-16" />
             </View>
             <View className="flex-1"></View>
           </View>
 
           <View className="ml-3 flex-1">
             <Text className="text-black" numberOfLines={2}>
-              {product.name}
+              {item.name}
             </Text>
-            <Text className="text-xs">Mã SP: {product.id}</Text>
+            <Text className="text-xs">Mã SP: {item.id}</Text>
             <Text className="text-orange-400 my-2">
-              {useConvertToVND(product.price)}
+              {useConvertToVND(item.price)}
             </Text>
             <View className="flex-row items-center justify-between">
               <Quantity quantity={item.quantity} item={item} />
