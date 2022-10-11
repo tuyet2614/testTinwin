@@ -1,3 +1,4 @@
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {useEffect, useState} from 'react';
 import {
   FlatList,
@@ -13,9 +14,25 @@ import HeaderStack from '../../components/HeaderStack';
 import InputItem from '../../components/InputItem';
 
 const AddressDetailScreen: React.FC = () => {
+  const route = useRoute();
+  const {setNewAddress} = route.params;
+  const navigation = useNavigation();
+  const [addressDetail, setAddressDetail] = useState('');
   const [province, setProvince] = useState<object>({});
   const [district, setDistrict] = useState<object>({});
   const [ward, setWard] = useState<object>({});
+
+  const onConfirm = () => {
+    console.log(addressDetail);
+    setNewAddress({
+      province: province,
+      district: district,
+      ward: ward,
+      specificAddress: addressDetail,
+    });
+
+    navigation.goBack();
+  };
 
   return (
     <SafeAreaView className="bg-white flex-1">
@@ -50,11 +67,17 @@ const AddressDetailScreen: React.FC = () => {
 
       <View className="m-5">
         <InputItem
+          setValue={setAddressDetail}
+          value={addressDetail}
           placeholder="Nhập tên đường, tòa nhà, số nhà..."
           title="Địa chỉ cụ thể"
           style="mb-3"
         />
-        <BtnPrimary text="Xác nhận địa chỉ" style="p-4 items-center" />
+        <BtnPrimary
+          text="Xác nhận địa chỉ"
+          style="p-4 items-center"
+          onPress={onConfirm}
+        />
       </View>
     </SafeAreaView>
   );

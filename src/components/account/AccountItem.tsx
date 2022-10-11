@@ -27,7 +27,11 @@ const AccountItem: React.FC<Props> = (props: Props) => {
         className="flex-row justify-between items-center p-4">
         <View className="flex-row items-center">
           <Image source={icon} />
-          <Text className={`text-black ${icon !== undefined && 'ml-3'}`}>
+          <Text
+            className={`text-black ${icon !== undefined && 'ml-3'} ${
+              icon === undefined && 'w-64'
+            }`}
+            numberOfLines={2}>
             {text}
           </Text>
         </View>

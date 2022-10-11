@@ -1,8 +1,8 @@
-import {get} from './AxiosHelper';
+import {deleteMethod, get, post, put} from './AxiosHelper';
 
 const ShippingServices = {
-  getShippingAddress(params) {
-    return get('/api/app/shipping-address', params);
+  getShippingAddress() {
+    return get('/shipping/api/app/shipping-address');
   },
   getProvinces(params) {
     return get('/api/app/province', params);
@@ -12,6 +12,18 @@ const ShippingServices = {
   },
   getWards(params) {
     return get('/api/app/ward', params);
+  },
+  setDefault(id) {
+    return put(`/shipping/api/app/shipping-address/${id}/set-default`);
+  },
+  updateAddress(id, putData) {
+    return put(`/shipping/api/app/shipping-address/${id}`, putData);
+  },
+  addNewAddress(postData) {
+    return post('/shipping/api/app/shipping-address', postData);
+  },
+  deleteAddress(id) {
+    return deleteMethod(`/shipping/api/app/shipping-address/${id}`);
   },
 };
 

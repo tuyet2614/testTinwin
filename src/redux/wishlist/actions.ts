@@ -20,7 +20,7 @@ const updateQuantity = (data: object) => ({
   payload: data,
 });
 
-const setWishlist = (data: object[]) => ({
+const setWishlist = (data: object) => ({
   type: SET_WISHLIST,
   payload: data,
 });

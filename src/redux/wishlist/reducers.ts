@@ -6,17 +6,23 @@ import {
 } from './constants';
 
 interface WishlistState {
+  id: string;
   wishlist: object[];
 }
 
 const initState: WishlistState = {
+  id: '',
   wishlist: [],
 };
 
 const wishlistReducer = (state = initState, action: any) => {
   switch (action?.type) {
     case SET_WISHLIST:
-      return {...state, wishlist: action.payload};
+      return {
+        ...state,
+        id: action.payload.id,
+        wishlist: action.payload.wishlist,
+      };
     case ADD_TO_WISHLIST:
       return {...state, wishlist: [...state.wishlist, action.payload]};
     case DELETE_FROM_WISHLIST:

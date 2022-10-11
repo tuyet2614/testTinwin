@@ -120,13 +120,13 @@ export const postHeadersUrl = async (path, postData) => {
     });
 };
 
-export const deleteMethod = (path, id) => {
-  //   const token = localStorage.getItem('token');
+export const deleteMethod = async (path, id) => {
+  const token = await AsyncStorage.getItem('token');
   return axios
     .delete(baseUrl + path + '?id=' + id, {
       headers: {
         'Content-Type': 'application/json',
-        // 'Authorization': Bearer ${token},
+        Authorization: `Bearer ${token}`,
       },
     })
     .then(res => {

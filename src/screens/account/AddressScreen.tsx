@@ -6,32 +6,9 @@ import HeaderStack from '../../components/HeaderStack';
 import useGetAddress from '../../hooks/address/useGetAddress';
 import {NAVIGATE_ADD_NEW_ADDRESS} from '../../navigation/navigate';
 
-export const dataAddress: object[] = [
-  {
-    id: 1,
-    name: 'Long',
-    phone: '012346789',
-    address: 'ABC',
-  },
-  {
-    id: 2,
-    name: 'Tuyết',
-    phone: '012346789',
-    address: 'DEF',
-  },
-  {
-    id: 3,
-    name: 'Thái',
-    phone: '012346789',
-    address: 'XYZ',
-  },
-];
-
 const AddressScreen: React.FC = () => {
   const navigation = useNavigation();
-  const fn = useGetAddress();
-  fn();
-  // console.log(dataAddress);
+  const addresses = useGetAddress();
 
   const onPress = () => {
     navigation.navigate(NAVIGATE_ADD_NEW_ADDRESS, {
@@ -44,7 +21,7 @@ const AddressScreen: React.FC = () => {
       <HeaderStack text="Địa chỉ giao hàng" isGoback={true} />
 
       <AddressContainer
-        data={dataAddress}
+        data={addresses}
         icon={require('../../assets/icons/account/location.png')}
       />
 

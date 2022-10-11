@@ -19,6 +19,8 @@ import CheckBoxItem from '../../components/CheckBoxItem';
 import HeaderStack from '../../components/HeaderStack';
 import InputItem from '../../components/InputItem';
 import TitleItem from '../../components/TitleItem';
+import useAddNewAddress from '../../hooks/address/useAddNewAddress';
+import useUpdateAddress from '../../hooks/address/useUpdateAddress';
 import useChoose from '../../hooks/useChoose';
 import {NAVIGATE_ADDRESS_DETAIL} from '../../navigation/navigate';
 
@@ -26,17 +28,42 @@ const AddNewAddressScreen: React.FC = () => {
   const route = useRoute();
   const {title, item} = route.params;
 
+  const updateAddress = useUpdateAddress();
+  const addNewAddress = useAddNewAddress();
+
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
+  const [provinceId, setProvinceId] = useState('');
+  const [districtId, setDistrictId] = useState('');
+  const [wardId, setWardId] = useState('');
+  const [isCheck, setIsCheck] = useState(false);
+  const [newAddress, setNewAddress] = useState({});
 
   useEffect(() => {
     if (item !== undefined) {
       setName(item.name);
-      setPhone(item.phone);
-      setAddress(item.address);
+      setPhone(item.phoneNumber);
+      setAddress(item.specificAddress);
+      setIsCheck(item.isDefault);
+      setProvinceId(item.provinceId);
+      setDistrictId(item.districtId);
+      setWardId(item.wardId);
     }
   }, []);
+
+  useEffect(() => {
+    Object.keys(newAddress).length > 0 &&
+      setAddress(
+        newAddress.specificAddress +
+          ', ' +
+          newAddress.ward.name +
+          ', ' +
+          newAddress.district.name +
+          ', ' +
+          newAddress.province.name,
+      );
+  }, [newAddress]);
 
   const addressTypes: object[] = [
     {
@@ -51,7 +78,7 @@ const AddNewAddressScreen: React.FC = () => {
     },
   ];
 
-  const {isChoose, choose} = useChoose(addressTypes);
+  const {isChoose, choose, itemIsChoose} = useChoose(addressTypes);
   const renderItem = ({item}) => (
     <TouchableOpacity
       onPress={() => isChoose(item)}
@@ -65,7 +92,31 @@ const AddNewAddressScreen: React.FC = () => {
 
   const navigation = useNavigation();
   const onChooseAddress = () => {
-    navigation.navigate(NAVIGATE_ADDRESS_DETAIL);
+    navigation.navigate(NAVIGATE_ADDRESS_DETAIL, {
+      setNewAddress: setNewAddress,
+    });
+  };
+
+  const onConfirm = () => {
+    const data = {
+      name: name,
+      phoneNumber: phone,
+      specificAddress: address,
+      isDefault: isCheck,
+      shippingAddressType: itemIsChoose.id,
+      provinceId:
+        Object.keys(newAddress).length > 0
+          ? newAddress.province.id
+          : provinceId,
+      districtId:
+        Object.keys(newAddress).length > 0
+          ? newAddress.district.id
+          : districtId,
+      wardId: Object.keys(newAddress).length > 0 ? newAddress.ward.id : wardId,
+    };
+
+    item !== undefined ? updateAddress(item.id, data) : addNewAddress(data);
+    navigation.goBack();
   };
 
   return (
@@ -103,7 +154,12 @@ const AddNewAddressScreen: React.FC = () => {
             onPress={onChooseAddress}
           />
 
-          <CheckBoxItem text="Đặt làm địa chỉ mặc định" style="ml-2" />
+          <CheckBoxItem
+            text="Đặt làm địa chỉ mặc định"
+            style="ml-2"
+            setIsCheck={setIsCheck}
+            isCheck={isCheck}
+          />
         </View>
 
         <TitleItem title="Loại địa chỉ" marginTop="mt-10" />
@@ -119,7 +175,11 @@ const AddNewAddressScreen: React.FC = () => {
         <BtnBorder text="Xoá địa chỉ" style="p-3 mx-3 items-center" />
       )}
       <View className="m-3">
-        <BtnPrimary text="Hoàn thành" style="items-center m-3" />
+        <BtnPrimary
+          text="Hoàn thành"
+          style="items-center m-3"
+          onPress={onConfirm}
+        />
       </View>
     </SafeAreaView>
   );

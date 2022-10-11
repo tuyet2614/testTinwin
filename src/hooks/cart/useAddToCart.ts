@@ -1,11 +1,12 @@
 import {faCheckCircle, faXmarkCircle} from '@fortawesome/free-solid-svg-icons';
 import {useDispatch, useSelector} from 'react-redux';
 import {setWishlist} from '../../redux/wishlist/actions';
-import {getWishlistState} from '../../redux/wishlist/selectors';
+import {getWishlistId, getWishlistState} from '../../redux/wishlist/selectors';
 import CartServices from '../../services/CartServices';
 import useShowNotification from '../useShowNotification';
 
 const useAddToCart = () => {
+  const wishlist = useSelector(getWishlistId);
   const cart = useSelector(getWishlistState);
   const dispatchRedux = useDispatch();
   const dispatchCart = (data: object[]) => {
@@ -14,9 +15,8 @@ const useAddToCart = () => {
 
   const {dispatchShowNotification, notification} = useShowNotification();
   const addToCart = (item: object) => {
-    console.log(item);
     const postData = {
-      customerCartId: cart[0].customerCartId,
+      customerCartId: wishlist.id,
       productId: item.id,
       quantity: 1,
     };
