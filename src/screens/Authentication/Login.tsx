@@ -37,7 +37,7 @@ import {
 } from '../../constant/const';
 import {login} from '../../redux/authentication/actions';
 import {getAuth} from '../../redux/authentication/selectors';
-import {getUser} from '../../redux/dataUser/actions';
+import {clearUser, getUser} from '../../redux/dataUser/actions';
 import {getUserSelector} from '../../redux/dataUser/selectors';
 import {
   isVietnamesePhoneNumber,
@@ -58,7 +58,6 @@ const Login: React.FC = ({}) => {
   const dispatch = useDispatch();
   const data = useSelector(getAuth);
   const user = useSelector(getUserSelector);
-
   useEffect(() => {
     if (user.currentUser) {
       navigation.navigate('TabBar');
@@ -121,7 +120,7 @@ const Login: React.FC = ({}) => {
       }),
     );
     const token = await AsyncStorage.getItem('token');
-
+    console.log(token);
     if (!token) {
       setVisible(false);
       return;

@@ -1,4 +1,4 @@
-import {GET_USER_SUCCESS} from './constants';
+import {CLEAR_USER, GET_USER_SUCCESS} from './constants';
 
 interface UserState {}
 
@@ -8,6 +8,8 @@ const dataUserReducer = (state = initState, action: any) => {
   switch (action?.type) {
     case GET_USER_SUCCESS:
       return {...state, currentUser: action.data};
+    case CLEAR_USER:
+      return {...state, currentUser: {}};
     default:
       return state;
   }
