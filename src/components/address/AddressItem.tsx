@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import {RadioButton} from 'react-native-paper';
 import {colors} from '../../assets/colors';
+import useDeleteAddress from '../../hooks/address/useDeleteAddress';
 import useSetDefault from '../../hooks/address/useSetDefault';
 import {NAVIGATE_ADD_NEW_ADDRESS} from '../../navigation/navigate';
 
@@ -47,6 +48,10 @@ const AddressItem: React.FC<Props> = (props: Props) => {
   };
 
   const setDefault = useSetDefault();
+  const deleteAddress = useDeleteAddress();
+  const onDelete = () => {
+    deleteAddress(id);
+  };
   const onSetDefault = () => {
     setDefault(id);
     setOptionsVisible(false);
@@ -125,7 +130,9 @@ const AddressItem: React.FC<Props> = (props: Props) => {
                 onPress={changeAddress}>
                 <Text className="text-orange-400">Chỉnh sửa</Text>
               </TouchableOpacity>
-              <TouchableOpacity className="p-3 border-orange-400 border-2 rounded-lg">
+              <TouchableOpacity
+                className="p-3 border-orange-400 border-2 rounded-lg"
+                onPress={onDelete}>
                 <Text className="text-orange-400">Xoá</Text>
               </TouchableOpacity>
             </View>

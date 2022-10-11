@@ -20,6 +20,7 @@ import HeaderStack from '../../components/HeaderStack';
 import InputItem from '../../components/InputItem';
 import TitleItem from '../../components/TitleItem';
 import useAddNewAddress from '../../hooks/address/useAddNewAddress';
+import useDeleteAddress from '../../hooks/address/useDeleteAddress';
 import useUpdateAddress from '../../hooks/address/useUpdateAddress';
 import useChoose from '../../hooks/useChoose';
 import {NAVIGATE_ADDRESS_DETAIL} from '../../navigation/navigate';
@@ -33,7 +34,7 @@ const AddNewAddressScreen: React.FC = () => {
 
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
+  const [address, setAddress] = useState('Chọn địa chỉ');
   const [provinceId, setProvinceId] = useState('');
   const [districtId, setDistrictId] = useState('');
   const [wardId, setWardId] = useState('');
@@ -97,6 +98,12 @@ const AddNewAddressScreen: React.FC = () => {
     });
   };
 
+  const deleteAddress = useDeleteAddress();
+  const onDelete = () => {
+    deleteAddress(item.id);
+    navigation.goBack();
+  };
+
   const onConfirm = () => {
     const data = {
       name: name,
@@ -149,10 +156,7 @@ const AddNewAddressScreen: React.FC = () => {
             Địa chỉ cụ thể
             <Text className="text-red-danger">*</Text>
           </Text>
-          <AccountItem
-            text={item !== undefined ? address : 'Chọn địa chỉ'}
-            onPress={onChooseAddress}
-          />
+          <AccountItem text={address} onPress={onChooseAddress} />
 
           <CheckBoxItem
             text="Đặt làm địa chỉ mặc định"
@@ -172,7 +176,11 @@ const AddNewAddressScreen: React.FC = () => {
       </ScrollView>
 
       {item !== undefined && (
-        <BtnBorder text="Xoá địa chỉ" style="p-3 mx-3 items-center" />
+        <BtnBorder
+          text="Xoá địa chỉ"
+          style="p-3 mx-3 items-center"
+          onPress={onDelete}
+        />
       )}
       <View className="m-3">
         <BtnPrimary

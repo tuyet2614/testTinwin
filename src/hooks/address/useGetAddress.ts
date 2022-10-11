@@ -28,7 +28,7 @@ const useGetAddress = () => {
 
   useEffect(() => {
     fn();
-  }, [defaultAddress]);
+  }, []);
 
   return addresses;
 };

@@ -15,6 +15,7 @@ const useAddToCart = () => {
 
   const {dispatchShowNotification, notification} = useShowNotification();
   const addToCart = (item: object) => {
+    console.log(wishlist);
     const postData = {
       customerCartId: wishlist.id,
       productId: item.id,

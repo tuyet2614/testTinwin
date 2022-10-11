@@ -35,13 +35,13 @@ export const get = async (path, params) => {
     });
 };
 
-export const post = (path, postData) => {
-  //   const token = localStorage.getItem('token');
+export const post = async (path, postData) => {
+  const token = await AsyncStorage.getItem('token');
   return axios
     .post(baseUrl + path, postData, {
       headers: {
         'Content-Type': 'application/json',
-        // 'Authorization': Bearer ${token},
+        Authorization: `Bearer ${token}`,
       },
     })
     .then(res => {
@@ -125,6 +125,7 @@ export const deleteMethod = async (path, id) => {
   return axios
     .delete(baseUrl + path + '?id=' + id, {
       headers: {
+        Accept: 'text/plain',
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
@@ -136,7 +137,7 @@ export const deleteMethod = async (path, id) => {
     })
     .catch(err => {
       // handleErr(err)
-      // console.log(err);
+      console.log(err);
     });
 };
 

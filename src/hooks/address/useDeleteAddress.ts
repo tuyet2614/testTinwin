@@ -1,26 +1,15 @@
 import {useDispatch} from 'react-redux';
 import {setAddress} from '../../redux/address/actions';
 import ShippingServices from '../../services/ShippingServices';
-import useGetAddress from './useGetAddress';
 
-const useAddNewAddress = () => {
+const useDeleteAddress = () => {
   const dispatchRedux = useDispatch();
   const dispatchAddress = (data: object[]) => {
     dispatchRedux(setAddress(data));
   };
 
-  const addNewAddress = (data: object) => {
-    const postData = {
-      name: data.name,
-      phoneNumber: data.phoneNumber,
-      specificAddress: data.specificAddress,
-      shippingAddressType: data.shippingAddressType,
-      isDefault: data.isDefault,
-      provinceId: data.provinceId,
-      districtId: data.districtId,
-      wardId: data.wardId,
-    };
-    ShippingServices.addNewAddress(postData)
+  const deleteAddress = (id: string) => {
+    ShippingServices.deleteAddress(id)
       .then(res => {
         console.log(res);
         ShippingServices.getShippingAddress()
@@ -32,7 +21,7 @@ const useAddNewAddress = () => {
       .catch(err => console.log(err));
   };
 
-  return addNewAddress;
+  return deleteAddress;
 };
 
-export default useAddNewAddress;
+export default useDeleteAddress;
