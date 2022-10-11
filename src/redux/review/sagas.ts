@@ -1,14 +1,19 @@
 import {all, call, fork, takeLatest} from 'redux-saga/effects';
 import ReviewServices from '../../services/ReviewServices';
-import {GET_FOR_CUSTOMER} from './constants';
+import {GET_FOR_CUSTOMER, REVIEW} from './constants';
 
+interface action {
+  data: object;
+  payload: object;
+  type: string;
+}
 function* fetchData() {
-  takeLatest(GET_FOR_CUSTOMER, function* (action?: object) {
+  yield takeLatest(REVIEW, function* (action: action) {
     try {
-      const res: object = yield call(
-        ReviewServices.getForCustomer(action.payload),
-      );
-      console.log(res);
+      const res = yield call(ReviewServices.review, action.payload);
+      if (res.status === 200) {
+      } else {
+      }
     } catch (error) {}
   });
 }

@@ -1,1 +1,1 @@
-export const GET_FOR_CUSTOMER = 'GET_FOR_CUSTOMER';
+export const REVIEW = 'REVIEW';

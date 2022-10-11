@@ -11,7 +11,6 @@ function* fetchData() {
   yield takeLatest(LOGIN, function* (action: action) {
     try {
       const res = yield call(AuthenticationServices.login, action.payload);
-      console.log(res);
       if (res.status === 200) {
         AsyncStorage.setItem('token', res.data.access_token);
         yield put({type: LOGIN_SUCCESS, data: res.data});

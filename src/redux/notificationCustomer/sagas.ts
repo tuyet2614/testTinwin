@@ -89,6 +89,6 @@ function* fetchData() {
   });
 }
 
-export default function* OrderSaga() {
+export default function* NotificationSaga() {
   yield all([fork(fetchData)]);
 }

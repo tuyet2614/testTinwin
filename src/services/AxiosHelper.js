@@ -5,7 +5,7 @@ import {baseUrl} from '../Ultis/Constant/const';
 const headersFormUrl = 'application/x-www-form-urlencoded';
 export const get = async (path, params) => {
   const token = await AsyncStorage.getItem('token');
-  // console.log(token);
+
   if (params !== undefined) {
     if (params instanceof Object) {
       path +=
@@ -31,12 +31,11 @@ export const get = async (path, params) => {
     })
     .catch(err => {
       // handleErr(err)
-      // console.log(err);
     });
 };
 
 export const post = async (path, postData) => {
-  const token = AsyncStorage.getItem('token');
+  const token = await AsyncStorage.getItem('token');
   return await axios
     .post(baseUrl + path, postData, {
       headers: {
@@ -50,7 +49,6 @@ export const post = async (path, postData) => {
       });
     })
     .catch(err => {
-      // handleErr(err)
       return new Promise(resolve => {
         resolve(err.response);
       });
@@ -95,7 +93,6 @@ export const deleteMethod = async (path, id) => {
 };
 export const put = async (path, params) => {
   const token = await AsyncStorage.getItem('token');
-  console.log(token);
   if (params !== undefined) {
     if (params instanceof Object) {
       path +=
@@ -120,7 +117,6 @@ export const put = async (path, params) => {
     })
     .catch(err => {
       // handleErr(err)
-      console.log(err);
     });
 };
 

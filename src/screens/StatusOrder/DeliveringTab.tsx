@@ -1,13 +1,64 @@
-import {ScrollView} from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
+import React from 'react';
+import {FlatList, SafeAreaView} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import CardOrder from '../../components/cards/CardOrder';
+import {
+  getMoreOrder,
+  getMoreOrderDelivering,
+  getOrderDelivering,
+} from '../../redux/order/actions';
+import {getOrderSelector} from '../../redux/order/selectors';
 
 const Delivering: React.FC = () => {
+  const dispatch = useDispatch();
+  const order = useSelector(getOrderSelector);
+  let totalItemDefault = 10;
+  const [refreshing, setRefreshing] = React.useState(false);
+  // useFocusEffect(() => {
+  //   dispatch(
+  //     getOrderDelivering({TextSearch: '', Status: 3, skip: 10, take: 10}),
+  //   );
+  // });
+
+  const renderCard = ({item}) => {
+    return <CardOrder titleBtn="Đã nhận" item={item} />;
+  };
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    dispatch(
+      getOrderDelivering({
+        TextSearch: '',
+        Status: 3,
+        skip: 0,
+        take: 10,
+      }),
+    );
+    setRefreshing(false);
+  }, [dispatch]);
+  const onLoadMore = () => {
+    dispatch(
+      getMoreOrderDelivering({
+        TextSearch: '',
+        Status: 3,
+        skip: totalItemDefault,
+        take: 10,
+      }),
+    );
+    totalItemDefault = totalItemDefault + 10;
+  };
+
   return (
-    <ScrollView>
-      <CardOrder titleBtn="Đã nhận"></CardOrder>
-      <CardOrder titleBtn="Đã nhận"></CardOrder>
-      <CardOrder titleBtn="Đã nhận"></CardOrder>
-    </ScrollView>
+    <SafeAreaView>
+      <FlatList
+        data={order?.orderDelivering?.items}
+        renderItem={renderCard}
+        keyExtractor={item => item.id}
+        onRefresh={onRefresh}
+        onEndReached={onLoadMore}
+        refreshing={refreshing}
+      />
+    </SafeAreaView>
   );
 };
 

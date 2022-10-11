@@ -24,7 +24,6 @@ const initState: ReviewState = {
 const reivewReducer = (state = initState, action: any) => {
   switch (action.type) {
     case GET_FOR_CUSTOMER:
-      console.log(state);
       return state;
     default:
       return state;

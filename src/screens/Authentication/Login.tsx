@@ -5,12 +5,14 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 import {faEyeSlash} from '@fortawesome/free-regular-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import {useEffect, useState} from 'react';
 import {
   Image,
   Keyboard,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -18,6 +20,7 @@ import {
   View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   anotherOrange,
   black,
@@ -32,20 +35,17 @@ import {
   red,
   white,
 } from '../../constant/const';
-import {style} from './style';
-import {ScrollView} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
 import {login} from '../../redux/authentication/actions';
 import {getAuth} from '../../redux/authentication/selectors';
-import ModalAuthen from './ModalAuthen';
+import {getUser} from '../../redux/dataUser/actions';
+import {getUserSelector} from '../../redux/dataUser/selectors';
 import {
-  validateEmail,
   isVietnamesePhoneNumber,
+  validateEmail,
   validatePass,
 } from '../../Ultis/commons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {getUserSelector} from '../../redux/dataUser/selectors';
-import {getUser} from '../../redux/dataUser/actions';
+import ModalAuthen from './ModalAuthen';
+import {style} from './style';
 
 const Login: React.FC = ({}) => {
   const navigation = useNavigation();
@@ -58,15 +58,16 @@ const Login: React.FC = ({}) => {
   const dispatch = useDispatch();
   const data = useSelector(getAuth);
   const user = useSelector(getUserSelector);
+
+  useEffect(() => {
+    if (user.currentUser) {
+      navigation.navigate('TabBar');
+    }
+  }, [navigation, user]);
   useEffect(() => {
     Keyboard.dismiss();
     dispatch(getUser());
   }, []);
-  useEffect(() => {
-    if (user.currentUser !== {}) {
-      navigation.navigate('TabBar');
-    }
-  }, [navigation, user]);
 
   const setUser = (text: string) => {
     setUserName(text);
@@ -125,9 +126,7 @@ const Login: React.FC = ({}) => {
       setVisible(false);
       return;
     }
-    if (user.currentUser !== {}) {
-      navigateTabBar();
-    }
+    navigateTabBar();
   };
   return (
     <ScrollView>

@@ -1,10 +1,10 @@
-import {GET_FOR_CUSTOMER} from './constants';
+import {REVIEW} from './constants';
 
-const getForCustomer = (data?: object) => {
+const review = (data?: object) => {
   return {
-    type: GET_FOR_CUSTOMER,
+    type: REVIEW,
     payload: data,
   };
 };
 
-export {getForCustomer};
+export {review};

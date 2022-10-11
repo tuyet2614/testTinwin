@@ -1,9 +1,189 @@
 const GET_ORDER = 'GET_ORDER';
 const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
 const GET_ORDER_FAIL = 'GET_ORDER_FAIL';
-const getOrder = (data: object) => ({
-  type: GET_ORDER,
-  payload: data,
-});
+const GET_ORDER_WAIT_COMFIRM = 'GET_ORDER_WAIT_COMFIRM';
+const GET_ORDER_WAIT_COMFIRM_SUCCESS = 'GET_ORDER_WAIT_COMFIRM_SUCCESS';
+const GET_ORDER_WAIT_COMFIRM_FAIL = 'GET_ORDER_WAIT_COMFIRM_FAIL';
+const GET_ORDER_PREPARE = 'GET_ORDER_PREPARE';
+const GET_ORDER_PREPARE_SUCCESS = 'GET_ORDER_PREPARE_SUCCESS';
+const GET_ORDER_PREPARE_FAIL = 'GET_ORDER_PREPARE_FAIL';
+const GET_ORDER_DELIVERING = 'GET_ORDER_DELIVERING';
+const GET_ORDER_DELIVERING_SUCCESS = 'GET_ORDER_DELIVERING_SUCCESS';
+const GET_ORDER_DELIVERING_FAIL = 'GET_ORDER_DELIVERING_FAIL';
+const GET_ORDER_DELIVERED = 'GET_ORDER_DELIVERED';
+const GET_ORDER_DELIVERED_SUCCESS = 'GET_ORDER_DELIVERED_SUCCESS';
+const GET_ORDER_DELIVERED_FAIL = 'GET_ORDER_DELIVERED_FAIL';
+const GET_ORDER_CANCELLED = 'GET_ORDER_CANCELLED';
+const GET_ORDER_CANCELLED_SUCCESS = 'GET_ORDER_CANCELLED_SUCCESS';
+const GET_ORDER_CANCELLED_FAIL = 'GET_ORDER_CANCELLED_FAIL';
 
-export {GET_ORDER, GET_ORDER_SUCCESS, GET_ORDER_FAIL, getOrder};
+const GET_MORE_ORDER = 'GET_MORE_ORDER';
+const GET_MORE_ORDER_SUCCESS = 'GET_MORE_ORDER_SUCCESS';
+const GET_MORE_ORDER_FAIL = 'GET_MORE_ORDER_FAIL';
+const GET_MORE_ORDER_WAIT_COMFIRM = 'GET_MORE_ORDER_WAIT_COMFIRM';
+const GET_MORE_ORDER__WAIT_COMFIRM_SUCCESS =
+  'GET_MORE_ORDER__WAIT_COMFIRM_SUCCESS';
+const GET_MORE_ORDER_WAIT_COMFIRM_FAIL = 'GET_MORE_ORDER_WAIT_COMFIRM_FAIL';
+const GET_MORE_ORDER_PREPARE = 'GET_MORE_ORDER_PREPARE';
+const GET_MORE_ORDER_PREPARE_SUCCESS = 'GET_MORE_ORDER_PREPARE_SUCCESS';
+const GET_MORE_ORDER_PREPARE_FAIL = 'GET_MORE_ORDER_PREPARE_FAIL';
+const GET_MORE_ORDER_DELIVERING = 'GET_MORE_ORDER_DELIVERING';
+const GET_MORE_ORDER_DELIVERING_SUCCESS = 'GET_MORE_ORDER_DELIVERING_SUCCESS';
+const GET_MORE_ORDER_DELIVERING_FAIL = 'GET_MORE_ORDER_DELIVERING_FAIL';
+const GET_MORE_ORDER_DELIVERED = 'GET_MORE_ORDER_DELIVERED';
+const GET_MORE_ORDER_DELIVERED_SUCCESS = 'GET_MORE_ORDER_DELIVERED_SUCCESS';
+const GET_MORE_ORDER_DELIVERED_FAIL = 'GET_MORE_ORDER_DELIVERED_FAIL';
+const GET_MORE_ORDER_CANCELLED = 'GET_MORE_ORDER_CANCELLED';
+const GET_MORE_ORDER_CANCELLED_SUCCESS = 'GET_MORE_ORDER_CANCELLED_SUCCESS';
+const GET_MORE_ORDER_CANCELLED_FAIL = 'GET_MORE_ORDER_CANCELLED_FAIL';
+
+const GET_REASON_CANCEL = 'GET_REASON_CANCEL';
+const GET_REASON_CANCEL_SUCCESS = 'GET_REASON_CANCEL_SUCCESS';
+const GET_REASON_CANCEL_FAIL = 'GET_REASON_CANCEL_FAIL';
+
+const CANCEL_ORDER = 'CANCEL_ORDER';
+
+const getOrder = (data: object) => {
+  return {
+    type: GET_ORDER,
+    payload: data,
+  };
+};
+const getOrderWaitComfirm = (data: object) => {
+  return {
+    type: GET_ORDER_WAIT_COMFIRM,
+    payload: data,
+  };
+};
+const getOrderPrepare = (data: object) => {
+  return {
+    type: GET_ORDER_PREPARE,
+    payload: data,
+  };
+};
+const getOrderDelivering = (data: object) => {
+  return {
+    type: GET_ORDER_DELIVERING,
+    payload: data,
+  };
+};
+const getOrderDelivered = (data: object) => {
+  return {
+    type: GET_ORDER_DELIVERED,
+    payload: data,
+  };
+};
+const getOrderCancel = (data: object) => {
+  return {
+    type: GET_ORDER_CANCELLED,
+    payload: data,
+  };
+};
+
+const getMoreOrderWaitComfirm = (data: object) => {
+  return {
+    type: GET_MORE_ORDER_WAIT_COMFIRM,
+    payload: data,
+  };
+};
+const getMoreOrderPrepare = (data: object) => {
+  return {
+    type: GET_MORE_ORDER_PREPARE,
+    payload: data,
+  };
+};
+
+const getMoreOrderDelivered = (data: object) => {
+  return {
+    type: GET_MORE_ORDER_DELIVERED,
+    payload: data,
+  };
+};
+const getMoreOrderDelivering = (data: object) => {
+  return {
+    type: GET_MORE_ORDER_DELIVERING,
+    payload: data,
+  };
+};
+
+const getMoreOrderCancel = (data: object) => {
+  return {
+    type: GET_MORE_ORDER_CANCELLED,
+    payload: data,
+  };
+};
+const getMoreOrder = (data: object) => {
+  return {
+    type: GET_MORE_ORDER,
+    payload: data,
+  };
+};
+
+const getReasonCancel = () => {
+  return {
+    type: GET_REASON_CANCEL,
+  };
+};
+const cancelOrder = (data: object) => {
+  return {
+    type: CANCEL_ORDER,
+    payload: data,
+  };
+};
+
+export {
+  GET_ORDER,
+  GET_ORDER_SUCCESS,
+  GET_ORDER_FAIL,
+  GET_MORE_ORDER,
+  GET_MORE_ORDER_SUCCESS,
+  GET_MORE_ORDER_FAIL,
+  GET_ORDER_WAIT_COMFIRM,
+  getOrder,
+  getMoreOrder,
+  GET_ORDER_WAIT_COMFIRM_SUCCESS,
+  GET_ORDER_WAIT_COMFIRM_FAIL,
+  GET_ORDER_PREPARE,
+  GET_ORDER_PREPARE_SUCCESS,
+  GET_ORDER_PREPARE_FAIL,
+  GET_ORDER_DELIVERING,
+  GET_ORDER_DELIVERING_SUCCESS,
+  GET_ORDER_DELIVERING_FAIL,
+  GET_ORDER_DELIVERED,
+  GET_ORDER_DELIVERED_SUCCESS,
+  GET_ORDER_DELIVERED_FAIL,
+  GET_ORDER_CANCELLED,
+  GET_ORDER_CANCELLED_SUCCESS,
+  GET_ORDER_CANCELLED_FAIL,
+  GET_MORE_ORDER_WAIT_COMFIRM,
+  GET_MORE_ORDER__WAIT_COMFIRM_SUCCESS,
+  GET_MORE_ORDER_WAIT_COMFIRM_FAIL,
+  GET_MORE_ORDER_PREPARE,
+  GET_MORE_ORDER_PREPARE_SUCCESS,
+  GET_MORE_ORDER_PREPARE_FAIL,
+  GET_MORE_ORDER_DELIVERING,
+  GET_MORE_ORDER_DELIVERING_SUCCESS,
+  GET_MORE_ORDER_DELIVERING_FAIL,
+  GET_MORE_ORDER_DELIVERED,
+  GET_MORE_ORDER_DELIVERED_SUCCESS,
+  GET_MORE_ORDER_DELIVERED_FAIL,
+  GET_MORE_ORDER_CANCELLED,
+  GET_MORE_ORDER_CANCELLED_SUCCESS,
+  GET_MORE_ORDER_CANCELLED_FAIL,
+  getOrderWaitComfirm,
+  getOrderPrepare,
+  getOrderDelivering,
+  getOrderDelivered,
+  getOrderCancel,
+  getMoreOrderWaitComfirm,
+  getMoreOrderPrepare,
+  getMoreOrderDelivered,
+  getMoreOrderDelivering,
+  getMoreOrderCancel,
+  GET_REASON_CANCEL,
+  GET_REASON_CANCEL_SUCCESS,
+  GET_REASON_CANCEL_FAIL,
+  getReasonCancel,
+  CANCEL_ORDER,
+  cancelOrder,
+};

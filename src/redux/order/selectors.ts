@@ -1,8 +1,5 @@
 import {createSelector} from 'reselect';
 
-const notificationReducer = (state: any) => state.notification;
+const orderReducer = (state: any) => state.order;
 
-export const getNotificationSelector = createSelector(
-  notificationReducer,
-  state => state,
-);
+export const getOrderSelector = createSelector(orderReducer, state => state);

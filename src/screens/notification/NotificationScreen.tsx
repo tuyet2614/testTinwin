@@ -39,7 +39,7 @@ const NotificationScreen: React.FC = () => {
   var totalItemDefault = 10;
 
   useEffect(() => {
-    if (user.currentUser === {}) {
+    if (!user.currentUser) {
       navigation.navigate('Login');
     }
   }, [navigation, user]);
@@ -49,9 +49,6 @@ const NotificationScreen: React.FC = () => {
     dispatch(getCountUnreadNotification());
   }, [navigation, dispatch]);
 
-  const bool1 = () => {
-    setBool(!bool);
-  };
   const onPressItem = (id: string) => {
     dispatch(maskAsRead({notificationId: id}));
   };

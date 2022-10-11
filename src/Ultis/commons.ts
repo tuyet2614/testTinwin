@@ -19,3 +19,19 @@ export function formatDate(date: Date) {
     -2,
   )}       ${day}`;
 }
+export const toVND = (value: number) => {
+  if (!value) {
+    return;
+  }
+  return value.toLocaleString('it-IT', {style: 'currency', currency: 'VND'});
+};
+export function removeItemByValue(array: [], item: number) {
+  if (!array || !item) {
+    return;
+  }
+  var index = array.indexOf(item);
+  if (index !== -1) {
+    array.splice(index, 1);
+  }
+  return array;
+}
