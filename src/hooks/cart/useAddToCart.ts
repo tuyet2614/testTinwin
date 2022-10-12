@@ -1,6 +1,6 @@
 import {faCheckCircle, faXmarkCircle} from '@fortawesome/free-solid-svg-icons';
 import {useDispatch, useSelector} from 'react-redux';
-import {setWishlist} from '../../redux/wishlist/actions';
+import {addToWishlist, setWishlist} from '../../redux/wishlist/actions';
 import {getWishlistId, getWishlistState} from '../../redux/wishlist/selectors';
 import CartServices from '../../services/CartServices';
 import useShowNotification from '../useShowNotification';
@@ -36,6 +36,7 @@ const useAddToCart = () => {
             1000,
           );
         } else {
+          dispatchRedux(addToWishlist(item));
           dispatchShowNotification({
             icon: faCheckCircle,
             text: 'Đã thêm vào giỏ',

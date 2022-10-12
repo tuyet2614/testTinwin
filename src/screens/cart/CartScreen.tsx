@@ -1,6 +1,6 @@
 import {faTrash} from '@fortawesome/free-solid-svg-icons';
 import {useNavigation} from '@react-navigation/native';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   SafeAreaView,
@@ -9,6 +9,7 @@ import {
   View,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import {data} from '../../assets/data/data';
 import AddressItem from '../../components/address/AddressItem';
 import BtnPrimary from '../../components/BtnPrimary';
 import CartContainer from '../../components/cart/CartContainer';
@@ -24,6 +25,7 @@ import {setWishlist} from '../../redux/wishlist/actions';
 import {getWishlistId, getWishlistState} from '../../redux/wishlist/selectors';
 
 const CartScreen: React.FC = () => {
+  const [cartBySupplier, setCartBySupplier] = useState<any>([]);
   const navigation = useNavigation();
   const deleteAllWishlist = useDeleteAllWishlist();
   const {defaultAddress, dispatchDefaultAddress} = useDefaultAddress();
@@ -42,15 +44,6 @@ const CartScreen: React.FC = () => {
   const dispatchCart = (data: object) => {
     dispatchRedux(setWishlist(data));
   };
-  // useEffect(() => {
-
-  // }, []);
-  // console.log({
-  //   bySupplier: dataCart.filter(
-  //     (item, index) =>
-  //       index !== 0 && item.supplierId === dataCart[index - 1].supplierId,
-  //   ),
-  // });
 
   useEffect(() => {
     addresses !== undefined &&
@@ -58,6 +51,19 @@ const CartScreen: React.FC = () => {
         addresses.find((item: object) => item.isDefault === true),
       );
     cart.length > 0 && dispatchCart(cart);
+
+    const arr = dataCart.map((item, index) => item.supplierId);
+
+    arr.map(item =>
+      setCartBySupplier((prv: any) => [
+        ...prv,
+        dataCart.filter(i => i.supplierId === item),
+      ]),
+    );
+
+    console.log({
+      bySupplier: cartBySupplier,
+    });
   }, [cart]);
 
   return (
@@ -72,7 +78,7 @@ const CartScreen: React.FC = () => {
               onPress={navigateCartAddress}
             />
           )}
-          {dataCart !== undefined && dataCart.length === cart.length ? (
+          {dataCart !== undefined && cart.length >= dataCart.length - 2 ? (
             <View>
               <SelectAllCartItem
                 title="Tất cả"
@@ -80,10 +86,18 @@ const CartScreen: React.FC = () => {
                 onPress={() => deleteAllWishlist()}
               />
               <View className="h-0.5 bg-gray-200" />
-              {/* {cart.filter((item, index) => {
-
-              })} */}
-              <CartContainer data={dataCart} title="A" loading={loading} />
+              {cartBySupplier.length > 0 &&
+                cartBySupplier.map((item, index) => (
+                  <CartContainer
+                    data={item}
+                    title={
+                      item[0].supplier !== undefined
+                        ? item[0].supplier.storeName
+                        : 'ABC'
+                    }
+                    loading={loading}
+                  />
+                ))}
             </View>
           ) : dataCart.length === 0 ? (
             <View className="h-96 items-center justify-center">

@@ -19,6 +19,7 @@ const CartBtn: React.FC<Props> = (props: Props) => {
   const {color, style} = props;
 
   const {cart} = useGetCart();
+  const dataCart = useSelector(getWishlistState);
   const dispatchRedux = useDispatch();
   const dispatchCart = (data: object) => {
     dispatchRedux(setWishlist(data));
@@ -34,9 +35,9 @@ const CartBtn: React.FC<Props> = (props: Props) => {
   return (
     <TouchableOpacity className={`${style}`} onPress={navigateCart}>
       <FontAwesomeIcon icon={faCartShopping} color={color} size={25} />
-      {cart !== undefined && cart.length > 0 && (
+      {cart !== undefined && dataCart.length !== 0 && (
         <View className="bg-blue-200 w-4 h-4 absolute items-center justify-center rounded-full top-2 right-2">
-          <Text className="text-orange-400 text-xs">{cart.length}</Text>
+          <Text className="text-orange-400 text-xs">{dataCart.length}</Text>
         </View>
       )}
     </TouchableOpacity>

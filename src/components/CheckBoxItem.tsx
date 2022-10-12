@@ -33,7 +33,7 @@ const CheckBoxItem: React.FC<Props> = (props: Props) => {
         tintColor={colors.primary}
         tintColors={{true: colors.primary, false: colors.disable}}
       />
-      <FontAwesomeIcon icon={icon} style={tw`mr-2`} />
+      {icon !== undefined && <FontAwesomeIcon icon={icon} style={tw`mr-2`} />}
       <Text className="text-black">{text}</Text>
     </View>
   );
