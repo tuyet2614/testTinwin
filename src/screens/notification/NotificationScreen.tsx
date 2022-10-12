@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {
@@ -38,10 +39,12 @@ const NotificationScreen: React.FC = () => {
   const dataNotification = useSelector(getNotificationSelector);
   const user = useSelector(getUserSelector);
   var totalItemDefault = 10;
-
+  console.log(dataNotification);
   useEffect(() => {
-    console.log(user);
     if (!user.currentUser) {
+      (async () => {
+        await AsyncStorage.clear();
+      })();
       navigation.navigate('Login');
     }
   }, [navigation, user]);
@@ -89,8 +92,11 @@ const NotificationScreen: React.FC = () => {
   }
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
-    dispatch(getNotification({skip: 0, take: totalItemDefault}));
-    setRefreshing(false);
+    Promise.resolve(
+      dispatch(getNotification({skip: 0, take: totalItemDefault})),
+    ).then(() => {
+      setRefreshing(false);
+    });
   }, []);
   const onLoadMore = () => {
     dispatch(getMoreNotification({skip: totalItemDefault, take: 10}));

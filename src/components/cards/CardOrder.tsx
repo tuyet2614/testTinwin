@@ -28,7 +28,7 @@ const CardOrder: React.FC<Props> = props => {
 
   const navi = () => {
     if (titleBtn === 'Thanh toán ngay') {
-      navigation.navigate('DetailOrder');
+      navigation.navigate('Payment', {item: item});
     }
     if (titleBtn === 'Đã nhận') {
       navigation.navigate('OrderSuccess');
@@ -41,8 +41,12 @@ const CardOrder: React.FC<Props> = props => {
   const changeHideItem = () => {
     setHideItem(!hideItem);
   };
+  const seeDetail = () => {
+    navigation.navigate('DetailOrder', {item: item});
+  };
+
   const renderItem = (item, index) => {
-    if (hideItem === true) {
+    if (hideItem) {
       if (index >= 1) {
         return <></>;
       } else {
@@ -114,67 +118,70 @@ const CardOrder: React.FC<Props> = props => {
     return;
   }
   return (
-    <View style={styles.card}>
-      <View style={styles.title}>
-        <Image source={require('../../assets/order/shop.png')}></Image>
-        <Text style={styles.textTitle}>TV xiaomi Việt Nam</Text>
-      </View>
-      {item?.orderDetails?.map((item, index) => renderItem(item, index))}
+    <TouchableOpacity onPress={seeDetail}>
+      <View style={styles.card}>
+        <View style={styles.title}>
+          <Image source={require('../../assets/order/shop.png')}></Image>
+          <Text style={styles.textTitle}>{item.companyName}</Text>
+        </View>
+        {item?.orderDetails?.map((item, index) => renderItem(item, index))}
 
-      {item?.orderDetails?.length > 1 ? renderSeeMore() : <></>}
-      <View style={style1.boxLine}>
-        <View style={style1.line} />
-        <View style={style1.line} />
-      </View>
-      <View style={style1.flexAlign}>
-        <Text style={styles.totalCount}>
-          {getTotalQuantity(item?.orderDetails)} sản phẩm
-        </Text>
+        {item?.orderDetails?.length > 1 ? renderSeeMore() : <></>}
+        <View style={style1.boxLine}>
+          <View style={style1.line} />
+          <View style={style1.line} />
+        </View>
         <View style={style1.flexAlign}>
-          <Text style={style1.titleTotal}>Tổng thanh toán</Text>
-          <Text style={styles.totalPrice}>{toVND(item.totalPay)}</Text>
-        </View>
-      </View>
-      <View style={style1.boxLine}>
-        <View style={style1.line} />
-        <View style={style1.line} />
-      </View>
-      <View
-        style={{
-          width: btnPrimary ? 160 : 140,
-          alignSelf: 'flex-end',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-        }}>
-        {btnPrimary ? (
-          <View style={style1.m0}>
-            <BtnOrder content={btnPrimary} onPress={naviReview} />
+          <Text style={styles.totalCount}>
+            {getTotalQuantity(item?.orderDetails)} sản phẩm
+          </Text>
+          <View style={style1.flexAlign}>
+            <Text style={style1.titleTotal}>Tổng thanh toán</Text>
+            <Text style={styles.totalPrice}>{toVND(item.totalPay)}</Text>
           </View>
-        ) : (
-          <View></View>
-        )}
-        <View>
-          <BtnOrder content={titleBtn} onPress={navi} />
         </View>
+        <View style={style1.boxLine}>
+          <View style={style1.line} />
+          <View style={style1.line} />
+        </View>
+        <View
+          style={{
+            width: btnPrimary ? 160 : 140,
+            alignSelf: 'flex-end',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+          }}>
+          {btnPrimary ? (
+            <View style={style1.m0}>
+              <BtnOrder content={btnPrimary} onPress={naviReview} />
+            </View>
+          ) : (
+            <View></View>
+          )}
+          <View>
+            <BtnOrder content={titleBtn} onPress={navi} />
+          </View>
+        </View>
+        {item.status === 2 ? (
+          <ModalCancel
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+            item={item}
+          />
+        ) : (
+          <></>
+        )}
+        {titleBtn === 'Mua lại' ? (
+          <ModalBuyAgain
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+            item={item}
+          />
+        ) : (
+          <></>
+        )}
       </View>
-      {item.status === 2 ? (
-        <ModalCancel
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-          item={item}
-        />
-      ) : (
-        <></>
-      )}
-      {titleBtn === 'Mua lại' ? (
-        <ModalBuyAgain
-          modalVisible={modalVisible}
-          setModalVisible={setModalVisible}
-        />
-      ) : (
-        <></>
-      )}
-    </View>
+    </TouchableOpacity>
   );
 };
 const style1 = StyleSheet.create({

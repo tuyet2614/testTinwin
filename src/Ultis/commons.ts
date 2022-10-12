@@ -12,12 +12,24 @@ export const validatePass = (pass: string) => {
   );
 };
 export function formatDate(date: Date) {
+  if (!date) {
+    return;
+  }
   let day = date.toLocaleString('en-GB').split(',')[0];
   let hours = date.getHours();
   let minutes = date.getMinutes();
   return `${('00' + hours).slice(-2)}:${('00' + minutes).slice(
     -2,
   )}       ${day}`;
+}
+export function formatDateDetailOrder(date: Date) {
+  if (!date) {
+    return;
+  }
+  let day = date.toLocaleString('en-GB').split(',')[0];
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  return `${day} ${('00' + hours).slice(-2)}:${('00' + minutes).slice(-2)}`;
 }
 export const toVND = (value: number) => {
   if (!value) {
@@ -34,4 +46,13 @@ export function removeItemByValue(array: [], item: number) {
     array.splice(index, 1);
   }
   return array;
+}
+export function formartPhoneNumber(value: string) {
+  if (!value) {
+    return;
+  }
+  while (value.charAt(0) === '0') {
+    value = value.substr(1);
+  }
+  return `(+84) ${value}`;
 }

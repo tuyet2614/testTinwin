@@ -9,11 +9,12 @@ import {
   getOrderDelivering,
 } from '../../redux/order/actions';
 import {getOrderSelector} from '../../redux/order/selectors';
+import {useRef} from 'react';
 
 const Delivering: React.FC = () => {
   const dispatch = useDispatch();
   const order = useSelector(getOrderSelector);
-  let totalItemDefault = 10;
+  let totalItemDefault = useRef(10);
   const [refreshing, setRefreshing] = React.useState(false);
   // useFocusEffect(() => {
   //   dispatch(
@@ -25,27 +26,31 @@ const Delivering: React.FC = () => {
     return <CardOrder titleBtn="Đã nhận" item={item} />;
   };
   const onRefresh = React.useCallback(() => {
+    totalItemDefault.current = 10;
     setRefreshing(true);
-    dispatch(
-      getOrderDelivering({
-        TextSearch: '',
-        Status: 3,
-        skip: 0,
-        take: 10,
-      }),
-    );
-    setRefreshing(false);
+    Promise.resolve(
+      dispatch(
+        getOrderDelivering({
+          TextSearch: '',
+          Status: 4,
+          skip: 0,
+          take: 10,
+        }),
+      ),
+    ).then(() => {
+      setRefreshing(false);
+    });
   }, [dispatch]);
   const onLoadMore = () => {
     dispatch(
       getMoreOrderDelivering({
         TextSearch: '',
-        Status: 3,
+        Status: 4,
         skip: totalItemDefault,
         take: 10,
       }),
     );
-    totalItemDefault = totalItemDefault + 10;
+    totalItemDefault.current = totalItemDefault.current + 10;
   };
 
   return (

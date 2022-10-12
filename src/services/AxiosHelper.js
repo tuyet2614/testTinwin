@@ -30,6 +30,7 @@ export const get = async (path, params) => {
       });
     })
     .catch(err => {
+      console.log(err);
       // handleErr(err)
     });
 };

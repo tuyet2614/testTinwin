@@ -43,6 +43,26 @@ const GET_REASON_CANCEL_FAIL = 'GET_REASON_CANCEL_FAIL';
 
 const CANCEL_ORDER = 'CANCEL_ORDER';
 
+const GET_DETAIL_ORDER = 'GET_DETAIL_ORDER';
+const GET_DETAIL_ORDER_SUCCESS = 'GET_DETAIL_ORDER_SUCCESS';
+const GET_DETAIL_ORDER_FAIL = 'GET_DETAIL_ORDER_FAIL';
+
+const GET_DETAIL_SHIPPING_ADDRESS = 'GET_DETAIL_SHIPPING_ADDRESS';
+const GET_DETAIL_SHIPPING_ADDRESS_SUCCESS =
+  'GET_DETAIL_SHIPPING_ADDRESS_SUCCESS';
+const GET_DETAIL_SHIPPING_ADDRESSR_FAIL = 'GET_DETAIL_SHIPPING_ADDRESSR_FAIL';
+
+const GET_DETAIL_SHIPPING_ADDRESS_NOT_CANCEL =
+  'GET_DETAIL_SHIPPING_ADDRESS_NOT_CANCEL';
+const GET_DETAIL_SHIPPING_ADDRESS_NOT_CANCEL_SUCCESS =
+  'GET_DETAIL_SHIPPING_ADDRESS_NOT_CANCEL_SUCCESS';
+const GET_DETAIL_SHIPPING_ADDRESS_NOT_CANCEL_FAIL =
+  'GET_DETAIL_SHIPPING_ADDRESS_NOT_CANCEL_FAIL';
+
+const GET_SUPPILER = 'GET_SUPPILER';
+const GET_SUPPILER_SUCCESS = 'GET_SUPPILER_SUCCESS';
+const GET_SUPPILER_FAIL = 'GET_SUPPILER_FAIL';
+
 const getOrder = (data: object) => {
   return {
     type: GET_ORDER,
@@ -130,6 +150,30 @@ const cancelOrder = (data: object) => {
     payload: data,
   };
 };
+const getDetailOrder = (data: object) => {
+  return {
+    type: GET_DETAIL_ORDER,
+    payload: data,
+  };
+};
+const getDetailShippingAddress = (data: object) => {
+  return {
+    type: GET_DETAIL_SHIPPING_ADDRESS,
+    payload: data,
+  };
+};
+const getDetailShippingAddressNotCancel = (data: object) => {
+  return {
+    type: GET_DETAIL_SHIPPING_ADDRESS_NOT_CANCEL,
+    payload: data,
+  };
+};
+const getSupplier = (data: object) => {
+  return {
+    type: GET_SUPPILER,
+    payload: data,
+  };
+};
 
 export {
   GET_ORDER,
@@ -186,4 +230,20 @@ export {
   getReasonCancel,
   CANCEL_ORDER,
   cancelOrder,
+  getDetailOrder,
+  GET_DETAIL_ORDER,
+  GET_DETAIL_ORDER_SUCCESS,
+  GET_DETAIL_ORDER_FAIL,
+  getDetailShippingAddress,
+  GET_DETAIL_SHIPPING_ADDRESS,
+  GET_DETAIL_SHIPPING_ADDRESS_SUCCESS,
+  GET_DETAIL_SHIPPING_ADDRESSR_FAIL,
+  getSupplier,
+  GET_SUPPILER,
+  GET_SUPPILER_FAIL,
+  GET_SUPPILER_SUCCESS,
+  GET_DETAIL_SHIPPING_ADDRESS_NOT_CANCEL,
+  GET_DETAIL_SHIPPING_ADDRESS_NOT_CANCEL_SUCCESS,
+  GET_DETAIL_SHIPPING_ADDRESS_NOT_CANCEL_FAIL,
+  getDetailShippingAddressNotCancel,
 };

@@ -2,6 +2,15 @@ import {all, call, fork, put, takeLatest} from 'redux-saga/effects';
 import OrderServices from '../../services/OrderServices';
 import {
   CANCEL_ORDER,
+  GET_DETAIL_ORDER,
+  GET_DETAIL_ORDER_FAIL,
+  GET_DETAIL_ORDER_SUCCESS,
+  GET_DETAIL_SHIPPING_ADDRESS,
+  GET_DETAIL_SHIPPING_ADDRESSR_FAIL,
+  GET_DETAIL_SHIPPING_ADDRESS_NOT_CANCEL,
+  GET_DETAIL_SHIPPING_ADDRESS_NOT_CANCEL_FAIL,
+  GET_DETAIL_SHIPPING_ADDRESS_NOT_CANCEL_SUCCESS,
+  GET_DETAIL_SHIPPING_ADDRESS_SUCCESS,
   GET_MORE_ORDER,
   GET_MORE_ORDER_CANCELLED,
   GET_MORE_ORDER_CANCELLED_FAIL,
@@ -41,6 +50,9 @@ import {
   GET_REASON_CANCEL,
   GET_REASON_CANCEL_FAIL,
   GET_REASON_CANCEL_SUCCESS,
+  GET_SUPPILER,
+  GET_SUPPILER_FAIL,
+  GET_SUPPILER_SUCCESS,
 } from './actions';
 interface action {
   data: object;
@@ -218,6 +230,7 @@ function* fetchData() {
       }
     } catch (error) {}
   });
+
   yield takeLatest(GET_REASON_CANCEL, function* (action: action) {
     try {
       const res = yield call(OrderServices.getReasonCancel, action.payload);
@@ -236,6 +249,64 @@ function* fetchData() {
       const res = yield call(OrderServices.cancelMyBuy, action.payload);
       if (res.status === 200) {
       } else {
+      }
+    } catch (error) {}
+  });
+  yield takeLatest(GET_DETAIL_ORDER, function* (action: action) {
+    try {
+      const res = yield call(OrderServices.getDetailOrder, action.payload);
+      if (res.status === 200) {
+        yield put({type: GET_DETAIL_ORDER_SUCCESS, data: res.data});
+      } else {
+        yield put({
+          type: GET_DETAIL_ORDER_FAIL,
+          err: res.data.error_description,
+        });
+      }
+    } catch (error) {}
+  });
+  yield takeLatest(GET_DETAIL_SHIPPING_ADDRESS, function* (action: action) {
+    try {
+      const res = yield call(OrderServices.getDetailAddress, action.payload);
+      if (res.status === 200) {
+        yield put({type: GET_DETAIL_SHIPPING_ADDRESS_SUCCESS, data: res.data});
+      } else {
+        yield put({
+          type: GET_DETAIL_SHIPPING_ADDRESSR_FAIL,
+          err: res.data.error_description,
+        });
+      }
+    } catch (error) {}
+  });
+  yield takeLatest(
+    GET_DETAIL_SHIPPING_ADDRESS_NOT_CANCEL,
+    function* (action: action) {
+      try {
+        const res = yield call(OrderServices.getDetailAddress, action.payload);
+        if (res.status === 200) {
+          yield put({
+            type: GET_DETAIL_SHIPPING_ADDRESS_NOT_CANCEL_SUCCESS,
+            data: res.data,
+          });
+        } else {
+          yield put({
+            type: GET_DETAIL_SHIPPING_ADDRESS_NOT_CANCEL_FAIL,
+            err: res.data.error_description,
+          });
+        }
+      } catch (error) {}
+    },
+  );
+  yield takeLatest(GET_SUPPILER, function* (action: action) {
+    try {
+      const res = yield call(OrderServices.getSuppiler, action.payload);
+      if (res.status === 200) {
+        yield put({type: GET_SUPPILER_SUCCESS, data: res.data});
+      } else {
+        yield put({
+          type: GET_SUPPILER_FAIL,
+          err: res.data.error_description,
+        });
       }
     } catch (error) {}
   });

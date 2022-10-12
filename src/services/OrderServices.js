@@ -13,6 +13,25 @@ const OrderServices = {
       params.reason,
     );
   },
+  getDetailOrder(params) {
+    return get('/webbff/sales/api/app/customer-order', params);
+  },
+  getDetailAddressNotCancel(params) {
+    return get(
+      `/webbff/shipping/api/app/shipping-address/${params}/disable-delete`,
+    );
+  },
+  getDetailAddress(params) {
+    return get(
+      `/webbff/shipping/api/app/shipping-address/${params}/disable-delete`,
+    );
+  },
+  getSuppiler(params) {
+    return get(`/webbff/partnership/api/app/supplier/${params}/supplier-by-id`);
+  },
+  receiveOrder(params) {
+    return get('/webbff/sales/api/app/customer-order/', params);
+  },
 };
 
 export default OrderServices;

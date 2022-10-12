@@ -1,6 +1,10 @@
 import {
+  GET_DETAIL_ORDER_SUCCESS,
+  GET_DETAIL_SHIPPING_ADDRESS_NOT_CANCEL_SUCCESS,
+  GET_DETAIL_SHIPPING_ADDRESS_SUCCESS,
   GET_MORE_ORDER_CANCELLED_SUCCESS,
   GET_MORE_ORDER_DELIVERED,
+  GET_MORE_ORDER_DELIVERED_SUCCESS,
   GET_MORE_ORDER_DELIVERING_SUCCESS,
   GET_MORE_ORDER_PREPARE_SUCCESS,
   GET_MORE_ORDER_SUCCESS,
@@ -12,6 +16,7 @@ import {
   GET_ORDER_SUCCESS,
   GET_ORDER_WAIT_COMFIRM_SUCCESS,
   GET_REASON_CANCEL_SUCCESS,
+  GET_SUPPILER_SUCCESS,
 } from './actions';
 
 interface OrderState {
@@ -21,6 +26,9 @@ interface OrderState {
   orderDelivering: {items: object; totalCount: number};
   orderDelivered: {items: object; totalCount: number};
   orderCancel: {items: object; totalCount: number};
+  reasonCancel: {};
+  detailOrder: {};
+  detailShippingAddress: {};
 }
 
 const initState: OrderState = {
@@ -48,6 +56,9 @@ const initState: OrderState = {
     items: {},
     totalCount: 0,
   },
+  reasonCancel: [],
+  detailOrder: {},
+  detailShippingAddress: {},
 };
 var _ = require('lodash');
 const orderReducers = (state = initState, action: any) => {
@@ -109,7 +120,7 @@ const orderReducers = (state = initState, action: any) => {
           items: _.concat(state.orderDelivering.items, action.data.items),
         },
       };
-    case GET_MORE_ORDER_DELIVERED:
+    case GET_MORE_ORDER_DELIVERED_SUCCESS:
       if (!action.data) {
         return state;
       }
@@ -134,6 +145,14 @@ const orderReducers = (state = initState, action: any) => {
 
     case GET_REASON_CANCEL_SUCCESS:
       return {...state, reasonCancel: action.data};
+    case GET_DETAIL_ORDER_SUCCESS:
+      return {...state, detailOrder: action.data};
+    case GET_DETAIL_SHIPPING_ADDRESS_SUCCESS:
+      return {...state, detailShippingAddress: action.data};
+    case GET_DETAIL_SHIPPING_ADDRESS_NOT_CANCEL_SUCCESS:
+      return {...state, detailShippingAddress: action.data};
+    case GET_SUPPILER_SUCCESS:
+      return {...state, supplier: action.data};
     default:
       return state;
   }

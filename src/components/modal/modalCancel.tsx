@@ -40,6 +40,7 @@ const ModalCancel: React.FC<Props> = (props: Props) => {
   const [reason, setReason] = useState<string>('');
   const order = useSelector(getOrderSelector);
   const dispatch = useDispatch();
+
   const reverseModal = () => {
     setModalVisible(!modalVisible);
   };
@@ -67,7 +68,9 @@ const ModalCancel: React.FC<Props> = (props: Props) => {
       </TouchableOpacity>
     );
   };
-
+  if (!order.reasonCancel) {
+    return;
+  }
   return (
     <SafeAreaView>
       <Modal animationType="slide" transparent={true} visible={modalVisible}>

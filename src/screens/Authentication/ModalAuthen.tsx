@@ -32,7 +32,7 @@ const ModalAuthen = (props: any) => {
             <Text style={styles.modalTitle}>Thông báo</Text>
             <View style={styles.modalContent}>
               <Text style={styles.modalText}>{content}</Text>
-              <Text style={styles.modalText}>Vui lòng nhập lại</Text>
+              {/* <Text style={styles.modalText}>Vui lòng nhập lại</Text> */}
             </View>
             <View style={styles.flexMt}>
               <View style={styles.viewOk} />
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     width: 320,
-    height: 270,
+    height: 280,
   },
   button: {
     borderRadius: 20,

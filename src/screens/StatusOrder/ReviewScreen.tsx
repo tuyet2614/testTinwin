@@ -10,23 +10,19 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {useDispatch} from 'react-redux';
 import BtnOrder from '../../components/buttons/BtnOrder';
 import ModalCancel from '../../components/modal/modalCancel';
 import {
   anotherGrey,
-  anotherOrange,
   black,
   darkerGrey,
   darkestGrey,
-  LighterGrey,
   orangeDark,
-  white,
   whiteGrey,
 } from '../../constant/const';
-import {styles} from '../../screens/StatusOrder/style';
-import {removeItemByValue} from '../../Ultis/commons';
-import {useDispatch} from 'react-redux';
 import {review} from '../../redux/review/actions';
+import {styles} from '../../screens/StatusOrder/style';
 
 const Review: React.FC = () => {
   const navigation = useNavigation();
@@ -67,35 +63,33 @@ const Review: React.FC = () => {
   };
   const setChoose1 = () => {
     if (choose.includes(1)) {
-      setChoose(_.pull(choose, 1));
+      setChoose(prev => prev?.filter(i => i !== 1));
     } else {
       setChoose(_.concat(choose, 1));
     }
   };
   const setChoose2 = () => {
     if (choose.includes(2)) {
-      setChoose(_.pull(choose, 2));
+      setChoose(prev => prev?.filter(i => i !== 2));
     } else {
       setChoose(_.concat(choose, 2));
     }
   };
   const setChoose3 = () => {
     if (choose.includes(3)) {
-      setChoose(_.pull(choose, 3));
+      setChoose(prev => prev?.filter(i => i !== 3));
     } else {
       setChoose(_.concat(choose, 3));
     }
   };
   const setChoose4 = () => {
     if (choose.includes(4)) {
-      setChoose(_.pull(choose, 4));
+      setChoose(prev => prev?.filter(i => i !== 4));
     } else {
       setChoose(_.concat(choose, 4));
     }
   };
-  useEffect(() => {
-    console.log(choose);
-  }, [choose]);
+
   const renderProduct = item => {
     return (
       <>

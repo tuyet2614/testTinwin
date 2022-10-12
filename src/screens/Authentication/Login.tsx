@@ -39,6 +39,7 @@ import {login} from '../../redux/authentication/actions';
 import {getAuth} from '../../redux/authentication/selectors';
 import {clearUser, getUser} from '../../redux/dataUser/actions';
 import {getUserSelector} from '../../redux/dataUser/selectors';
+import AuthenticationServices from '../../services/AuthenticationServices';
 import {
   isVietnamesePhoneNumber,
   validateEmail,
@@ -55,6 +56,7 @@ const Login: React.FC = ({}) => {
   const [password, setPassword] = useState<string>('');
   const [securityUsername, setSecurityUsername] = useState<boolean>();
   const [securityPassword, setSecurityPassword] = useState<boolean>();
+  const [errMsg, setErrMsg] = useState<string>('');
   const dispatch = useDispatch();
   const data = useSelector(getAuth);
   const user = useSelector(getUserSelector);
@@ -111,22 +113,26 @@ const Login: React.FC = ({}) => {
     }
     setSecurityPassword(true);
 
-    dispatch(
-      login({
-        client_id: 'Mobile_Retailer',
-        client_secret: '1q2w3E*',
-        grant_type: 'password',
-        username: userName,
-        password: password,
-      }),
-    );
-    dispatch(getUser());
-    const token = await AsyncStorage.getItem('token');
-    if (!token) {
-      setVisible(false);
-      return;
-    }
-    navigateTabBar();
+    // dispatch(
+    //   login({
+    //     username: userName,
+    //     password: password,
+    //   }),
+    // );
+
+    AuthenticationServices.login({
+      username: userName,
+      password: password,
+    }).then(async res => {
+      if (res.status === 400) {
+        setErrMsg(res.data.error_description);
+        setVisible(false);
+      } else if (res.status === 200) {
+        await AsyncStorage.setItem('token', res.data.access_token);
+        dispatch(getUser());
+        navigateTabBar();
+      }
+    });
   };
   return (
     <ScrollView>
@@ -251,7 +257,7 @@ const Login: React.FC = ({}) => {
       <ModalAuthen
         modalVisible={visible}
         setModalVisible={setVisible}
-        content={data?.errorMsg}
+        content={errMsg}
       />
     </ScrollView>
   );

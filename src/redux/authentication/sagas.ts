@@ -12,7 +12,6 @@ function* fetchData() {
     try {
       const res = yield call(AuthenticationServices.login, action.payload);
       if (res.status === 200) {
-        AsyncStorage.setItem('token', res.data.access_token);
         yield put({type: LOGIN_SUCCESS, data: res.data});
       } else {
         yield put({type: LOGIN_FAIL, err: res.data.error_description});
