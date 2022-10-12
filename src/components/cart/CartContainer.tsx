@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {faAngleRight, faStore} from '@fortawesome/free-solid-svg-icons';
 import {FlatList, Text, View} from 'react-native';
 import tw from 'tailwind-react-native-classnames';
@@ -19,11 +19,16 @@ const CartContainer: React.FC<Props> = (props: Props) => {
   const {title, data, onPress, loading} = props;
 
   const [isCheck, setIsCheck] = useState(false);
+  const [totalPrice, setTotalPrice] = useState(0);
   const renderItem = ({item}) => <CartItem item={item} isCheckAll={isCheck} />;
 
-  // const totalPrice = useTotalPrice();
+  const sum = useTotalPrice();
 
-  return !loading ? (
+  // useEffect(() => {
+  //   setTotalPrice(sum);
+  // }, []);
+
+  return (
     <View>
       <SelectAllCartItem
         title={title}
@@ -39,17 +44,15 @@ const CartContainer: React.FC<Props> = (props: Props) => {
         keyExtractor={key => key.id}
         renderItem={renderItem}
       />
-      {/* <View className="flex-row mx-5 justify-between my-2">
-    <Text>Tổng tiền hàng</Text>
-    {!loading && (
-      <Text className="text-orange-400 font-bold">
-        {useConvertToVND(totalPrice)}
-      </Text>
-    )}
-  </View> */}
+      <View className="flex-row mx-5 justify-between my-2">
+        <Text>Tổng tiền hàng</Text>
+        {!loading && data.length > 0 && (
+          <Text className="text-orange-400 font-bold">
+            {useConvertToVND(sum)}
+          </Text>
+        )}
+      </View>
     </View>
-  ) : (
-    <Loading />
   );
 };
 

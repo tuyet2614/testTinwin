@@ -1,10 +1,12 @@
 import {faCartShopping} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {useNavigation} from '@react-navigation/native';
+import {useEffect} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import useGetCart from '../../hooks/cart/useGetCart';
 import {NAVIGATE_CART} from '../../navigation/navigate';
+import {setWishlist} from '../../redux/wishlist/actions';
 import {getWishlistState} from '../../redux/wishlist/selectors';
 
 interface Props {
@@ -17,6 +19,13 @@ const CartBtn: React.FC<Props> = (props: Props) => {
   const {color, style} = props;
 
   const {cart} = useGetCart();
+  const dispatchRedux = useDispatch();
+  const dispatchCart = (data: object) => {
+    dispatchRedux(setWishlist(data));
+  };
+  useEffect(() => {
+    cart.length > 0 && dispatchCart(cart);
+  }, [cart]);
 
   const navigateCart = () => {
     navigation.navigate(NAVIGATE_CART);

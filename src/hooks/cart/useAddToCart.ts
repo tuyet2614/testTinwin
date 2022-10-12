@@ -6,7 +6,6 @@ import CartServices from '../../services/CartServices';
 import useShowNotification from '../useShowNotification';
 
 const useAddToCart = () => {
-  const wishlist = useSelector(getWishlistId);
   const cart = useSelector(getWishlistState);
   const dispatchRedux = useDispatch();
   const dispatchCart = (data: object[]) => {
@@ -15,15 +14,14 @@ const useAddToCart = () => {
 
   const {dispatchShowNotification, notification} = useShowNotification();
   const addToCart = (item: object) => {
-    console.log(wishlist);
     const postData = {
-      customerCartId: wishlist.id,
       productId: item.id,
       quantity: 1,
     };
 
     CartServices.addToCart(postData)
       .then(res => {
+        console.log({resAddCart: res});
         if (res.data.error !== undefined) {
           dispatchShowNotification({
             icon: faXmarkCircle,
@@ -38,7 +36,6 @@ const useAddToCart = () => {
             1000,
           );
         } else {
-          dispatchCart(res.data.cartItems);
           dispatchShowNotification({
             icon: faCheckCircle,
             text: 'Đã thêm vào giỏ',

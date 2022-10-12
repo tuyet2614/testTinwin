@@ -6,12 +6,10 @@ import {
 } from './constants';
 
 interface WishlistState {
-  id: string;
   wishlist: object[];
 }
 
 const initState: WishlistState = {
-  id: '',
   wishlist: [],
 };
 
@@ -20,25 +18,24 @@ const wishlistReducer = (state = initState, action: any) => {
     case SET_WISHLIST:
       return {
         ...state,
-        id: action.payload.id,
-        wishlist: action.payload.wishlist,
+        wishlist: action.payload,
       };
     case ADD_TO_WISHLIST:
       return {...state, wishlist: [...state.wishlist, action.payload]};
     case DELETE_FROM_WISHLIST:
-      console.log(action.payload);
       return {
         ...state,
-        wishlist: state.wishlist.filter(
-          item => item.productId !== action.payload.productId,
-        ),
+        wishlist: [
+          ...state.wishlist.filter(item => item.id !== action.payload.id),
+        ],
       };
     case UPDATE_QUANTITY:
       return {
         ...state,
         wishlist: state.wishlist.map(item => {
-          if (item.productId === action.payload.id)
+          if (item.id === action.payload.id) {
             return {...item, quantity: action.payload.quantity};
+          }
           return item;
         }),
       };
