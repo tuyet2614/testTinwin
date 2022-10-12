@@ -152,7 +152,7 @@ const DetailOrder: React.FC = (props: Props) => {
         <View style={style1.line} />
         <View style={style1.line} />
       </View>
-      {item.paymentTime ?? (
+      {item.paymentTime ? (
         <>
           <View style={style1.flexMb}>
             <Text style={style1.titleDate}>Thời gian thanh toán</Text>
@@ -165,6 +165,8 @@ const DetailOrder: React.FC = (props: Props) => {
             <View style={style1.line} />
           </View>
         </>
+      ) : (
+        <></>
       )}
     </>
   );
