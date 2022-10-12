@@ -19,6 +19,7 @@ import {
   grey,
   white,
 } from '../../constant/const';
+import {getUser} from '../../redux/dataUser/actions';
 import {getUserSelector} from '../../redux/dataUser/selectors';
 import {
   getCountUnreadNotification,
@@ -47,6 +48,7 @@ const NotificationScreen: React.FC = () => {
   useEffect(() => {
     navigation.setOptions({title: 'Thông báo'});
     dispatch(getNotification({skip: 0, take: totalItemDefault}));
+    dispatch(getUser());
     dispatch(getCountUnreadNotification());
   }, [navigation, dispatch]);
 
