@@ -59,6 +59,7 @@ const Login: React.FC = ({}) => {
   const data = useSelector(getAuth);
   const user = useSelector(getUserSelector);
   useEffect(() => {
+    console.log(user);
     if (user.currentUser) {
       navigation.navigate('TabBar');
     }
@@ -119,8 +120,8 @@ const Login: React.FC = ({}) => {
         password: password,
       }),
     );
+    dispatch(getUser());
     const token = await AsyncStorage.getItem('token');
-    console.log(token);
     if (!token) {
       setVisible(false);
       return;

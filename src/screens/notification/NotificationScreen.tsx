@@ -39,6 +39,7 @@ const NotificationScreen: React.FC = () => {
   var totalItemDefault = 10;
 
   useEffect(() => {
+    console.log(user);
     if (!user.currentUser) {
       navigation.navigate('Login');
     }
