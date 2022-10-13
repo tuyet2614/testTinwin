@@ -1,7 +1,7 @@
-import {faBuilding, faHome} from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {useRoute} from '@react-navigation/native';
-import {useEffect, useState} from 'react';
+import { faBuilding, faHome } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { useRoute } from '@react-navigation/native';
+import { useEffect, useState } from 'react';
 import {
   FlatList,
   SafeAreaView,
@@ -11,19 +11,19 @@ import {
   View,
 } from 'react-native';
 import tw from 'tailwind-react-native-classnames';
-import {colors} from '../../assets/colors';
+import { colors } from '../../assets/colors';
 import AccountItem from '../../components/account/AccountItem';
 import BtnBorder from '../../components/BtnBorder';
 import BtnPrimary from '../../components/BtnPrimary';
 import CheckBoxItem from '../../components/CheckBoxItem';
 import HeaderStack from '../../components/HeaderStack';
 import InputItem from '../../components/InputItem';
-import TitleItem from '../../components/TitleItem';
+// import TitleItem from '../../components/TitleItem';
 import useChoose from '../../hooks/useChoose';
 
 const AddNewAddressScreen: React.FC = () => {
   const route = useRoute();
-  const {title, item} = route.params;
+  const { title, item } = route.params;
 
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -50,13 +50,12 @@ const AddNewAddressScreen: React.FC = () => {
     },
   ];
 
-  const {isChoose, choose} = useChoose(addressTypes);
-  const renderItem = ({item}) => (
+  const { isChoose, choose } = useChoose(addressTypes);
+  const renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() => isChoose(item)}
-      className={`flex-row items-center border-2 border-${
-        choose(item) ? 'orange-primary' : 'gray-100'
-      } flex-1 py-2 px-5 rounded-lg ${choose(item) && 'bg-orange-100'}`}>
+      className={`flex-row items-center border-2 border-${choose(item) ? 'orange-primary' : 'gray-100'
+        } flex-1 py-2 px-5 rounded-lg ${choose(item) && 'bg-orange-100'}`}>
       <FontAwesomeIcon icon={item.icon} color={colors.primary} />
       <Text className="ml-2 text-lg">{item.text}</Text>
     </TouchableOpacity>

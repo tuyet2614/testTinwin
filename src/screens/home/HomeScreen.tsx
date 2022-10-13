@@ -10,6 +10,10 @@ import ProductsContainer from '../../components/product/ProductsContainer';
 import { LOGO_TINWIN_PRIMARY, Industry_icon, stall_icon, outstanding_icon } from '../../assets/images';
 import { NAVIGATE_SEARCH_SCREEN } from '../../navigation/navigate';
 import { useNavigation } from '@react-navigation/native';
+import { useGetListShops } from '../../hooks/shops/useGetShops';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import useGetSupplier from '../../hooks/home/useGetSupplier';
 
 export const data = [
   {
@@ -73,15 +77,13 @@ export const data = [
 
 const HomeScreen: React.FC = () => {
   const navigation = useNavigation();
-  const onPressRoute = () => {
-    navigation.navigate(NAVIGATE_SEARCH_SCREEN)
-  }
+  const suppliers = useGetSupplier();
   return (
 
     <SafeAreaView className="bg-white h-full">
       <HomeHeader />
       <View className="flex-row mx-3 mb-3">
-        <SearchBtnHome onPress={onPressRoute} />
+        <SearchBtnHome />
         <CartBtn
           color={colors.primary}
           style="border border-gray-200 justify-center px-3 ml-3 rounded-lg"
@@ -103,7 +105,16 @@ const HomeScreen: React.FC = () => {
           flatlistStyle={[tw`flex-wrap`, { width: 750 }]}
           title="Gian hàng nổi bật"
           icon={stall_icon}
-          data={data}
+          data={
+            suppliers !== undefined &&
+            suppliers.map((item: object) => {
+              return {
+                id: item.id,
+                name: item.storeName,
+                avatar: item.logo,
+              };
+            })
+          }
         />
 
         <ProductsContainer
@@ -111,6 +122,7 @@ const HomeScreen: React.FC = () => {
           data={data}
           title="Sản phẩm nổi bật"
           icon={outstanding_icon}
+
         />
 
         <ProductsContainer

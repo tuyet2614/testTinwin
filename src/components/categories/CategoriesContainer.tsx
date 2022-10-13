@@ -12,21 +12,26 @@ import HomeTitle from '../home/HomeTitle';
 import StallCard from '../home/StallCard';
 import { useNavigation } from '@react-navigation/native';
 import CategoryCard from './CategoryCard';
+import { NAVIGATE_SHOP_DETAIL } from '../../navigation/navigate';
+import { Item } from 'react-native-paper/lib/typescript/components/List/List';
 
 interface Props {
   data: object[];
   title: string;
-  icon: ImageSourcePropType;
+  icon?: ImageSourcePropType;
   flatlistStyle?: object;
-  textBtn: string;
+  textBtn?: string;
+  onPress?: () => void
 }
 
 const CategoriesContainer: React.FC<Props> = (props: Props) => {
-  const { data, icon, title, flatlistStyle, textBtn } = props;
+  const { data, icon, title, flatlistStyle, textBtn, onPress } = props;
 
   const [isEnd, setIsEnd] = useState(false);
   const navigation = useNavigation()
-
+  const onPressRoute = (item) => {
+    navigation.navigate(NAVIGATE_SHOP_DETAIL, { id: item.id })
+  }
   const end = () => {
     setIsEnd(false);
   };
@@ -37,9 +42,9 @@ const CategoriesContainer: React.FC<Props> = (props: Props) => {
 
   const renderItem = ({ item }) =>
     title === 'Ngành hàng' ? (
-      <CategoryCard image={item.image} text={item.name} />
+      <CategoryCard image={item.image} text={item.name} onPress={onPress} />
     ) : (
-      <StallCard image={item.image} text={item.name} />
+      <StallCard image={item.avatar} text={item.name} onPress={() => onPressRoute(item)} />
     );
 
 

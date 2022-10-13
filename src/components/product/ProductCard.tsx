@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { faCartArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { useNavigation } from '@react-navigation/native';
-import { TouchableOpacity, Image, Text, View } from 'react-native';
+import { TouchableOpacity, Image, Text, View, StyleSheet } from 'react-native';
 import { Rating } from 'react-native-ratings';
 import useConvertToVND from '../../hooks/useConvertToVND';
 import useAddToWishlist from '../../hooks/wishlist/useAddToWishlist';
@@ -9,6 +9,7 @@ import BtnIcon from '../BtnIcon';
 import useShowNotification from '../../hooks/useShowNotification';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { NAVIGATE_PRODUCT_DETAIL } from '../../navigation/navigate';
+import { darkestGrey, white } from '../../constant/const';
 import tw from 'tailwind-react-native-classnames';
 
 interface Props {
@@ -33,13 +34,27 @@ const ProductCard: React.FC<Props> = (props: Props) => {
     <TouchableOpacity
       onPress={navigateProductDetail}
       className="p-3 border border-gray-200 rounded-lg mb-3 w-44">
-      <Image source={item.image} className={`w-full h-32`} />
-      <Text className="text-lg font-bold text-black">{item.name}</Text>
-      <Text>Đã bán 200</Text>
+      <View className={`w-full h-32`}>
+        <Image
+          source={
+            item.image !== null
+              ? { uri: item.image[0] }
+              : require('../../assets/logoTinwinPrimary.png')
+          }
+          className={`w-full h-full`}
+        />
+        {item.retailerTotalQuantity === 0 ? <View style={styles.soldout}>
+          <Text style={styles.soldoutText}>Hết hàng</Text>
+        </View> : ''}
+
+      </View>
+
+      <Text className="text-lg font-medium text-black">{item.name}</Text>
+      <Text>Đã bán {item.soldByCustomer}</Text>
       <Rating
         style={tw`items-start mt-3`}
         type="star"
-        startingValue={item.rating}
+        startingValue={item.totalRate}
         imageSize={10}
         readonly
         ratingCount={5}
@@ -58,3 +73,21 @@ const ProductCard: React.FC<Props> = (props: Props) => {
 };
 
 export default ProductCard;
+
+const styles = StyleSheet.create({
+  soldout: {
+    position: 'absolute',
+    top: 0,
+    width: '100%',
+    height: '100%',
+    opacity: 0.8,
+    backgroundColor: darkestGrey,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  soldoutText: {
+    color: white,
+    fontSize: 18,
+    fontWeight: 'bold'
+  }
+})

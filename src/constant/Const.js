@@ -29,3 +29,4 @@ export const modalColorBeige = '#fecdab';
 export const borderBeige = '#fecfad';
 export const borderColorWhiteBeige = '#fff3ea';
 export const colorOpacity = 'rgba(90, 90, 90, 0.7)';
+export const linkKing = '#007AFF'

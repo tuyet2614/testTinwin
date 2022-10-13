@@ -3,6 +3,7 @@ export const Categories = [
         id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
         title: 'Đèn và thiết bị điện',
         image: require('../images/light.png'),
+        count: "7999"
     },
     {
         id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
@@ -28,6 +29,11 @@ export const Categories = [
         id: '58694a0f-3da1-471f-bd96-145571e29d79',
         title: 'Thực phẩm và trái cây',
         image: require('../images/vegetable.png'),
+    },
+    {
+        id: '58694a0f-3da1-471f-bd96-k45571e29d79',
+        title: 'Tất cả sản phẩm',
+        count: '12345'
     },
 
 ]
