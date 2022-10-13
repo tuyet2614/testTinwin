@@ -4,7 +4,6 @@ import ProductsContainer from '../product/ProductsContainer';
 import { useSelector, useDispatch } from 'react-redux';
 import { getProductState } from '../../redux/shop/selector';
 import {
-    sortProductByNewer,
     sortProductByPrice,
     sortProductBySeller,
 } from '../../redux/shop/action';
@@ -33,16 +32,13 @@ const SortOption: React.FC<Props> = props => {
         setStatus(item);
     };
     const product = useSelector(getProductState);
-    console.log('check: ', product.product);
     const dispatch = useDispatch();
 
     const onPressSortPrice = () => {
-        console.log('onfunction price: ');
         dispatch(sortProductByPrice(data, asc));
     };
 
     const onPressSortSold = () => {
-        console.log('onfunction sold: ');
         dispatch(sortProductBySeller(data));
     };
 
@@ -63,7 +59,6 @@ const SortOption: React.FC<Props> = props => {
     const getProductData = item => {
         const status = item.title;
         setStatusFilter(status);
-        console.log('status: ', status);
         switch (status) {
             case 'Mới nhất':
                 setAsc();

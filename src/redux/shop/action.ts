@@ -9,11 +9,6 @@ export const sortProductByPrice = (product: object, field: boolean) => ({
     payload: { product, field }
 })
 
-export const sortProductByNewer = (product: object) => ({
-    type: SORT_PRODUCT_BY_NEWER,
-    payload: product
-})
-
 export const sortProductBySeller = (product: object) => ({
     type: SORT_PRODUCT_BY_SELLER,
     payload: product

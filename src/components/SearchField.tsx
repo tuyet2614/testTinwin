@@ -24,8 +24,7 @@ export const SearchBar: React.FC<TextFieldProps> = ({
 }) => {
     const [searchText, setSearchText] = useState('');
 
-    const product = getListProductByKeyword('son')
-    console.log('search: ', product)
+    const product = getListProductByKeyword(searchText)
 
     return (
         <View
