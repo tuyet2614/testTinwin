@@ -2,28 +2,28 @@ import {deleteMethod, get, post, put} from './AxiosHelper';
 
 const ShippingServices = {
   getShippingAddress() {
-    return get('/shipping/api/app/shipping-address');
+    return get('/webbff/shipping/api/app/shipping-address');
   },
   getProvinces(params) {
-    return get('/api/app/province', params);
+    return get('/webbff/api/app/province', params);
   },
   getDistricts(params) {
-    return get('/api/app/district', params);
+    return get('/webbff/api/app/district', params);
   },
   getWards(params) {
-    return get('/api/app/ward', params);
+    return get('/webbff/api/app/ward', params);
   },
   setDefault(id) {
-    return put(`/shipping/api/app/shipping-address/${id}/set-default`);
+    return put(`/webbff/shipping/api/app/shipping-address/${id}/set-default`);
   },
   updateAddress(id, putData) {
-    return put(`/shipping/api/app/shipping-address/${id}`, putData);
+    return put(`/webbff/shipping/api/app/shipping-address/${id}`, putData);
   },
   addNewAddress(postData) {
-    return post('/shipping/api/app/shipping-address', postData);
+    return post('/webbff/shipping/api/app/shipping-address', postData);
   },
   deleteAddress(id) {
-    return deleteMethod(`/shipping/api/app/shipping-address/${id}`);
+    return deleteMethod(`/webbff/shipping/api/app/shipping-address/${id}`);
   },
 };
 

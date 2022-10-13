@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import {combineReducers} from 'redux';
 import authReducer from '../redux/authentication/reducers';
 import dataUserReducer from '../redux/dataUser/reducers';
 import addressReducer from '../redux/address/reducers';
