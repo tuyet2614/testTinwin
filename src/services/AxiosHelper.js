@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { baseUrl } from '../Ultils/Const/const';
 
