@@ -311,7 +311,7 @@ const Review: React.FC = () => {
   );
 };
 const style1 = StyleSheet.create({
-  flexColRe: {flexDirection: 'column-reverse', marginTop: 200},
+  flexColRe: {flexDirection: 'column-reverse', marginTop: 170},
   line: {flex: 1, height: 1, backgroundColor: whiteGrey},
   boxLine: {
     flexDirection: 'row',

@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import {FlatList, SafeAreaView} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import CardOrder from '../../components/cards/CardOrder';
@@ -11,14 +11,12 @@ import {getOrderSelector} from '../../redux/order/selectors';
 const Delivered: React.FC = () => {
   const dispatch = useDispatch();
   const order = useSelector(getOrderSelector);
-  let totalItemDefault = useRef(10);
-  const [refreshing, setRefreshing] = React.useState(false);
+  const [totalItemDefault, setTotalItemDefault] = useState(10);
   const renderCard = ({item}) => {
     return <CardOrder titleBtn="Mua lại" item={item} btnPrimary="Đánh giá" />;
   };
   const onRefresh = React.useCallback(() => {
-    totalItemDefault.current = 10;
-    setRefreshing(true);
+    setTotalItemDefault(10);
     dispatch(
       getOrderDelivered({
         TextSearch: '',
@@ -27,7 +25,6 @@ const Delivered: React.FC = () => {
         take: 10,
       }),
     );
-    setRefreshing(false);
   }, [dispatch]);
   const onLoadMore = () => {
     dispatch(
@@ -38,7 +35,7 @@ const Delivered: React.FC = () => {
         take: 10,
       }),
     );
-    totalItemDefault.current = totalItemDefault.current + 10;
+    setTotalItemDefault(prev => prev + 10);
   };
 
   return (
@@ -49,7 +46,7 @@ const Delivered: React.FC = () => {
         keyExtractor={item => item.id}
         onRefresh={onRefresh}
         onEndReached={onLoadMore}
-        refreshing={refreshing}
+        refreshing={order.loading}
       />
     </SafeAreaView>
   );

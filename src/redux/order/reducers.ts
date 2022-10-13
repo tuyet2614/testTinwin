@@ -3,17 +3,22 @@ import {
   GET_DETAIL_SHIPPING_ADDRESS_NOT_CANCEL_SUCCESS,
   GET_DETAIL_SHIPPING_ADDRESS_SUCCESS,
   GET_MORE_ORDER_CANCELLED_SUCCESS,
-  GET_MORE_ORDER_DELIVERED,
   GET_MORE_ORDER_DELIVERED_SUCCESS,
   GET_MORE_ORDER_DELIVERING_SUCCESS,
   GET_MORE_ORDER_PREPARE_SUCCESS,
   GET_MORE_ORDER_SUCCESS,
   GET_MORE_ORDER__WAIT_COMFIRM_SUCCESS,
+  GET_ORDER,
+  GET_ORDER_CANCELLED,
   GET_ORDER_CANCELLED_SUCCESS,
+  GET_ORDER_DELIVERED,
   GET_ORDER_DELIVERED_SUCCESS,
+  GET_ORDER_DELIVERING,
   GET_ORDER_DELIVERING_SUCCESS,
+  GET_ORDER_PREPARE,
   GET_ORDER_PREPARE_SUCCESS,
   GET_ORDER_SUCCESS,
+  GET_ORDER_WAIT_COMFIRM,
   GET_ORDER_WAIT_COMFIRM_SUCCESS,
   GET_REASON_CANCEL_SUCCESS,
   GET_SUPPILER_SUCCESS,
@@ -29,6 +34,7 @@ interface OrderState {
   reasonCancel: {};
   detailOrder: {};
   detailShippingAddress: {};
+  loading: boolean;
 }
 
 const initState: OrderState = {
@@ -59,22 +65,35 @@ const initState: OrderState = {
   reasonCancel: [],
   detailOrder: {},
   detailShippingAddress: {},
+  loading: false,
 };
 var _ = require('lodash');
 const orderReducers = (state = initState, action: any) => {
   switch (action?.type) {
+    case GET_ORDER:
+      return {...state, loading: true};
     case GET_ORDER_SUCCESS:
-      return {...state, orderWaitPay: action.data};
+      return {...state, orderWaitPay: action.data, loading: false};
+    case GET_ORDER_WAIT_COMFIRM:
+      return {...state, loading: true};
     case GET_ORDER_WAIT_COMFIRM_SUCCESS:
-      return {...state, orderWaitComfirm: action.data};
+      return {...state, orderWaitComfirm: action.data, loading: false};
+    case GET_ORDER_PREPARE:
+      return {...state, loading: true};
     case GET_ORDER_PREPARE_SUCCESS:
-      return {...state, orderPrepare: action.data};
+      return {...state, orderPrepare: action.data, loading: false};
+    case GET_ORDER_DELIVERING:
+      return {...state, loading: true};
     case GET_ORDER_DELIVERING_SUCCESS:
-      return {...state, orderDelivering: action.data};
+      return {...state, orderDelivering: action.data, loading: false};
+    case GET_ORDER_DELIVERED:
+      return {...state, loading: true};
     case GET_ORDER_DELIVERED_SUCCESS:
-      return {...state, orderDelivered: action.data};
+      return {...state, orderDelivered: action.data, loading: false};
+    case GET_ORDER_CANCELLED:
+      return {...state, loading: true};
     case GET_ORDER_CANCELLED_SUCCESS:
-      return {...state, orderCancel: action.data};
+      return {...state, orderCancel: action.data, loading: false};
 
     case GET_MORE_ORDER_SUCCESS:
       if (!action.data.items) {

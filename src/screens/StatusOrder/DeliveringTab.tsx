@@ -1,5 +1,5 @@
 import {useFocusEffect} from '@react-navigation/native';
-import React from 'react';
+import React, {useState} from 'react';
 import {FlatList, SafeAreaView} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import CardOrder from '../../components/cards/CardOrder';
@@ -14,8 +14,7 @@ import {useRef} from 'react';
 const Delivering: React.FC = () => {
   const dispatch = useDispatch();
   const order = useSelector(getOrderSelector);
-  let totalItemDefault = useRef(10);
-  const [refreshing, setRefreshing] = React.useState(false);
+  const [totalItemDefault, setTotalItemDefault] = useState(10);
   // useFocusEffect(() => {
   //   dispatch(
   //     getOrderDelivering({TextSearch: '', Status: 3, skip: 10, take: 10}),
@@ -26,20 +25,15 @@ const Delivering: React.FC = () => {
     return <CardOrder titleBtn="Đã nhận" item={item} />;
   };
   const onRefresh = React.useCallback(() => {
-    totalItemDefault.current = 10;
-    setRefreshing(true);
-    Promise.resolve(
-      dispatch(
-        getOrderDelivering({
-          TextSearch: '',
-          Status: 4,
-          skip: 0,
-          take: 10,
-        }),
-      ),
-    ).then(() => {
-      setRefreshing(false);
-    });
+    setTotalItemDefault(10);
+    dispatch(
+      getOrderDelivering({
+        TextSearch: '',
+        Status: 4,
+        skip: 0,
+        take: 10,
+      }),
+    );
   }, [dispatch]);
   const onLoadMore = () => {
     dispatch(
@@ -50,7 +44,7 @@ const Delivering: React.FC = () => {
         take: 10,
       }),
     );
-    totalItemDefault.current = totalItemDefault.current + 10;
+    setTotalItemDefault(prev => prev + 10);
   };
 
   return (
@@ -61,7 +55,7 @@ const Delivering: React.FC = () => {
         keyExtractor={item => item.id}
         onRefresh={onRefresh}
         onEndReached={onLoadMore}
-        refreshing={refreshing}
+        refreshing={order.loading}
       />
     </SafeAreaView>
   );

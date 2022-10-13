@@ -154,7 +154,7 @@ const DetailOrder: React.FC = (props: Props) => {
       </View>
       {item.paymentTime ? (
         <>
-          <View style={style1.flexMb}>
+          <View style={style1.flex}>
             <Text style={style1.titleDate}>Thời gian thanh toán</Text>
             <Text style={style1.dateTime}>
               {formatDateDetailOrder(new Date(item.paymentTime))}
@@ -258,7 +258,7 @@ const DetailOrder: React.FC = (props: Props) => {
             {item.status !== 1 ? renderTime() : <></>}
             {item.status === 4 ? (
               <>
-                <View style={style1.flexMb}>
+                <View style={style1.flex}>
                   <Text style={style1.titleDate}>
                     Thời gian giao hàng dự kiến trong vòng 24h
                   </Text>
@@ -305,7 +305,7 @@ const DetailOrder: React.FC = (props: Props) => {
 };
 const style1 = StyleSheet.create({
   line: {flex: 1, height: 1, backgroundColor: whiteGrey},
-  mb10: {marginBottom: 10},
+  mb10: {marginBottom: 10, marginTop: 20},
   dateTime: {
     fontWeight: '500',
     fontSize: 12,
@@ -335,7 +335,11 @@ const style1 = StyleSheet.create({
     marginTop: 4,
     marginBottom: 10,
   },
-  flex: {flexDirection: 'row', justifyContent: 'space-between'},
+  flex: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
+  },
   flex1: {flexDirection: 'row'},
   code: {
     marginLeft: 13,

@@ -167,6 +167,7 @@ function* fetchData() {
   });
   yield takeLatest(GET_MORE_ORDER_WAIT_COMFIRM, function* (action: action) {
     try {
+      // const res = yield call(OrderServices.getOrder, action.payload);
       const res = yield call(OrderServices.getOrder, action.payload);
       if (res.status === 200) {
         yield put({type: GET_MORE_ORDER__WAIT_COMFIRM_SUCCESS, data: res.data});
