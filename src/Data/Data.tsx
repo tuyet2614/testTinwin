@@ -1,0 +1,58 @@
+export const data = [
+    {
+        id: 1,
+        image: require('../images/sting.png'),
+        name: 'Nước tăng lực Sting nhân sâm...',
+        price: '200.000đ',
+        rating: 4,
+    },
+    {
+        id: 2,
+        image: require('../images/c2.png'),
+        name: 'Trà xanh C2 hương chanh ',
+        price: '600.000đ',
+        rating: 3.5,
+    },
+    {
+        id: 3,
+        image: require('../images/redbull.png'),
+        name: 'Nước tăng lực Redbull lon 250ml',
+        price: '100.000đ',
+        rating: 3.2,
+    },
+    {
+        id: 4,
+        image: require('../images/kokomi.png'),
+        name: 'Mì tôm chua cay Kokomi gói 65g',
+        price: '120.000đ',
+        rating: 4.1,
+    },
+    {
+        id: 5,
+        image: require('../images/c2.png'),
+        name: 'Trà xanh C2 hương chanh',
+        price: '50.000đ',
+        rating: 4.7,
+    },
+    {
+        id: 6,
+        image: require('../images/sting.png'),
+        name: 'Nước tăng lực Sting nhân sâm...',
+        price: '400.000đ',
+        rating: 5,
+    },
+    {
+        id: 7,
+        image: require('../images/kokomi.png'),
+        name: 'Mì tôm chua cay Kokomi gói 65g',
+        price: '200.000đ',
+        rating: 2.6,
+    },
+    {
+        id: 8,
+        image: require('../images/redbull.png'),
+        name: 'Nước tăng lực Redbull lon 250ml',
+        price: '100.000đ',
+        rating: 5,
+    },
+];

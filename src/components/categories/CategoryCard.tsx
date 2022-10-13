@@ -1,8 +1,11 @@
 import {useNavigation} from '@react-navigation/native';
 import {Image, ImageSourcePropType, Text, TouchableOpacity} from 'react-native';
 
+
 interface Props {
-  item: object;
+  image: ImageSourcePropType;
+  text: string;
+  style?: string
 }
 
 const CategoryCard: React.FC<Props> = (props: Props) => {

@@ -7,9 +7,12 @@ import TabBar from './TabBar';
 import AddNewAddressScreen from '../screens/account/AddNewAddressScreen';
 import ProductDetailScreen from '../screens/ProductDetail/ProductDetailScreen';
 import RatingScreen from '../screens/ProductDetail/RatingScreen';
+import SearchScreen from '../screens/Search/SearchScreen';
+import SearchResultScreen from '../screens/Search/SearchResultScreen';
 import FilterScreen from '../screens/categories/FilterScreen';
 import CartNavigator from '../screens/cart/CartNavigator';
 import UpdateInfoScreen from '../screens/account/UpdateInfoScreen';
+import ShopDetailScreen from '../screens/Shop/ShopDetailScreen';
 import OrderSuccess from '../screens/Payment/OrderSuccess';
 import InternetBanking from '../screens/Payment/InternetBanking';
 import Payment from '../screens/Payment/Payment';
@@ -25,6 +28,7 @@ import FormForgotPassword from '../screens/Authentication/FormResetPassword';
 import FormRegister from '../screens/Authentication/FormRegister';
 import Order from '../screens/StatusOrder/Order';
 import AddressDetailScreen from '../screens/account/AddressDetailScreen';
+import DetailCategoriesScreen from '../screens/Shop/DetailCategoriesScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -106,10 +110,11 @@ const Navigator: React.FC = () => {
           options={screenOptions}
         />
         <Stack.Screen
-          name="AddNewAddress"
-          component={AddNewAddressScreen}
+          name="Search"
+          component={SearchScreen}
           options={screenOptions}
         />
+
         <Stack.Screen
           name="ProductDetail"
           component={ProductDetailScreen}
@@ -118,6 +123,17 @@ const Navigator: React.FC = () => {
         <Stack.Screen
           name="Rating"
           component={RatingScreen}
+          options={screenOptions}
+        />
+        <Stack.Screen name="AddNewAddress" component={AddNewAddressScreen} />
+        <Stack.Screen
+          name="ShopDetail"
+          component={ShopDetailScreen}
+          options={screenOptions}
+        />
+        <Stack.Screen
+          name="DetailCategories"
+          component={DetailCategoriesScreen}
           options={screenOptions}
         />
         <Stack.Screen

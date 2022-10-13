@@ -27,6 +27,7 @@ export const styles = StyleSheet.create({
   infor: {
     marginTop: 26,
     flexDirection: 'row',
+    marginBottom: 10,
   },
   textInfor: {
     width: 0,

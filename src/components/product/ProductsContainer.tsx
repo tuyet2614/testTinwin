@@ -14,6 +14,7 @@ interface Props {
 const ProductsContainer: React.FC<Props> = (props: Props) => {
   const {data, icon, title, flatlistStyle, textBtn} = props;
 
+
   const [isEnd, setIsEnd] = useState(false);
 
   const renderItem = ({item}) => (
@@ -23,7 +24,7 @@ const ProductsContainer: React.FC<Props> = (props: Props) => {
   );
 
   return (
-    <View>
+    <View className={`flex-1`}>
       <HomeTitle title={title} icon={icon} textBtn={textBtn} />
       <FlatList
         onScrollBeginDrag={() => setIsEnd(false)}

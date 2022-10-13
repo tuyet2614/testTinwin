@@ -1,10 +1,128 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import {useEffect} from 'react';
-import {useNavigate} from 'react-router';
-const baseUrl = 'http://45.76.152.56/webbff';
+import {baseUrl} from '../Ultis/Constant/const';
 
+const headersFormUrl = 'application/x-www-form-urlencoded';
 export const get = async (path, params) => {
+  const token = await AsyncStorage.getItem('token');
+
+  if (params !== undefined) {
+    if (params instanceof Object) {
+      path +=
+        '?' +
+        Object.keys(params)
+          .map(key => key + '=' + params[key])
+          .join('&');
+    } else {
+      path += '/' + params;
+    }
+  }
+  return await axios
+    .get(baseUrl + path, {
+      headers: {
+        'Content-Type': 'text/plain',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then(res => {
+      return new Promise(resolve => {
+        resolve(res);
+      });
+    })
+    .catch(err => {
+      // handleErr(err)
+    });
+};
+export const getList = async (path, params) => {
+  const token = await AsyncStorage.getItem('token');
+
+  if (params !== undefined) {
+    if (params instanceof Object) {
+      path +=
+        '?' +
+        Object.keys(params)
+          .map(key => 'ids' + '=' + params[key])
+          .join('&');
+    } else {
+      path += '/' + params;
+    }
+  }
+  return await axios
+    .get(baseUrl + path, {
+      headers: {
+        'Content-Type': 'text/plain',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then(res => {
+      return new Promise(resolve => {
+        resolve(res);
+      });
+    })
+    .catch(err => {
+      // handleErr(err)
+    });
+};
+
+export const post = async (path, postData) => {
+  const token = await AsyncStorage.getItem('token');
+  return await axios
+    .post(baseUrl + path, postData, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then(res => {
+      return new Promise(resolve => {
+        resolve(res);
+      });
+    })
+    .catch(err => {
+      return new Promise(resolve => {
+        resolve(err.response);
+      });
+    });
+};
+export const postHeadersUrl = async (path, postData) => {
+  return await axios
+    .post(baseUrl + path, postData, {
+      headers: {
+        'Content-Type': headersFormUrl,
+      },
+    })
+    .then(res => {
+      return new Promise(resolve => {
+        resolve(res);
+      });
+    })
+    .catch(err => {
+      return new Promise(resolve => {
+        resolve(err.response);
+      });
+    });
+};
+export const deleteMethod = async (path, id) => {
+  const token = await AsyncStorage.getItem('token');
+  return await axios
+    .delete(baseUrl + path + '?id=' + id, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'text/plain',
+        'Content-Type': 'application/json',
+        Accept: undefined,
+      },
+    })
+    .then(res => {
+      return new Promise(resolve => {
+        resolve(res);
+      });
+    })
+    .catch(err => {
+      // handleErr(err)
+    });
+};
+export const put = async (path, params) => {
   const token = await AsyncStorage.getItem('token');
   if (params !== undefined) {
     if (params instanceof Object) {
@@ -18,9 +136,8 @@ export const get = async (path, params) => {
     }
   }
   return axios
-    .get(baseUrl + path, {
+    .put(baseUrl + path, {
       headers: {
-        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
     })
@@ -31,113 +148,6 @@ export const get = async (path, params) => {
     })
     .catch(err => {
       // handleErr(err)
-      // console.log(err);
-    });
-};
-
-export const post = async (path, postData) => {
-  const token = await AsyncStorage.getItem('token');
-  return axios
-    .post(baseUrl + path, postData, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then(res => {
-      return new Promise(resolve => {
-        resolve(res);
-      });
-    })
-    .catch(err => {
-      // handleErr(err)
-      return new Promise(resolve => {
-        resolve(err.response);
-      });
-    });
-};
-
-export const putUpload = async (path, putData) => {
-  const token = await AsyncStorage.getItem('token');
-  return axios
-    .put(baseUrl + path, putData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then(res => {
-      return new Promise(resolve => {
-        resolve(res);
-      });
-    })
-    .catch(err => {
-      // handleErr(err)
-      return new Promise(resolve => {
-        resolve(err.response);
-      });
-    });
-};
-
-export const put = async (path, putData) => {
-  const token = await AsyncStorage.getItem('token');
-  return axios
-    .put(baseUrl + path, putData, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then(res => {
-      return new Promise(resolve => {
-        resolve(res);
-      });
-    })
-    .catch(err => {
-      // handleErr(err)
-      return new Promise(resolve => {
-        resolve(err.response);
-      });
-    });
-};
-
-export const postHeadersUrl = async (path, postData) => {
-  return await axios
-    .post(baseUrl + path, postData, {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-    })
-    .then(res => {
-      return new Promise(resolve => {
-        resolve(res);
-      });
-    })
-    .catch(err => {
-      return new Promise(resolve => {
-        resolve(err.response);
-      });
-    });
-};
-
-export const deleteMethod = async (path, id) => {
-  const token = await AsyncStorage.getItem('token');
-  return axios
-    .delete(baseUrl + path + '?id=' + id, {
-      headers: {
-        Accept: 'text/plain',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then(res => {
-      return new Promise(resolve => {
-        resolve(res);
-      });
-    })
-    .catch(err => {
-      // handleErr(err)
-      console.log(err);
     });
 };
 

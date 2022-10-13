@@ -1,7 +1,7 @@
-import {faFacebookMessenger} from '@fortawesome/free-brands-svg-icons';
-import {faShareAlt} from '@fortawesome/free-solid-svg-icons';
-import {Text, View} from 'react-native';
-import {Rating} from 'react-native-ratings';
+import { faFacebookMessenger } from '@fortawesome/free-brands-svg-icons';
+import { faShareAlt } from '@fortawesome/free-solid-svg-icons';
+import { Text, View } from 'react-native';
+import { Rating } from 'react-native-ratings';
 import tw from 'tailwind-react-native-classnames';
 import useConvertToVND from '../../hooks/useConvertToVND';
 import IconBtnOnly from '../buttons/IconBtnOnly';
@@ -11,7 +11,7 @@ interface Props {
 }
 
 const ProductInfoContainer: React.FC<Props> = (props: Props) => {
-  const {item} = props;
+  const { item } = props;
 
   return (
     <View>
@@ -27,6 +27,7 @@ const ProductInfoContainer: React.FC<Props> = (props: Props) => {
             imageSize={10}
             readonly
             ratingCount={5}
+
           />
           <Text>{item.ratingAvg}</Text>
           <View className="h-full w-0.5 bg-gray-200 mx-3"></View>

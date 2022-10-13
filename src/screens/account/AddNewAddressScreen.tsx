@@ -11,7 +11,7 @@ import {
   View,
 } from 'react-native';
 import tw from 'tailwind-react-native-classnames';
-import {colors} from '../../assets/colors';
+import { colors } from '../../assets/colors';
 import AccountItem from '../../components/account/AccountItem';
 import BtnBorder from '../../components/BtnBorder';
 import BtnPrimary from '../../components/BtnPrimary';

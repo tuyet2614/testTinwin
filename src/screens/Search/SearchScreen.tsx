@@ -16,6 +16,7 @@ import { useNavigation } from '@react-navigation/native';
 import ListCategories from '../../components/item/ListCategories';
 import TitleSearch from '../../components/item/TitleSearch';
 import { cancel_icon } from '../../assets/images';
+import { NAVIGATE_HOME, NAVIGATE_SEARCH_DETAIL_SCREEN } from '../../navigation/navigate';
 
 const DATA = [
     {
@@ -53,18 +54,21 @@ const DATA2 = [
 const SearchScreen: React.FC = () => {
     const [search, setSearch] = useState('');
     const navigation = useNavigation();
-    const onPressRoute = () => {
-        navigation.navigate('TabBar')
+    const onPressRouteHome = () => {
+        navigation.navigate(NAVIGATE_HOME)
+    }
+    const onPressRouteSearch = () => {
+        navigation.navigate(NAVIGATE_SEARCH_DETAIL_SCREEN)
     }
     return (
-        <SafeAreaView className="bg-white">
+        <SafeAreaView className="bg-white pt-3">
             <ScrollView>
                 <View className={`px-6`}>
                     <View className={`flex-row`}>
                         <SearchBar placeholder="Tìm kiếm" width={280} />
 
                         <View className={`flex self-center ml-6`}>
-                            <TouchableOpacity onPress={onPressRoute}>
+                            <TouchableOpacity onPress={onPressRouteHome}>
                                 <Image source={cancel_icon} />
                             </TouchableOpacity>
                         </View>
@@ -72,7 +76,7 @@ const SearchScreen: React.FC = () => {
                     <View className={`mt-9`}>
                         {DATA2.map(item => (
                             <TouchableOpacity
-                                onPress={() => navigation.navigate('SearchResult')}>
+                                onPress={onPressRouteSearch}>
                                 <TitleSearch id={item.id} title={item.title} key={item.id} />
                             </TouchableOpacity>
                         ))}
@@ -96,13 +100,14 @@ const SearchScreen: React.FC = () => {
                 <View className={`w-fit h-1.5 bg-[#F9F9F9]`} />
 
                 <View>
-                    <View className={`pl-6 mt-4 mb-5`}>
+                    <View className={`px-6 mt-4 mb-5`}>
                         <Text className={`text-[#2D2D2D] text-[15px] font-bold`}>
                             Danh mục hàng
                         </Text>
                     </View>
 
                     <ListCategories />
+
                 </View>
             </ScrollView>
         </SafeAreaView>

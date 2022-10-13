@@ -24,28 +24,60 @@ import {
 } from '../../constant/const';
 import BtnOrder from '../buttons/BtnOrder';
 import {RadioButton} from '../buttons/RadioButton';
+import {useDispatch, useSelector} from 'react-redux';
+import {getOrderSelector} from '../../redux/order/selectors';
+import {useState} from 'react';
+import {cancelOrder} from '../../redux/order/actions';
 interface Props {
   modalVisible: boolean;
   setModalVisible: React.Dispatch<React.SetStateAction<any>>;
+  item: object;
 }
 
 const ModalCancel: React.FC<Props> = (props: Props) => {
-  const {modalVisible, setModalVisible} = props;
-  const reverseModal = () => {
-    setModalVisible(false);
-  };
+  const {modalVisible, setModalVisible, item} = props;
+  const [reasonId, setReasonId] = useState<string>('');
+  const [reason, setReason] = useState<string>('');
+  const order = useSelector(getOrderSelector);
+  const dispatch = useDispatch();
 
+  const reverseModal = () => {
+    setModalVisible(!modalVisible);
+  };
+  const onCancel = () => {
+    dispatch(
+      cancelOrder({
+        orderId: item.id,
+        reason: {reasonId: reasonId, reason: reason},
+      }),
+    );
+  };
+  const changeReason = (text: string) => {
+    setReason(text);
+  };
+  const renderReason = item => {
+    return (
+      <TouchableOpacity
+        style={styles1.flexMt19}
+        key={item.id}
+        onPress={() => {
+          setReasonId(item.id);
+        }}>
+        <RadioButton selected={reasonId === item.id ? true : false} />
+        <Text style={styles1.textChange}>{item.reasonName}</Text>
+      </TouchableOpacity>
+    );
+  };
+  if (!order.reasonCancel) {
+    return;
+  }
   return (
     <SafeAreaView>
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <TouchableOpacity
           style={styles1.bgColor}
           className={`flex-1 `}
-          onPress={() => {
-            setModalVisible(false);
-          }}></TouchableOpacity>
-        {/* <View
-          className={`bg-white  shadow-xl rounded-t-lg pt-5`}> */}
+          onPress={reverseModal}></TouchableOpacity>
         <View style={styles1.centeredView} className={`justify-end`}>
           <View style={styles1.modalView}>
             <ScrollView>
@@ -68,47 +100,8 @@ const ModalCancel: React.FC<Props> = (props: Props) => {
                   phẩm trong đơn hàng và không thể thay đổi sau đó
                 </Text>
               </View>
-              <TouchableOpacity style={styles1.flexMt19}>
-                <RadioButton selected={true} />
-                <Text style={styles1.textChange}>
-                  Muốn thay đổi địa chỉ giao hàng
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles1.flexMt19}>
-                <RadioButton selected={true} />
-                <Text style={styles1.textChange}>
-                  Muốn thay đổi sản phẩm trong đơn hàng{' '}
-                  <Text>(size, màu sắc, số lượng,...)</Text>
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles1.flexMt19}>
-                <RadioButton selected={true} />
-                <Text style={styles1.textChangeIdea}>
-                  Thủ tục thanh toán quá rắc rối
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles1.flexMt19}>
-                <RadioButton selected={true} />
-                <Text style={styles1.textChange}>
-                  Tìm thấy giá rẻ hơn ở chỗ khác
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles1.flexMt19}>
-                <RadioButton selected={true} />
-                <Text style={styles1.textChangeIdea}>
-                  Đổi ý, không muốn mua nữa
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles1.flexMt19}>
-                <RadioButton selected={true} />
-                <Text style={styles1.anotherReason}>Lý do khác</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles1.flexMt19}>
-                <RadioButton selected={true} />
-                <Text style={styles1.textChange}>
-                  Muốn thay đổi địa chỉ giao hàng
-                </Text>
-              </TouchableOpacity>
+              {order?.reasonCancel?.map(item => renderReason(item))}
+
               <TextInput
                 style={styles1.input}
                 // value={userName}
@@ -116,12 +109,12 @@ const ModalCancel: React.FC<Props> = (props: Props) => {
                 // onChange={text => setUserName(text)}
                 numberOfLines={4}
                 multiline={true}
+                onChangeText={changeReason}
               />
-              <BtnOrder content={'Hoàn thành'}></BtnOrder>
+              <BtnOrder content={'Hoàn thành'} onPress={onCancel}></BtnOrder>
             </ScrollView>
           </View>
         </View>
-        {/* </View> */}
       </Modal>
     </SafeAreaView>
   );

@@ -5,12 +5,14 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 import {faEyeSlash} from '@fortawesome/free-regular-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import {useEffect, useState} from 'react';
 import {
   Image,
   Keyboard,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -18,6 +20,7 @@ import {
   View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   anotherOrange,
   black,
@@ -29,19 +32,42 @@ import {
   moreLightGrey,
   orangeDark,
   orangeLight,
+  red,
   white,
 } from '../../constant/const';
+import {login} from '../../redux/authentication/actions';
+import {getAuth} from '../../redux/authentication/selectors';
+import {clearUser, getUser} from '../../redux/dataUser/actions';
+import {getUserSelector} from '../../redux/dataUser/selectors';
+import AuthenticationServices from '../../services/AuthenticationServices';
+import {
+  isVietnamesePhoneNumber,
+  validateEmail,
+  validatePass,
+} from '../../Ultis/commons';
+import ModalAuthen from './ModalAuthen';
 import {style} from './style';
-import {ScrollView} from 'react-native';
 
 const Login: React.FC = ({}) => {
   const navigation = useNavigation();
+  const [visible, setVisible] = useState(true);
   const [isPasswordSecure, setIsPasswordSecure] = useState(true);
   const [userName, setUserName] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [securityUsername, setSecurityUsername] = useState<boolean>();
+  const [securityPassword, setSecurityPassword] = useState<boolean>();
+  const [errMsg, setErrMsg] = useState<string>('');
+  const dispatch = useDispatch();
+  const data = useSelector(getAuth);
+  const user = useSelector(getUserSelector);
+  useEffect(() => {
+    if (user.currentUser) {
+      navigation.navigate('TabBar');
+    }
+  }, [navigation, user]);
   useEffect(() => {
     Keyboard.dismiss();
-    return () => {};
+    dispatch(getUser());
   }, []);
 
   const setUser = (text: string) => {
@@ -65,6 +91,48 @@ const Login: React.FC = ({}) => {
   const navigateRegister = () => {
     navigation.navigate('Register');
   };
+  const loginDefault = async () => {
+    if (userName === '') {
+      setSecurityUsername(false);
+      return;
+    } else {
+      if (!validateEmail(userName) && !isVietnamesePhoneNumber(userName)) {
+        setSecurityUsername(false);
+        return;
+      }
+    }
+    setSecurityUsername(true);
+    if (password === '') {
+      setSecurityPassword(false);
+      return;
+    }
+    if (!validatePass(password)) {
+      setSecurityPassword(false);
+      return;
+    }
+    setSecurityPassword(true);
+
+    // dispatch(
+    //   login({
+    //     username: userName,
+    //     password: password,
+    //   }),
+    // );
+
+    AuthenticationServices.login({
+      username: userName,
+      password: password,
+    }).then(async res => {
+      if (res.status === 400) {
+        setErrMsg(res.data.error_description);
+        setVisible(false);
+      } else if (res.status === 200) {
+        await AsyncStorage.setItem('token', res.data.access_token);
+        dispatch(getUser());
+        navigateTabBar();
+      }
+    });
+  };
   return (
     <ScrollView>
       <SafeAreaView style={style.container}>
@@ -83,22 +151,46 @@ const Login: React.FC = ({}) => {
           <View style={style1.mb20}>
             <Text style={style.textDescription}>Email / Số điện thoại</Text>
             <TextInput
-              style={style.input}
+              style={{
+                flex: 1,
+                minHeight: 50,
+                borderColor: securityUsername === false ? red : grey,
+                borderRadius: 10,
+                padding: 10,
+                borderWidth: 1,
+                borderStyle: 'solid',
+                color: grey,
+              }}
               value={userName}
               placeholder="Nhập Email / Số điện thoại"
-              onChange={setUser}
+              onChangeText={setUser}
               placeholderTextColor={lightGrey}
             />
+            <Text
+              className={`text-[12px] text-red-500 ${
+                securityUsername === false ? 'flex' : 'hidden'
+              }`}>
+              Định dạng Email/Số điện thoại không đúng
+            </Text>
           </View>
           <View>
             <Text style={style.textDescription}>Mật khẩu</Text>
             <TextInput
-              style={style.input}
+              style={{
+                flex: 1,
+                minHeight: 50,
+                borderColor: securityPassword === false ? red : grey,
+                borderRadius: 10,
+                padding: 10,
+                borderWidth: 1,
+                borderStyle: 'solid',
+                color: grey,
+              }}
               placeholder="Nhập mật khẩu"
               autoCapitalize="none"
               value={password}
               secureTextEntry={isPasswordSecure}
-              onChange={setPass}
+              onChangeText={setPass}
               placeholderTextColor={lightGrey}
             />
             <View style={style1.boxForgot}>
@@ -112,6 +204,12 @@ const Login: React.FC = ({}) => {
                 <Text style={style.textForgot}>Quên ?</Text>
               </TouchableOpacity>
             </View>
+            <Text
+              className={`text-[12px] text-red-500 ${
+                securityPassword === false ? 'flex' : 'hidden'
+              } mb-[10px]`}>
+              Định dạng password không đúng
+            </Text>
           </View>
         </View>
         <View>
@@ -129,7 +227,7 @@ const Login: React.FC = ({}) => {
             end={{x: 1, y: 0.5}}
             locations={[0, 1]}
             style={style1.btnLogin}>
-            <TouchableOpacity className="p-3" onPress={navigateTabBar}>
+            <TouchableOpacity className="p-3" onPress={loginDefault}>
               <Text style={style1.textLogin}>Đăng nhập</Text>
             </TouchableOpacity>
           </LinearGradient>
@@ -142,7 +240,9 @@ const Login: React.FC = ({}) => {
           <View style={style1.tripleIcon} />
         </View>
         <View style={style1.loginWith}>
-          <FontAwesomeIcon icon={faFacebook} color={blueGrey} size={55} />
+          <TouchableOpacity>
+            <FontAwesomeIcon icon={faFacebook} color={blueGrey} size={55} />
+          </TouchableOpacity>
           <FontAwesomeIcon icon={faGooglePlus} color={darkBlue} size={55} />
           <FontAwesomeIcon icon={faApple} color={black} size={55} />
         </View>
@@ -153,6 +253,11 @@ const Login: React.FC = ({}) => {
           </TouchableOpacity>
         </View>
       </SafeAreaView>
+      <ModalAuthen
+        modalVisible={visible}
+        setModalVisible={setVisible}
+        content={errMsg}
+      />
     </ScrollView>
   );
 };
