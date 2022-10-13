@@ -17,7 +17,7 @@ interface Props {
 
 const IntroductDetailShop: React.FC<Props> = (props: Props) => {
     const { title, value, rating } = props;
-
+    const star = rating ? parseFloat(rating.toFixed(1)) : 0
 
     return (
         <View >
@@ -25,7 +25,7 @@ const IntroductDetailShop: React.FC<Props> = (props: Props) => {
             <Text className={`text-[#FC832D] font-semibold text-sm`}>{value} Sản phẩm</Text>
             <View className={`flex-row`}>
                 <Stars
-                    default={rating}
+                    default={star}
                     count={5}
                     half={true}
                     starSize={50}
@@ -42,7 +42,7 @@ const IntroductDetailShop: React.FC<Props> = (props: Props) => {
                 />
 
 
-                <Text className={`text-[#FEB336]`}>{rating}</Text>
+                <Text className={`text-[#FEB336]`}>{star}</Text>
             </View>
 
         </View>

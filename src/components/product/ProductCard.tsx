@@ -49,7 +49,11 @@ const ProductCard: React.FC<Props> = (props: Props) => {
 
       </View>
 
-      <Text className="text-lg font-medium text-black">{item.name}</Text>
+      <Text
+        className="text-lg font-bold text-black h-16 my-2"
+        numberOfLines={2}>
+        {item.name}
+      </Text>
       <Text>Đã bán {item.soldByCustomer}</Text>
       <Rating
         style={tw`items-start mt-3`}
