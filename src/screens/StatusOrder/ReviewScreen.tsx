@@ -23,6 +23,7 @@ import {
 } from '../../constant/const';
 import {review} from '../../redux/review/actions';
 import {styles} from '../../screens/StatusOrder/style';
+import ReviewServices from '../../services/ReviewServices';
 
 const Review: React.FC = () => {
   const navigation = useNavigation();
@@ -52,7 +53,7 @@ const Review: React.FC = () => {
       orderId: item.id,
       productRatings: arr,
     };
-    dispatch(review(JSON.stringify(data)));
+    ReviewServices.review(data).then(res => console.log(res));
     navigation.goBack();
   };
   const setStar = (value: number) => {

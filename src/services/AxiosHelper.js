@@ -78,9 +78,7 @@ export const deleteMethod = async (path, id) => {
   return await axios
     .delete(baseUrl + path + '?id=' + id, {
       headers: {
-<<<<<<< HEAD
         Authorization: `Bearer ${token}`,
-=======
         'Content-Type': 'application/json',
         Accept: undefined,
       },

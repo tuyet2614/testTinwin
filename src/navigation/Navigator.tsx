@@ -10,7 +10,7 @@ import RatingScreen from '../screens/ProductDetail/RatingScreen';
 import SearchScreen from '../screens/Search/SearchScreen';
 import SearchResultScreen from '../screens/Search/SearchResultScreen';
 import FilterScreen from '../screens/categories/FilterScreen';
-import CartNavigator from '../screens/Cart/CartNavigator';
+import CartNavigator from '../screens/cart/CartNavigator';
 import UpdateInfoScreen from '../screens/account/UpdateInfoScreen';
 import ShopDetailScreen from '../screens/Shop/ShopDetailScreen';
 import OrderSuccess from '../screens/Payment/OrderSuccess';
