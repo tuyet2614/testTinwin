@@ -1,18 +1,15 @@
-import {
-  Image,
-  SafeAreaView,
-  Text,
-  View,
-  ScrollView,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
-import {useEffect, useState} from 'react';
-import {styles} from '../StatusOrder/style';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faAngleDown, faAngleUp} from '@fortawesome/free-solid-svg-icons';
-import LinearGradient from 'react-native-linear-gradient';
+import React, {useEffect, useState} from 'react';
+import {
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   anotherGrey,
   anotherOrange,
@@ -21,28 +18,99 @@ import {
   blue,
   colorTextTitleNotifi,
   grey,
-  greyNoti,
-  orangeDark,
-  orangeLight,
   white,
 } from '../../constant/const';
+import {getUser} from '../../redux/dataUser/actions';
+import {getUserSelector} from '../../redux/dataUser/selectors';
+import {
+  getCountUnreadNotification,
+  getMoreNotification,
+  getNotification,
+  maskAsRead,
+} from '../../redux/notificationCustomer/actions';
+import {getNotificationSelector} from '../../redux/notificationCustomer/selectors';
+import {formatDate} from '../../Ultis/commons';
 
 const NotificationScreen: React.FC = () => {
   const [bool, setBool] = useState(true);
+  const [refreshing, setRefreshing] = React.useState(false);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const dataNotification = useSelector(getNotificationSelector);
+  const user = useSelector(getUserSelector);
+  var totalItemDefault = 10;
+  // console.log(dataNotification);
+  useEffect(() => {
+    if (!user.currentUser) {
+      (async () => {
+        await AsyncStorage.clear();
+      })();
+      navigation.navigate('Login');
+    }
+  }, [navigation, user]);
   useEffect(() => {
     navigation.setOptions({title: 'Thông báo'});
+    dispatch(getNotification({skip: 0, take: totalItemDefault}));
+    dispatch(getUser());
+    dispatch(getCountUnreadNotification());
+  }, [navigation, dispatch]);
+
+  const onPressItem = (id: string) => {
+    dispatch(maskAsRead({notificationId: id}));
+  };
+
+  const renderItem = ({item}) => {
+    let date = new Date(item.creationTime);
+    return (
+      <TouchableOpacity
+        style={!item.isRead ? styles1.boxNotiYellow : styles1.boxNotiWhite}
+        onPress={() => onPressItem(item.id)}>
+        <View style={styles1.row}>
+          <Image source={require('../../assets/payment/Redbull.png')}></Image>
+          <View style={styles1.boxNoti}>
+            <View style={styles1.mw272}>
+              <Text style={styles1.titleContent}>{item.title}</Text>
+              <Text style={styles1.title}>{item.body}</Text>
+              <Text style={styles1.time}>{formatDate(date)}</Text>
+            </View>
+            {/* {bool ? (
+              <FontAwesomeIcon
+                icon={faAngleUp}
+                style={styles1.ml30}></FontAwesomeIcon>
+            ) : (
+              <FontAwesomeIcon
+                icon={faAngleDown}
+                style={styles1.ml30}></FontAwesomeIcon>
+            )} */}
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+  if (dataNotification.notification === undefined) {
+    return;
+  }
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    Promise.resolve(
+      dispatch(getNotification({skip: 0, take: totalItemDefault})),
+    ).then(() => {
+      setRefreshing(false);
+    });
   }, []);
-  const bool1 = () => {
-    setBool(!bool);
+  const onLoadMore = () => {
+    dispatch(getMoreNotification({skip: totalItemDefault, take: 10}));
+    totalItemDefault = totalItemDefault + 10;
   };
   return (
-    <ScrollView>
+    <View>
       <View style={styles1.flexAlign}>
         <Text style={styles1.update}>Cập nhật quan trọng</Text>
-        <Text style={styles1.notifi}>{188} thông báo mới</Text>
+        <Text style={styles1.notifi}>
+          {dataNotification?.notificationCount?.total} thông báo
+        </Text>
       </View>
-      <TouchableOpacity onPress={bool1} style={styles1.open}>
+      {/* <TouchableOpacity onPress={bool1} style={styles1.open}>
         <View style={styles1.row}>
           <Image source={require('../../assets/payment/Redbull.png')}></Image>
           <View style={styles1.flexAlignMl8}>
@@ -69,8 +137,8 @@ const NotificationScreen: React.FC = () => {
             )}
           </View>
         </View>
-      </TouchableOpacity>
-      <View
+      </TouchableOpacity> */}
+      {/* <View
         style={{backgroundColor: greyNoti, display: bool ? 'flex' : 'none'}}>
         <View style={styles1.boxNotiOpen}>
           <Text style={styles1.titleContent}>Xác nhận đơn hàng</Text>
@@ -100,34 +168,19 @@ const NotificationScreen: React.FC = () => {
           </Text>
           <Text style={styles1.time}>11:12{'      '} 22/05/2022</Text>
         </View>
-      </View>
-      <TouchableOpacity style={styles1.boxNotiWhite}>
-        <View style={styles1.row}>
-          <Image source={require('../../assets/payment/Redbull.png')}></Image>
-          <View style={styles1.boxNoti}>
-            <View style={styles1.mw272}>
-              <Text style={styles1.titleContent}>Xác nhận đơn hàng</Text>
-              <Text style={styles1.title}>
-                Vui lòng chọn “ Đã nhận được hàng” cho đơn hàng
-                <Text style={styles1.content}> SPXVN029922887466</Text> nếu bạn
-                hài lòng về sản phẩm, dịch vụ và không có nhu cầu Trả hàng/hoàn
-                tiền.
-              </Text>
-              <Text style={styles1.time}>11:12</Text>
-            </View>
-            {bool ? (
-              <FontAwesomeIcon
-                icon={faAngleUp}
-                style={styles1.ml30}></FontAwesomeIcon>
-            ) : (
-              <FontAwesomeIcon
-                icon={faAngleDown}
-                style={styles1.ml30}></FontAwesomeIcon>
-            )}
-          </View>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles1.btnNoti}>
+      </View> */}
+      <FlatList
+        data={dataNotification?.notification?.items}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+        onEndReached={onLoadMore}
+        onRefresh={onRefresh}
+        refreshing={refreshing}
+      />
+      {/* {dataNotification?.notification?.items?.map((item: object) =>
+        renderItem(item),
+      )} */}
+      {/* <TouchableOpacity style={styles1.btnNoti}>
         <View style={styles1.row}>
           <LinearGradient
             className={`rounded-md`}
@@ -155,8 +208,8 @@ const NotificationScreen: React.FC = () => {
             </View>
           </View>
         </View>
-      </TouchableOpacity>
-    </ScrollView>
+      </TouchableOpacity> */}
+    </View>
   );
 };
 const styles1 = StyleSheet.create({
@@ -235,6 +288,13 @@ const styles1 = StyleSheet.create({
   row: {flexDirection: 'row'},
   mw272: {maxWidth: 272},
   boxNotiWhite: {
+    backgroundColor: white,
+    paddingBottom: 12,
+    paddingLeft: 20,
+    paddingRight: 12,
+    paddingTop: 10,
+  },
+  boxNotiYellow: {
     backgroundColor: beige,
     paddingBottom: 12,
     paddingLeft: 20,

@@ -10,7 +10,6 @@ const initState: ProductState = {
 }
 
 const productReducer = (state = initState, action: any) => {
-    console.log('state:', state, action)
     switch (action?.type) {
         case GET_ALL_PRODUCT_OF_SHOP:
             return { ...state, product: action.payload }

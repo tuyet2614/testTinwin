@@ -1,23 +1,20 @@
+import {faAngleRight} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
+  ScrollView,
   StyleSheet,
   Text,
-  View,
-  ScrollView,
   TouchableOpacity,
+  View,
 } from 'react-native';
-import React from 'react';
-import {styles} from '../StatusOrder/style';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {
-  faAngleRight,
-  faMinusCircle,
-  faPlusCircle,
-} from '@fortawesome/free-solid-svg-icons';
+import {useDispatch, useSelector} from 'react-redux';
+import {ItemProduct} from '../../@types/apiReview';
+import BtnOrder from '../../components/buttons/BtnOrder';
 import {RadioButton} from '../../components/buttons/RadioButton';
 import {RadioOrangeBtn} from '../../components/buttons/RadioOrangeBtn';
-import BtnOrder from '../../components/buttons/BtnOrder';
-import {useNavigation} from '@react-navigation/native';
 import {
   anotherOrange,
   colorTextTitleNotifi,
@@ -25,6 +22,10 @@ import {
   white,
   whiteGrey,
 } from '../../constant/const';
+import {getDetailShippingAddress} from '../../redux/order/actions';
+import {getOrderSelector} from '../../redux/order/selectors';
+import {toVND, formartPhoneNumber} from '../../Ultis/commons';
+import {styles} from '../StatusOrder/style';
 
 type Props = {};
 
@@ -32,6 +33,17 @@ const Payment = (props: Props) => {
   var x = 1000000;
   x = x.toLocaleString('it-IT', {style: 'currency', currency: 'VND'});
   const navigation = useNavigation();
+  const route = useRoute();
+  const {item} = route.params;
+  const dispatch = useDispatch();
+  const order = useSelector(getOrderSelector);
+  const address = order.detailShippingAddress;
+  const [option, setOption] = useState(1);
+
+  useEffect(() => {
+    dispatch(getDetailShippingAddress(item.shippingAddressId));
+  }, [dispatch, item.shippingAddressId]);
+
   const navigate = () => {
     navigation.navigate('InternetBanking');
   };
@@ -41,17 +53,51 @@ const Payment = (props: Props) => {
   const navigateTT = () => {
     navigation.navigate('OrderSuccess');
   };
+  const renderProduct = (itemProduct: ItemProduct) => {
+    return (
+      <>
+        <View style={styles.infor}>
+          <Image
+            source={{uri: itemProduct.image[0]}}
+            style={styles.imgProduct}
+          />
+          <View style={styles.textInfor}>
+            <Text style={styles.productTitle}>{itemProduct.productName}</Text>
+            <Text style={styles.productCode}>MÃ SP: {itemProduct.code}</Text>
+            <View style={styles1.flexMgT}>
+              <Text style={styles.price}>{toVND(itemProduct.price)}</Text>
+              {/* <Text style={styles.count}>x3</Text> */}
+            </View>
+          </View>
+        </View>
+        <View style={styles1.a27}>
+          <Image
+            source={require('../../assets/payment/Minus.png')}
+            style={styles1.img20}></Image>
+          <Text style={styles1.count}>{itemProduct.quantity}</Text>
+          <Image
+            source={require('../../assets/payment/Plus.png')}
+            style={styles1.img20}></Image>
+        </View>
+        <View style={styles1.boxLine}>
+          <View style={styles1.line} />
+          <View style={styles1.line} />
+        </View>
+      </>
+    );
+  };
+
   return (
     <ScrollView>
       <View style={styles.card}>
         <View style={styles1.styFlex}>
           <Image source={require('../../assets/order/square.png')} />
           <View style={styles1.boxAddress}>
-            <Text style={styles1.name}>Robert Fox</Text>
-            <Text style={styles1.phone}>(+84) 12 345 6789</Text>
-            <Text style={styles1.textAddress}>
-              Toà nhà Mitec Tower Dương Đình Nghệ, Yên Hoà, Từ Liêm, Hà Nội
+            <Text style={styles1.name}>{address?.name}</Text>
+            <Text style={styles1.phone}>
+              {formartPhoneNumber(address?.phoneNumber)}
             </Text>
+            <Text style={styles1.textAddress}>{address?.specificAddress}</Text>
           </View>
           <FontAwesomeIcon
             icon={faAngleRight}
@@ -68,37 +114,10 @@ const Payment = (props: Props) => {
             </View>
             <FontAwesomeIcon icon={faAngleRight}></FontAwesomeIcon>
           </View>
-          <View style={styles.infor}>
-            <Image
-              source={require('../../assets/order/product.png')}
-              style={styles.imgProduct}></Image>
-            <View style={styles.textInfor}>
-              <Text style={styles.productTitle}>
-                Máy Lọc Không Khí Xiaomi Mi Air Purifier 4 lite
-              </Text>
-              <Text style={styles.productCode}>MÃ SP: a</Text>
-              <View style={styles1.flexMgT}>
-                <Text style={styles.price}>{x}</Text>
-                {/* <Text style={styles.count}>x3</Text> */}
-              </View>
-            </View>
-          </View>
-          <View style={styles1.a27}>
-            <Image
-              source={require('../../assets/payment/Minus.png')}
-              style={styles1.img20}></Image>
-            <Text style={styles1.count}>1</Text>
-            <Image
-              source={require('../../assets/payment/Plus.png')}
-              style={styles1.img20}></Image>
-          </View>
-          <View style={styles1.boxLine}>
-            <View style={styles1.line} />
-            <View style={styles1.line} />
-          </View>
+          {item.orderDetails.map((item1: ItemProduct) => renderProduct(item1))}
           <View style={styles1.flexMargin}>
-            <Text style={styles1.totalMoneyVc}>Tổng tiền hàng</Text>
-            <Text style={styles1.totalMoney}>{x}</Text>
+            <Text style={styles1.textTitleVc}>Tổng tiền hàng</Text>
+            <Text style={styles1.totalMoneyVc}>{toVND(item.totalPrice)}</Text>
           </View>
           <View style={styles1.boxLine}>
             <View style={styles1.line} />
@@ -106,7 +125,7 @@ const Payment = (props: Props) => {
           </View>
           <View style={[styles1.flex, styles1.justi]}>
             <Text style={styles1.textTitleVc}>Phí vận chuyển</Text>
-            <Text style={styles1.totalMoneyVc}>{x}</Text>
+            <Text style={styles1.totalMoneyVc}>{toVND(item.shippingFee)}</Text>
           </View>
           <View style={styles1.boxLine}>
             <View style={styles1.line} />
@@ -114,7 +133,7 @@ const Payment = (props: Props) => {
           </View>
           <View style={[styles1.flex, styles1.justi]}>
             <Text style={styles1.textTitleVc}>Tổng số tiền</Text>
-            <Text style={styles1.totalMoneyVc}>{x}</Text>
+            <Text style={styles1.totalMoneyVc}>{toVND(item.totalPay)}</Text>
           </View>
         </View>
       </View>

@@ -3,14 +3,14 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
   Image,
   Modal,
-  Pressable,
+  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  SafeAreaView,
 } from 'react-native';
+import {ItemProduct} from '../../@types/apiReview';
 import BtnOrder from '../../components/buttons/BtnOrder';
 import {
   anotherOrange,
@@ -22,13 +22,30 @@ import {
 } from '../../constant/const';
 
 export const ModalBuyAgain = (props: any) => {
-  const {modalVisible, setModalVisible} = props;
+  const {modalVisible, setModalVisible, item} = props;
   const reverseModal = () => {
     setModalVisible(!modalVisible);
   };
   const false1 = () => {
     setModalVisible(false);
   };
+  const renderProduct = (itemProduct: ItemProduct) => {
+    return (
+      <View style={styles1.boxP} key={itemProduct.code}>
+        <Image
+          source={{uri: itemProduct.image[0]}}
+          style={styles1.image}></Image>
+        <View style={styles1.ml17}>
+          <Text style={styles1.textP}>{itemProduct.productName}</Text>
+          <View style={styles1.flexAlign}>
+            <Text style={styles1.code}>Mã SP: {itemProduct.code}</Text>
+            <Text style={styles1.x3}>x{itemProduct.quantity}</Text>
+          </View>
+        </View>
+      </View>
+    );
+  };
+
   return (
     <SafeAreaView>
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
@@ -50,19 +67,11 @@ export const ModalBuyAgain = (props: any) => {
                     color={black}></FontAwesomeIcon>
                 </TouchableOpacity>
               </View>
-              <View style={styles1.boxP}>
-                <Image source={require('../../assets/order/sting.png')}></Image>
-                <View style={styles1.ml17}>
-                  <Text style={styles1.textP}>
-                    Thùng 24 Chai Nước Giải Khát Sting Vàng (330ml/chai)
-                  </Text>
-                  <View style={styles1.flexAlign}>
-                    <Text style={styles1.code}>Mã SP: ASSDF</Text>
-                    <Text style={styles1.x3}>x3</Text>
-                  </View>
-                </View>
-              </View>
-              <View style={styles1.boxP}>
+              {item?.orderDetails?.map((item1: ItemProduct) =>
+                renderProduct(item1),
+              )}
+
+              {/* <View style={styles1.boxP}>
                 <Image
                   source={require('../../assets/order/sting.png')}
                   blurRadius={9}
@@ -79,7 +88,7 @@ export const ModalBuyAgain = (props: any) => {
                     <Text style={styles1.x3SoldOut}>x3</Text>
                   </View>
                 </View>
-              </View>
+              </View> */}
               <View style={styles1.mt42}>
                 <BtnOrder content={'Đồng ý'} style={styles1.wh76}></BtnOrder>
               </View>
@@ -97,7 +106,7 @@ const styles1 = StyleSheet.create({
     lineHeight: 14,
     fontWeight: '500',
     color: anotherOrange,
-    marginRight: 70,
+    marginLeft: 160,
   },
   code: {
     fontWeight: '400',
@@ -214,4 +223,8 @@ const styles1 = StyleSheet.create({
   imgSoldOut: {position: 'absolute', top: 0},
   flex: {flexDirection: 'row', justifyContent: 'space-between'},
   bgColor: {backgroundColor: 'rgba(90, 90, 90, 0.7)'},
+  image: {
+    width: 76,
+    height: 76,
+  },
 });
