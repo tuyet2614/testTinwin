@@ -1,15 +1,8 @@
 import {faTrash} from '@fortawesome/free-solid-svg-icons';
 import {useNavigation} from '@react-navigation/native';
 import {useEffect, useState} from 'react';
-import {
-  ActivityIndicator,
-  SafeAreaView,
-  ScrollView,
-  Text,
-  View,
-} from 'react-native';
+import {SafeAreaView, ScrollView, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {data} from '../../assets/data/data';
 import AddressItem from '../../components/address/AddressItem';
 import BtnPrimary from '../../components/BtnPrimary';
 import CartContainer from '../../components/cart/CartContainer';
@@ -17,24 +10,27 @@ import SelectAllCartItem from '../../components/cart/SelectAllCartItem';
 import HeaderStack from '../../components/HeaderStack';
 import Loading from '../../components/Loading';
 import useGetAddress from '../../hooks/address/useGetAddress';
+import useBuyFromCart from '../../hooks/cart/useBuyFromCart';
 import useGetCart from '../../hooks/cart/useGetCart';
+import useConvertToVND from '../../hooks/useConvertToVND';
 import useDefaultAddress from '../../hooks/useDefaultAddress';
 import useDeleteAllWishlist from '../../hooks/wishlist/useDeleteAllWishlist';
+import useTotalPrice from '../../hooks/wishlist/useTotalPrice';
 import {NAVIGATE_CART_ADDRESS} from '../../navigation/navigate';
 import {setWishlist} from '../../redux/wishlist/actions';
 import {getWishlistId, getWishlistState} from '../../redux/wishlist/selectors';
 
 const CartScreen: React.FC = () => {
-  const [cartBySupplier, setCartBySupplier] = useState<any>([]);
   const navigation = useNavigation();
   const deleteAllWishlist = useDeleteAllWishlist();
   const {defaultAddress, dispatchDefaultAddress} = useDefaultAddress();
+  const [checkAllSupplier, setCheckAllSupplier] = useState(false);
 
   const dataCart = useSelector(getWishlistState);
-  console.log({dataCart});
 
   const {cart, loading} = useGetCart();
   const addresses = useGetAddress();
+  const sum = useTotalPrice();
 
   const navigateCartAddress = () => {
     navigation.navigate(NAVIGATE_CART_ADDRESS);
@@ -50,21 +46,15 @@ const CartScreen: React.FC = () => {
       dispatchDefaultAddress(
         addresses.find((item: object) => item.isDefault === true),
       );
+  }, [addresses]);
+  useEffect(() => {
     cart.length > 0 && dispatchCart(cart);
-
-    const arr = dataCart.map((item, index) => item.supplierId);
-
-    arr.map(item =>
-      setCartBySupplier((prv: any) => [
-        ...prv,
-        dataCart.filter(i => i.supplierId === item),
-      ]),
-    );
-
-    console.log({
-      bySupplier: cartBySupplier,
-    });
   }, [cart]);
+
+  const {buyFromCart, data} = useBuyFromCart();
+  const onBuy = () => {
+    buyFromCart();
+  };
 
   return (
     <SafeAreaView className="bg-white flex-1">
@@ -78,15 +68,19 @@ const CartScreen: React.FC = () => {
               onPress={navigateCartAddress}
             />
           )}
-          {dataCart !== undefined && cart.length >= dataCart.length - 2 ? (
+          {dataCart !== undefined &&
+          dataCart.length !== 0 &&
+          cart.length >= dataCart.length - 2 ? (
             <View>
               <SelectAllCartItem
+                setIsCheck={setCheckAllSupplier}
+                isCheck={checkAllSupplier}
                 title="Tất cả"
                 iconRight={faTrash}
                 onPress={() => deleteAllWishlist()}
               />
               <View className="h-0.5 bg-gray-200" />
-              {cartBySupplier.length > 0 &&
+              {/* {cartBySupplier.length > 0 &&
                 cartBySupplier.map((item, index) => (
                   <CartContainer
                     data={item}
@@ -97,24 +91,33 @@ const CartScreen: React.FC = () => {
                     }
                     loading={loading}
                   />
-                ))}
+                ))} */}
+              <CartContainer
+                data={dataCart}
+                title={'ABC'}
+                loading={loading}
+                checkAllSupplier={checkAllSupplier}
+              />
             </View>
           ) : dataCart.length === 0 ? (
             <View className="h-96 items-center justify-center">
               <Text>Không có sản phẩm nào trong giỏ</Text>
             </View>
           ) : (
-            <Loading />
+            <View className="h-96">
+              <Loading />
+            </View>
           )}
         </ScrollView>
       ) : (
         <Loading />
       )}
       <View className="m-3">
-        <View className="my-3">
+        <View className="my-3 flex-row justify-between">
           <Text>Tổng cộng</Text>
+          <Text className="text-orange-primary">{useConvertToVND(sum)}</Text>
         </View>
-        <BtnPrimary text="Mua hàng" style="p-3 items-center" />
+        <BtnPrimary text="Mua hàng" style="p-3 items-center" onPress={onBuy} />
       </View>
     </SafeAreaView>
   );

@@ -1,10 +1,13 @@
 import CheckBox from '@react-native-community/checkbox';
+import {useNavigation} from '@react-navigation/native';
 import {useState, useEffect} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {colors} from '../../assets/colors';
+import useCheckCartItem from '../../hooks/cart/useCheckCartItem';
 import useGetProductById from '../../hooks/productDetail/useGetProductById';
 import useConvertToVND from '../../hooks/useConvertToVND';
 import useDeleteFromWishlist from '../../hooks/wishlist/useDeleteFromWishlist';
+import {NAVIGATE_PRODUCT_DETAIL} from '../../navigation/navigate';
 import Quantity from './Quantity';
 
 interface Props {
@@ -16,6 +19,8 @@ interface Props {
 const CartItem: React.FC<Props> = (props: Props) => {
   const {item, onChange, isCheckAll} = props;
   const [isChecked, setIsChecked] = useState<boolean>(false);
+  const navigation = useNavigation();
+  console.log({cartItem: item});
 
   const dispatchDeleteFromWishlist = useDeleteFromWishlist();
 
@@ -24,14 +29,25 @@ const CartItem: React.FC<Props> = (props: Props) => {
     onChange !== undefined && onChange();
   };
 
+  const navigateProductDetail = () => {
+    navigation.navigate(NAVIGATE_PRODUCT_DETAIL, {product: item});
+  };
+
   useEffect(() => {
     setIsChecked(isCheckAll);
   }, [isCheckAll]);
 
+  const checkCartItem = useCheckCartItem();
+  useEffect(() => {
+    checkCartItem(item, isChecked);
+  }, [isChecked]);
+
   return (
     item !== undefined && (
       <View>
-        <TouchableOpacity className="flex-row py-3">
+        <TouchableOpacity
+          className="flex-row py-3"
+          onPress={navigateProductDetail}>
           <CheckBox
             boxType="square"
             style={{padding: 10}}

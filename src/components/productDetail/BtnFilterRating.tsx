@@ -21,7 +21,7 @@ const BtnFilterRating: React.FC<Props> = (props: Props) => {
       } items-center mb-2 p-2 rounded-lg`}>
       {text !== undefined ? (
         <Text
-          className={`${text !== undefined && 'w-40'} ${
+          className={`${text !== undefined && 'w-36'} ${
             isChoose ? 'text-orange-400' : ''
           } text-center`}>
           {text}

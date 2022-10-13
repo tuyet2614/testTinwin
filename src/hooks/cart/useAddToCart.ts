@@ -28,30 +28,25 @@ const useAddToCart = () => {
             text: res.data.error.message,
             visible: true,
           });
-          setTimeout(
-            () =>
-              dispatchShowNotification({
-                visible: false,
-              }),
-            1000,
-          );
         } else {
-          dispatchRedux(addToWishlist(item));
+          dispatchRedux(addToWishlist({...item, quantity: 1}));
           dispatchShowNotification({
             icon: faCheckCircle,
             text: 'Đã thêm vào giỏ',
             visible: true,
           });
-          setTimeout(
-            () =>
-              dispatchShowNotification({
-                visible: false,
-              }),
-            1000,
-          );
         }
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err))
+      .then(() =>
+        setTimeout(
+          () =>
+            dispatchShowNotification({
+              visible: false,
+            }),
+          1000,
+        ),
+      );
   };
 
   return {

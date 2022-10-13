@@ -89,6 +89,7 @@ const ProductDetailScreen: React.FC = () => {
             renderItem={renderItem}
           />
         )} */}
+        <Image source={{uri: product.image[0]}} className="w-full h-80" />
         <ProductInfoContainer item={product} />
         <StallAccount item={product} />
         <ProductDetailContainer

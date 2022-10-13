@@ -1,5 +1,6 @@
 import {
   ADD_TO_WISHLIST,
+  CHECK_ITEM_WISHLIST,
   DELETE_FROM_WISHLIST,
   SET_WISHLIST,
   UPDATE_QUANTITY,
@@ -33,6 +34,17 @@ const wishlistReducer = (state = initState, action: any) => {
         wishlist: state.wishlist.map(item => {
           if (item.id === action.payload.id) {
             return {...item, quantity: action.payload.quantity};
+          }
+          return item;
+        }),
+      };
+    case CHECK_ITEM_WISHLIST:
+      console.log({payload: action.payload});
+      return {
+        ...state,
+        wishlist: state.wishlist.map(item => {
+          if (item.id === action.payload.item.id) {
+            return {...item, isCheck: action.payload.isCheck};
           }
           return item;
         }),

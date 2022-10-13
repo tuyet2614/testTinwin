@@ -4,13 +4,10 @@ import useDeleteFromCart from '../cart/useDeleteFromCart';
 import useGetCart from '../cart/useGetCart';
 
 const useDeleteFromWishlist = () => {
-  const dispatchRedux = useDispatch();
   const deleteFromCart = useDeleteFromCart();
 
   const dispatchDeleteFromWishlist = (data: object) => {
-    dispatchRedux(deleteFromWishlist(data));
-
-    deleteFromCart(data.customerCartId, data.customerCartItemId);
+    deleteFromCart(data.customerCartId, data.customerCartItemId, data);
   };
 
   return dispatchDeleteFromWishlist;

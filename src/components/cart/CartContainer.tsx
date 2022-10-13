@@ -7,26 +7,26 @@ import useTotalPrice from '../../hooks/wishlist/useTotalPrice';
 import CartItem from './CartItem';
 import SelectAllCartItem from './SelectAllCartItem';
 import Loading from '../Loading';
+import useTotalPriceBySupplier from '../../hooks/cart/useTotalPriceBySupplier';
 
 interface Props {
   title: string;
   data: object[];
   onPress?: () => void;
   loading: boolean;
+  checkAllSupplier?: boolean;
 }
 
 const CartContainer: React.FC<Props> = (props: Props) => {
-  const {title, data, onPress, loading} = props;
+  const {title, data, onPress, loading, checkAllSupplier} = props;
 
   const [isCheck, setIsCheck] = useState(false);
-  const [totalPrice, setTotalPrice] = useState(0);
   const renderItem = ({item}) => <CartItem item={item} isCheckAll={isCheck} />;
 
-  const sum = useTotalPrice();
-
-  // useEffect(() => {
-  //   setTotalPrice(sum);
-  // }, []);
+  // const total = useTotalPriceBySupplier(data);
+  useEffect(() => {
+    setIsCheck(checkAllSupplier);
+  }, [checkAllSupplier]);
 
   return (
     <View>
@@ -44,14 +44,14 @@ const CartContainer: React.FC<Props> = (props: Props) => {
         keyExtractor={key => key.id}
         renderItem={renderItem}
       />
-      <View className="flex-row mx-5 justify-between my-2">
+      {/* <View className="flex-row mx-5 justify-between my-2">
         <Text>Tổng tiền hàng</Text>
         {!loading && data.length > 0 && (
           <Text className="text-orange-400 font-bold">
-            {useConvertToVND(sum)}
+            {useConvertToVND(total)}
           </Text>
         )}
-      </View>
+      </View> */}
     </View>
   );
 };

@@ -1,5 +1,6 @@
 import {
   ADD_TO_WISHLIST,
+  CHECK_ITEM_WISHLIST,
   DELETE_FROM_WISHLIST,
   SET_WISHLIST,
   UPDATE_QUANTITY,
@@ -25,4 +26,15 @@ const setWishlist = (data: object) => ({
   payload: data,
 });
 
-export {addToWishlist, deleteFromWishlist, updateQuantity, setWishlist};
+const checkItemWishlist = (data: object) => ({
+  type: CHECK_ITEM_WISHLIST,
+  payload: data,
+});
+
+export {
+  addToWishlist,
+  deleteFromWishlist,
+  updateQuantity,
+  setWishlist,
+  checkItemWishlist,
+};
