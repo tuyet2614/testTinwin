@@ -80,6 +80,7 @@ const CartScreen: React.FC = () => {
                 onPress={() => deleteAllWishlist()}
               />
               <View className="h-0.5 bg-gray-200" />
+              {/* to commit */}
               {/* {cartBySupplier.length > 0 &&
                 cartBySupplier.map((item, index) => (
                   <CartContainer
