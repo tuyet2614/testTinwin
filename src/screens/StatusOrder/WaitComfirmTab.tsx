@@ -12,13 +12,13 @@ import {useRef} from 'react';
 const WaitComfirm: React.FC = () => {
   const dispatch = useDispatch();
   const order = useSelector(getOrderSelector);
-  const [totalItemDefault, setTotalItemDefault] = useState(10);
+  const totalItemDefault = useRef(10);
 
   const renderCard = ({item}) => {
     return <CardOrder titleBtn="Hủy đơn" item={item} />;
   };
   const onRefresh = React.useCallback(() => {
-    setTotalItemDefault(10);
+    totalItemDefault.current = 10;
     dispatch(
       getOrderWaitComfirm({
         TextSearch: '',
@@ -33,11 +33,11 @@ const WaitComfirm: React.FC = () => {
       getMoreOrderWaitComfirm({
         TextSearch: '',
         Status: 2,
-        skip: totalItemDefault,
+        skip: totalItemDefault.current,
         take: 10,
       }),
     );
-    setTotalItemDefault(prev => prev + 10);
+    totalItemDefault.current = totalItemDefault.current + 10;
   };
 
   return (

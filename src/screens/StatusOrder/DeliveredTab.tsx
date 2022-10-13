@@ -11,12 +11,12 @@ import {getOrderSelector} from '../../redux/order/selectors';
 const Delivered: React.FC = () => {
   const dispatch = useDispatch();
   const order = useSelector(getOrderSelector);
-  const [totalItemDefault, setTotalItemDefault] = useState(10);
+  const totalItemDefault = useRef(10);
   const renderCard = ({item}) => {
     return <CardOrder titleBtn="Mua lại" item={item} btnPrimary="Đánh giá" />;
   };
   const onRefresh = React.useCallback(() => {
-    setTotalItemDefault(10);
+    totalItemDefault.current = 10;
     dispatch(
       getOrderDelivered({
         TextSearch: '',
@@ -31,11 +31,11 @@ const Delivered: React.FC = () => {
       getMoreOrderDelivered({
         TextSearch: '',
         Status: 4,
-        skip: totalItemDefault,
+        skip: totalItemDefault.current,
         take: 10,
       }),
     );
-    setTotalItemDefault(prev => prev + 10);
+    totalItemDefault.current = totalItemDefault.current + 10;
   };
 
   return (

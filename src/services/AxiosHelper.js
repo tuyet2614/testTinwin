@@ -30,7 +30,36 @@ export const get = async (path, params) => {
       });
     })
     .catch(err => {
-      console.log(err);
+      // handleErr(err)
+    });
+};
+export const getList = async (path, params) => {
+  const token = await AsyncStorage.getItem('token');
+
+  if (params !== undefined) {
+    if (params instanceof Object) {
+      path +=
+        '?' +
+        Object.keys(params)
+          .map(key => 'ids' + '=' + params[key])
+          .join('&');
+    } else {
+      path += '/' + params;
+    }
+  }
+  return await axios
+    .get(baseUrl + path, {
+      headers: {
+        'Content-Type': 'text/plain',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then(res => {
+      return new Promise(resolve => {
+        resolve(res);
+      });
+    })
+    .catch(err => {
       // handleErr(err)
     });
 };

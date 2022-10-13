@@ -42,9 +42,7 @@ const DetailOrder: React.FC = (props: Props) => {
   const [btn, setBtn] = useState<string>('');
   const [btnSecond, setBtnSecond] = useState<string>('');
   const [modalVisible, setModalVisible] = useState(false);
-  console.log(item, 'detail1');
-  var x = 1000000;
-  x = x.toLocaleString('it-IT', {style: 'currency', currency: 'VND'});
+  // console.log(item, 'detail1');
   const dispatch = useDispatch();
 
   const navigateBtn = () => {

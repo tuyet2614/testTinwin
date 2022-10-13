@@ -9,7 +9,7 @@ import {useRef} from 'react';
 const Prepare: React.FC = () => {
   const dispatch = useDispatch();
   const order = useSelector(getOrderSelector);
-  const [totalItemDefault, setTotalItemDefault] = useState(10);
+  const totalItemDefault = useRef(10);
   // useFocusEffect(() => {
   //   dispatch(getOrderPrepare({TextSearch: '', Status: 2, skip: 10, take: 10}));
   // });
@@ -18,7 +18,7 @@ const Prepare: React.FC = () => {
     return <CardOrder titleBtn="Huỷ đơn" item={item} />;
   };
   const onRefresh = React.useCallback(() => {
-    setTotalItemDefault(10);
+    totalItemDefault.current = 10;
     dispatch(
       getOrderPrepare({
         TextSearch: '',
@@ -33,11 +33,11 @@ const Prepare: React.FC = () => {
       getMoreOrderPrepare({
         TextSearch: '',
         Status: 3,
-        skip: totalItemDefault,
+        skip: totalItemDefault.current,
         take: 10,
       }),
     );
-    setTotalItemDefault(prev => prev + 10);
+    totalItemDefault.current = totalItemDefault.current + 10;
   };
 
   return (

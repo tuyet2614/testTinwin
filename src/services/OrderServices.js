@@ -1,4 +1,4 @@
-import {get, post} from './AxiosHelper';
+import {get, getList, post} from './AxiosHelper';
 
 const OrderServices = {
   getOrder(params) {
@@ -26,11 +26,14 @@ const OrderServices = {
       `/webbff/shipping/api/app/shipping-address/${params}/disable-delete`,
     );
   },
-  getSuppiler(params) {
-    return get(`/webbff/partnership/api/app/supplier/${params}/supplier-by-id`);
-  },
   receiveOrder(params) {
     return get('/webbff/sales/api/app/customer-order/', params);
+  },
+  getSupplier(params) {
+    return getList(
+      '/webbff/partnership/api/app/supplier/supplier-by-list-id',
+      params,
+    );
   },
 };
 

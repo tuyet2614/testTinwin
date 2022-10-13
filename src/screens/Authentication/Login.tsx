@@ -61,7 +61,6 @@ const Login: React.FC = ({}) => {
   const data = useSelector(getAuth);
   const user = useSelector(getUserSelector);
   useEffect(() => {
-    console.log(user);
     if (user.currentUser) {
       navigation.navigate('TabBar');
     }

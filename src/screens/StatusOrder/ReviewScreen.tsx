@@ -53,7 +53,7 @@ const Review: React.FC = () => {
       orderId: item.id,
       productRatings: arr,
     };
-    ReviewServices.review(data).then(res => console.log(res));
+    ReviewServices.review(data).then(res => {});
     navigation.goBack();
   };
   const setStar = (value: number) => {

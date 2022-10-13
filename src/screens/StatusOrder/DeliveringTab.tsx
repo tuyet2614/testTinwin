@@ -14,7 +14,7 @@ import {useRef} from 'react';
 const Delivering: React.FC = () => {
   const dispatch = useDispatch();
   const order = useSelector(getOrderSelector);
-  const [totalItemDefault, setTotalItemDefault] = useState(10);
+  const totalItemDefault = useRef(10);
   // useFocusEffect(() => {
   //   dispatch(
   //     getOrderDelivering({TextSearch: '', Status: 3, skip: 10, take: 10}),
@@ -25,7 +25,7 @@ const Delivering: React.FC = () => {
     return <CardOrder titleBtn="Đã nhận" item={item} />;
   };
   const onRefresh = React.useCallback(() => {
-    setTotalItemDefault(10);
+    totalItemDefault.current = 10;
     dispatch(
       getOrderDelivering({
         TextSearch: '',
@@ -40,11 +40,11 @@ const Delivering: React.FC = () => {
       getMoreOrderDelivering({
         TextSearch: '',
         Status: 4,
-        skip: totalItemDefault,
+        skip: totalItemDefault.current,
         take: 10,
       }),
     );
-    setTotalItemDefault(prev => prev + 10);
+    totalItemDefault.current = totalItemDefault.current + 10;
   };
 
   return (

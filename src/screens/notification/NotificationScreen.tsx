@@ -39,7 +39,7 @@ const NotificationScreen: React.FC = () => {
   const dataNotification = useSelector(getNotificationSelector);
   const user = useSelector(getUserSelector);
   var totalItemDefault = 10;
-  console.log(dataNotification);
+  // console.log(dataNotification);
   useEffect(() => {
     if (!user.currentUser) {
       (async () => {
