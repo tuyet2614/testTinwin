@@ -1,4 +1,4 @@
-import { Image, ImageSourcePropType, Text, TouchableOpacity } from 'react-native';
+import {Image, ImageSourcePropType, Text, TouchableOpacity} from 'react-native';
 
 interface Props {
   image: ImageSourcePropType;
@@ -7,7 +7,7 @@ interface Props {
 }
 
 const StallCard: React.FC<Props> = (props: Props) => {
-  const { image, text, onPress } = props;
+  const {image, text, onPress} = props;
   return (
     <TouchableOpacity onPress={onPress} className="items-center m-3">
       <Image

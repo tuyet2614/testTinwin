@@ -9,7 +9,6 @@ export const useGetListShops = () => {
     useEffect(() => {
         listShopService.getListShop().then(res => {
             setRes(res.data)
-            console.log("list", res.data)
         }).catch(err => console.log('error: ', err.response.data))
     }, [])
 

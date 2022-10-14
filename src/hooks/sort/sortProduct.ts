@@ -1,5 +1,4 @@
 export const SortProductAsc = (data: object[], field: string) => {
-    console.log('data: ', data)
     data.sort(function (a: any, b: any): number {
         return a[field] - b[field]
     })

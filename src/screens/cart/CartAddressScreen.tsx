@@ -6,13 +6,14 @@ import AddressContainer from '../../components/address/AddressContainer';
 import BtnBorder from '../../components/BtnBorder';
 import BtnPrimary from '../../components/BtnPrimary';
 import HeaderStack from '../../components/HeaderStack';
+import useGetAddress from '../../hooks/address/useGetAddress';
 import useDefaultAddress from '../../hooks/useDefaultAddress';
 import {NAVIGATE_ADD_NEW_ADDRESS} from '../../navigation/navigate';
-import {dataAddress} from '../account/AddressScreen';
 
 const CartAddressScreen: React.FC = () => {
   const navigation = useNavigation();
   const {dispatchDefaultAddress, defaultAddress} = useDefaultAddress();
+  const addresses = useGetAddress();
   const [value, setValue] = useState(defaultAddress.id);
 
   const navigateAddNewAddress = () => {
@@ -22,7 +23,7 @@ const CartAddressScreen: React.FC = () => {
   };
 
   const onConfirm = () => {
-    dispatchDefaultAddress(dataAddress.find(item => item.id === value));
+    dispatchDefaultAddress(addresses.find((item: object) => item.id === value));
     navigation.goBack();
   };
 
@@ -31,9 +32,9 @@ const CartAddressScreen: React.FC = () => {
       <HeaderStack text="Địa chỉ nhận hàng" isGoback={true} />
       <ScrollView>
         <RadioButton.Group
-          onValueChange={newValue => setValue(Number(newValue))}
+          onValueChange={newValue => setValue(newValue)}
           value={value}>
-          <AddressContainer data={dataAddress} setValue={setValue} />
+          <AddressContainer data={addresses} setValue={setValue} />
         </RadioButton.Group>
       </ScrollView>
       <View className="m-3">

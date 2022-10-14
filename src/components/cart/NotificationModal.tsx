@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { Text, View, Modal } from 'react-native';
+import {useEffect} from 'react';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {Text, View, Modal} from 'react-native';
 import useShowNotification from '../../hooks/useShowNotification';
 
 interface Props {
@@ -9,8 +9,8 @@ interface Props {
 }
 
 const NotificationModal: React.FC = () => {
-  const { notification, dispatchShowNotification } = useShowNotification();
-  const { icon, text, visible } = notification;
+  const {notification, dispatchShowNotification} = useShowNotification();
+  const {icon, text, visible} = notification;
 
   return (
     <Modal

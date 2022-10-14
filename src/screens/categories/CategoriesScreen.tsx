@@ -7,9 +7,15 @@ import FilterBtn from '../../components/buttons/FilterBtn';
 import SearchBtnHome from '../../components/buttons/SearchBtnHome';
 import CategoriesContainer from '../../components/categories/CategoriesContainer';
 import ProductsContainer from '../../components/product/ProductsContainer';
+import useGetCategories from '../../hooks/categories/useGetCategories';
+import useGetTopSearch from '../../hooks/categories/useGetTopSearch';
+import useGetCategoriesForHome from '../../hooks/home/useGetCategoriesForHome';
 import {data} from '../home/HomeScreen';
 
 const CategoriesScreen: React.FC = () => {
+  const {categories, loadingCategories} = useGetCategoriesForHome();
+  const products = useGetTopSearch();
+
   return (
     <SafeAreaView className="bg-white mb-20 h-full">
       <View className="flex-row mx-3 my-2">
@@ -26,7 +32,7 @@ const CategoriesScreen: React.FC = () => {
             num: 3,
             justifyContent: 'space-around',
           }}
-          data={data}
+          data={categories}
           icon={require('../../assets/icons/home/industry.png')}
           textBtn=""
           title="Ngành hàng"
@@ -34,7 +40,7 @@ const CategoriesScreen: React.FC = () => {
 
         <ProductsContainer
           flatlistStyle={tw`justify-evenly`}
-          data={data}
+          data={products}
           icon={require('../../assets/icons/home/industry.png')}
           textBtn="Xem thêm"
           title="Tìm kiếm hàng đầu"

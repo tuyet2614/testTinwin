@@ -13,9 +13,7 @@ const ProductDetailTitle: React.FC<Props> = (props: Props) => {
   return (
     <View className="flex-row items-center m-5">
       <FontAwesomeIcon icon={icon} color="#FD7D00" size={25} />
-      <Text className="text-orange-primary font-bold text-xl ml-2">
-        {title}
-      </Text>
+      <Text className="text-orange-400 font-bold text-xl ml-2">{title}</Text>
     </View>
   );
 };

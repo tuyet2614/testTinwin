@@ -1,4 +1,4 @@
-import {black, grey} from '../../constant/const';
+import {black, grey, red} from '../../constant/const';
 
 const {StyleSheet} = require('react-native');
 
@@ -45,6 +45,19 @@ export const style = StyleSheet.create({
     // alignItems: 'stretch',
     minHeight: 50,
     borderColor: '#0000001F 12%',
+    borderRadius: 10,
+    padding: 10,
+    borderWidth: 1,
+    borderStyle: 'solid',
+    // marginBottom: 30,
+    color: grey,
+  },
+  inputErr: {
+    // width: 327,
+    flex: 1,
+    // alignItems: 'stretch',
+    minHeight: 50,
+    borderColor: red,
     borderRadius: 10,
     padding: 10,
     borderWidth: 1,

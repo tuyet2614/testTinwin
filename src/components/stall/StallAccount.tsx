@@ -16,9 +16,9 @@ const StallAccount: React.FC<Props> = (props: Props) => {
         className="h-14 w-14 bg-blue-400 rounded-full"
       />
       <View className="ml-3">
-        <Text className="text-lg">Tên gian hàng</Text>
+        <Text className="text-lg">{item.brandName}</Text>
         <Text className="text-xs">
-          <Text className="text-orange-primary">12345</Text> Sản phẩm
+          <Text className="text-orange-400">12345</Text> Sản phẩm
         </Text>
         <View className="flex-row items-center">
           <Rating
@@ -29,7 +29,7 @@ const StallAccount: React.FC<Props> = (props: Props) => {
             readonly
             ratingCount={5}
           />
-          <Text className="text-xs text-orange-primary">4.5</Text>
+          <Text className="text-xs text-orange-400">4.5</Text>
         </View>
       </View>
     </View>

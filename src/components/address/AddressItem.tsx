@@ -12,19 +12,26 @@ import {
 } from 'react-native';
 import {RadioButton} from 'react-native-paper';
 import {colors} from '../../assets/colors';
+import useDeleteAddress from '../../hooks/address/useDeleteAddress';
+import useSetDefault from '../../hooks/address/useSetDefault';
 import {NAVIGATE_ADD_NEW_ADDRESS} from '../../navigation/navigate';
 
 interface Props {
-  name: string;
-  phone: string;
-  address: string;
-  id: number;
+  item: object;
   onPress?: () => void;
   icon?: ImageSourcePropType;
 }
 
 const AddressItem: React.FC<Props> = (props: Props) => {
-  const {name, phone, address, onPress, icon, id} = props;
+  const {item, onPress, icon} = props;
+  const {
+    name,
+    phoneNumber,
+    specificAddress,
+    shippingAddressType,
+    isDefault,
+    id,
+  } = item;
   const [optionsVisible, setOptionsVisible] = useState(false);
 
   const navigation = useNavigation();
@@ -36,13 +43,22 @@ const AddressItem: React.FC<Props> = (props: Props) => {
   const changeAddress = () => {
     navigation.navigate(NAVIGATE_ADD_NEW_ADDRESS, {
       title: 'Sửa địa chỉ',
-      item: {
-        name: name,
-        phone: phone,
-        address: address,
-      },
+      item: item,
     });
   };
+
+  const setDefault = useSetDefault();
+  const deleteAddress = useDeleteAddress();
+  const onDelete = () => {
+    deleteAddress(id);
+  };
+  const onSetDefault = () => {
+    setDefault(id);
+    setOptionsVisible(false);
+  };
+
+  const type =
+    shippingAddressType === 2 ? 'Địa chỉ văn phòng' : 'Địa chỉ nhà riêng';
 
   return (
     <View>
@@ -54,13 +70,24 @@ const AddressItem: React.FC<Props> = (props: Props) => {
             <Image source={icon} className="m-3 h-6 w-6" />
           ) : (
             <View className="h-3">
-              <RadioButton value={id} color={colors.primary} />
+              <RadioButton.Android value={id} color={colors.primary} />
             </View>
           )}
           <View>
             <Text className="font-bold text-xl text-black">{name}</Text>
-            <Text>{phone}</Text>
-            <Text>{address}</Text>
+            <Text className="my-2">{phoneNumber}</Text>
+            <Text className="w-64 text-xs" numberOfLines={2}>
+              {specificAddress}
+            </Text>
+            <View className="flex-row justify-between my-2">
+              <Text
+                className={`text-${
+                  shippingAddressType === 2 ? 'orange-400' : 'blue-400'
+                }`}>
+                {type}
+              </Text>
+              {isDefault && <Text className="text-green-400">Mặc định</Text>}
+            </View>
           </View>
         </View>
 
@@ -93,16 +120,20 @@ const AddressItem: React.FC<Props> = (props: Props) => {
             </View>
             <View className="h-0.5 bg-gray-200 mb-2"></View>
             <View className="m-3 h-3/4 justify-evenly">
-              <TouchableOpacity className="p-3 border-orange-primary border-2 rounded-lg">
-                <Text className="text-orange-primary">Đặt làm mặc định</Text>
+              <TouchableOpacity
+                className="p-3 border-orange-400 border-2 rounded-lg"
+                onPress={onSetDefault}>
+                <Text className="text-orange-400">Đặt làm mặc định</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                className="p-3 border-orange-primary border-2 rounded-lg"
+                className="p-3 border-orange-400 border-2 rounded-lg"
                 onPress={changeAddress}>
-                <Text className="text-orange-primary">Chỉnh sửa</Text>
+                <Text className="text-orange-400">Chỉnh sửa</Text>
               </TouchableOpacity>
-              <TouchableOpacity className="p-3 border-orange-primary border-2 rounded-lg">
-                <Text className="text-orange-primary">Xoá</Text>
+              <TouchableOpacity
+                className="p-3 border-orange-400 border-2 rounded-lg"
+                onPress={onDelete}>
+                <Text className="text-orange-400">Xoá</Text>
               </TouchableOpacity>
             </View>
           </View>

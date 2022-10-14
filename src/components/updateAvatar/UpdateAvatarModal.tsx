@@ -1,7 +1,8 @@
-import { Dispatch, SetStateAction } from 'react';
-import { Alert, Modal, SafeAreaView, TouchableOpacity, View } from 'react-native';
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import {Dispatch, SetStateAction} from 'react';
+import {Alert, Modal, SafeAreaView, TouchableOpacity, View} from 'react-native';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import tw from 'tailwind-react-native-classnames';
+import useUploadAvatar from '../../hooks/user/useUploadAvatar';
 import ModalBtn from './ModalBtn';
 
 interface Props {
@@ -11,7 +12,9 @@ interface Props {
 }
 
 const UpdateAvatarModal: React.FC<Props> = (props: Props) => {
-  const { modalVisible, setModalVisible, setValue } = props;
+  const {modalVisible, setModalVisible, setValue} = props;
+
+  const {upload} = useUploadAvatar();
 
   const onLaunchImageLibrary = () => {
     launchImageLibrary(
@@ -20,7 +23,8 @@ const UpdateAvatarModal: React.FC<Props> = (props: Props) => {
       },
       response => {
         if (response.didCancel != true) {
-          setValue({ uri: response.assets[0].uri });
+          // setValue({uri: response.assets[0].uri});
+          upload(response.assets[0].uri);
           setModalVisible(false);
         }
       },
@@ -37,7 +41,7 @@ const UpdateAvatarModal: React.FC<Props> = (props: Props) => {
         if (response.errorCode !== undefined) {
           Alert.alert(response.errorCode);
         } else if (response.didCancel != true) {
-          setValue({ uri: response.assets[0].uri });
+          upload(response.assets[0].uri);
           setModalVisible(false);
         }
       },
@@ -59,18 +63,18 @@ const UpdateAvatarModal: React.FC<Props> = (props: Props) => {
           className={`bg-white justify-end pb-20 shadow-xl rounded-t-lg pt-5`}>
           <ModalBtn
             textColor="white"
-            color="orange-primary"
+            color="orange-400"
             text="Chọn ảnh từ thư viện"
             onPress={onLaunchImageLibrary}
           />
           <ModalBtn
             textColor="white"
-            color="orange-primary"
+            color="orange-400"
             text="Chụp ảnh"
             onPress={onLaunchCamera}
           />
           <ModalBtn
-            textColor="orange-primary"
+            textColor="orange-400"
             color="gray-100"
             text="Thoát"
             onPress={hideModal}

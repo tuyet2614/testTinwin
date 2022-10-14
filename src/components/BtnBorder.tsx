@@ -12,8 +12,8 @@ const BtnBorder: React.FC<Props> = (props: Props) => {
   return (
     <TouchableOpacity
       onPress={onPress}
-      className={`border-orange-primary border-2 ${style} rounded-md`}>
-      <Text className={`text-orange-primary`}>{text}</Text>
+      className={`border-orange-400 border-2 ${style} rounded-md`}>
+      <Text className={`text-orange-400`}>{text}</Text>
     </TouchableOpacity>
   );
 };

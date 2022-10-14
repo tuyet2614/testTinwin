@@ -1,5 +1,5 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AddressScreen from '../screens/account/AddressScreen';
 import OnboardingScreen from '../screens/OnboardingScreen';
 import Splash from '../screens/Splash';
@@ -10,7 +10,7 @@ import RatingScreen from '../screens/ProductDetail/RatingScreen';
 import SearchScreen from '../screens/Search/SearchScreen';
 import SearchResultScreen from '../screens/Search/SearchResultScreen';
 import FilterScreen from '../screens/categories/FilterScreen';
-import CartNavigator from '../screens/Cart/CartNavigator';
+import CartNavigator from '../screens/cart/CartNavigator';
 import UpdateInfoScreen from '../screens/account/UpdateInfoScreen';
 import ShopDetailScreen from '../screens/Shop/ShopDetailScreen';
 import OrderSuccess from '../screens/Payment/OrderSuccess';
@@ -27,6 +27,7 @@ import OTP from '../screens/Authentication/OTPAuthen';
 import FormForgotPassword from '../screens/Authentication/FormResetPassword';
 import FormRegister from '../screens/Authentication/FormRegister';
 import Order from '../screens/StatusOrder/Order';
+import AddressDetailScreen from '../screens/account/AddressDetailScreen';
 import DetailCategoriesScreen from '../screens/Shop/DetailCategoriesScreen';
 
 const Stack = createNativeStackNavigator();
@@ -35,7 +36,7 @@ const Navigator: React.FC = () => {
   const screenOptions = {
     headerShown: false,
   };
-  const options = ({ }) => ({
+  const options = ({}) => ({
     headerShadowVisible: false,
     headerBackTitleVisible: false,
   });
@@ -70,7 +71,11 @@ const Navigator: React.FC = () => {
           component={FormForgotPassword}
           options={options}
         />
-        <Stack.Screen name="TabBar" component={TabBar} options={screenOptions} />
+        <Stack.Screen
+          name="TabBar"
+          component={TabBar}
+          options={screenOptions}
+        />
         <Stack.Screen
           name="OrderSuccess"
           component={OrderSuccess}
@@ -109,11 +114,7 @@ const Navigator: React.FC = () => {
           component={SearchScreen}
           options={screenOptions}
         />
-        <Stack.Screen
-          name="SearchResult"
-          component={SearchResultScreen}
-          options={screenOptions}
-        />
+
         <Stack.Screen
           name="ProductDetail"
           component={ProductDetailScreen}
@@ -124,17 +125,14 @@ const Navigator: React.FC = () => {
           component={RatingScreen}
           options={screenOptions}
         />
+        <Stack.Screen name="AddNewAddress" component={AddNewAddressScreen} />
         <Stack.Screen
-
-          name="AddNewAddress"
-          component={AddNewAddressScreen} />
-        <Stack.Screen
-          name='ShopDetail'
+          name="ShopDetail"
           component={ShopDetailScreen}
           options={screenOptions}
         />
         <Stack.Screen
-          name='DetailCategories'
+          name="DetailCategories"
           component={DetailCategoriesScreen}
           options={screenOptions}
         />
@@ -153,7 +151,16 @@ const Navigator: React.FC = () => {
           component={UpdateInfoScreen}
           options={screenOptions}
         />
-
+        <Stack.Screen
+          name="AddressDetail"
+          component={AddressDetailScreen}
+          options={screenOptions}
+        />
+        <Stack.Screen
+          name="SearchResult"
+          component={SearchResultScreen}
+          options={screenOptions}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

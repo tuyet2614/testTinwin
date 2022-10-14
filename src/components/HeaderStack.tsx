@@ -31,7 +31,7 @@ const HeaderStack: React.FC<Props> = (props: Props) => {
 
       {textBtnRight !== undefined ? (
         <TouchableOpacity onPress={onPress}>
-          <Text className="text-orange-primary">{textBtnRight}</Text>
+          <Text className="text-orange-400">{textBtnRight}</Text>
         </TouchableOpacity>
       ) : (
         <View className="w-8"></View>

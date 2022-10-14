@@ -1,13 +1,16 @@
-import { useDispatch } from "react-redux"
-import { deleteFromWishlist } from "../../redux/wishlist/actions"
+import {useDispatch} from 'react-redux';
+import {deleteFromWishlist, setWishlist} from '../../redux/wishlist/actions';
+import useDeleteFromCart from '../cart/useDeleteFromCart';
+import useGetCart from '../cart/useGetCart';
 
 const useDeleteFromWishlist = () => {
-    const dispatchRedux = useDispatch()
-    const dispatchDeleteFromWishlist = (data: object) => {
-        dispatchRedux(deleteFromWishlist(data))
-    }
+  const deleteFromCart = useDeleteFromCart();
 
-    return dispatchDeleteFromWishlist
-}
+  const dispatchDeleteFromWishlist = (data: object) => {
+    deleteFromCart(data.customerCartId, data.customerCartItemId, data);
+  };
 
-export default useDeleteFromWishlist
+  return dispatchDeleteFromWishlist;
+};
+
+export default useDeleteFromWishlist;

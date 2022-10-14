@@ -1,4 +1,5 @@
-import { Image, ImageSourcePropType, Text, TouchableOpacity } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {Image, ImageSourcePropType, Text, TouchableOpacity} from 'react-native';
 
 
 interface Props {
@@ -8,11 +9,12 @@ interface Props {
 }
 
 const CategoryCard: React.FC<Props> = (props: Props) => {
-  const { image, text, style } = props;
+  const {image, text} = props;
+  const navigation = useNavigation();
 
   return (
-    <TouchableOpacity className={"items-center mb-5"}>
-      <Image source={image} className="m-3" />
+    <TouchableOpacity className="items-center mb-5">
+      <Image source={{uri: image}} className="m-3 h-24 w-24 rounded-lg" />
       <Text className="text-black">{text}</Text>
     </TouchableOpacity>
   );

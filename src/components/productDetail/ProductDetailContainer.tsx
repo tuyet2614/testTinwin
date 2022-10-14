@@ -3,6 +3,7 @@ import {faInfoCircle} from '@fortawesome/free-solid-svg-icons';
 import {FlatList, Text, View} from 'react-native';
 import InfoDetailItem from './InfoDetailItem';
 import ProductDetailTitle from './ProductDetailTitle';
+import RenderHtml from 'react-native-render-html';
 
 interface Props {
   arr?: object[];
@@ -18,6 +19,10 @@ const ProductDetailContainer: React.FC<Props> = (props: Props) => {
     <InfoDetailItem text={item.text} value={item.value} index={index} />
   );
 
+  const source = {
+    html: text,
+  };
+
   return (
     <View className="">
       <ProductDetailTitle icon={icon} title={title} />
@@ -28,7 +33,9 @@ const ProductDetailContainer: React.FC<Props> = (props: Props) => {
           renderItem={renderItem}
         />
       ) : (
-        <Text className="mx-5">{text}</Text>
+        <View className="mx-5">
+          <RenderHtml source={source} />
+        </View>
       )}
 
       <View className="h-2 bg-gray-100 mt-3"></View>

@@ -9,7 +9,6 @@ function* fetchData(action: number) {
         const res: object = yield call(
             ShopServices.getShop(action),
         );
-        console.log(res);
     } catch (error) { }
 
 }

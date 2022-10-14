@@ -5,10 +5,10 @@ import {
   faStore,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Platform, SafeAreaView } from 'react-native';
-import { colors } from '../assets/colors';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {Platform, SafeAreaView, View} from 'react-native';
+import {colors} from '../assets/colors';
 import NotificationModal from '../components/cart/NotificationModal';
 import AccountNavigator from '../screens/account/AccountNavigator';
 import CategoriesScreen from '../screens/categories/CategoriesScreen';
@@ -19,7 +19,7 @@ const TabBar: React.FC = () => {
   const Tab = createBottomTabNavigator();
 
   const screenOptions = ({route}) => ({
-    // headerShown: false,
+    headerShown: false,
     tabBarIcon: ({focused, color, size}) => {
       return (
         <FontAwesomeIcon
@@ -27,10 +27,10 @@ const TabBar: React.FC = () => {
             route.name === 'Trang chủ'
               ? faHome
               : route.name === 'Danh mục'
-                ? faStore
-                : route.name === 'Thông báo'
-                  ? faBell
-                  : faUser
+              ? faStore
+              : route.name === 'Thông báo'
+              ? faBell
+              : faUser
           }
           color={color}
           size={20}
@@ -52,19 +52,15 @@ const TabBar: React.FC = () => {
   });
 
   return (
-    <Tab.Navigator screenOptions={screenOptions}>
-      <Tab.Screen name="Trang chủ" component={HomeScreen} />
-      <Tab.Screen name="Danh mục" component={CategoriesScreen} />
-      <Tab.Screen
-        name="Thông báo"
-        component={NotificationScreen}
-        options={{
-          headerShadowVisible: false,
-          headerBackTitleVisible: false,
-        }}
-      />
-      <Tab.Screen name="Tôi" component={AccountNavigator} />
-    </Tab.Navigator>
+    <View className="flex-1">
+      <Tab.Navigator screenOptions={screenOptions}>
+        <Tab.Screen name="Trang chủ" component={HomeScreen} />
+        <Tab.Screen name="Danh mục" component={CategoriesScreen} />
+        <Tab.Screen name="Thông báo" component={NotificationScreen} />
+        <Tab.Screen name="Tôi" component={AccountNavigator} />
+      </Tab.Navigator>
+      <NotificationModal />
+    </View>
   );
 };
 

@@ -66,7 +66,7 @@ const RatingContainer: React.FC<Props> = (props: Props) => {
           <Text className="text-xs">4.5 / 5 (10.5k Đánh giá)</Text>
         </View>
         <View className="flex-row items-center">
-          <Text className="text-orange-primary">Xem tất cả</Text>
+          <Text className="text-orange-400">Xem tất cả</Text>
           <FontAwesomeIcon icon={faAngleRight} color={colors.primary} />
         </View>
       </TouchableOpacity>

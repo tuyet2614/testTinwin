@@ -17,12 +17,12 @@ const BtnFilterRating: React.FC<Props> = (props: Props) => {
     <TouchableOpacity
       onPress={onPress}
       className={`border ${
-        isChoose ? 'border-orange-primary' : 'border-gray-200'
+        isChoose ? 'border-orange-400' : 'border-gray-200'
       } items-center mb-2 p-2 rounded-lg`}>
       {text !== undefined ? (
         <Text
-          className={`${text !== undefined && 'w-40'} ${
-            isChoose ? 'text-orange-primary' : ''
+          className={`${text !== undefined && 'w-36'} ${
+            isChoose ? 'text-orange-400' : ''
           } text-center`}>
           {text}
         </Text>
@@ -38,9 +38,7 @@ const BtnFilterRating: React.FC<Props> = (props: Props) => {
           ratingCount={rating}
         />
       )}
-      <Text className={`${isChoose ? 'text-orange-primary' : ''}`}>
-        ({num})
-      </Text>
+      <Text className={`${isChoose ? 'text-orange-400' : ''}`}>({num})</Text>
     </TouchableOpacity>
   );
 };

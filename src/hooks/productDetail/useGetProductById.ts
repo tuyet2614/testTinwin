@@ -1,6 +1,27 @@
-const useGetProductById = (id: number, data: object[]) => {
+import {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {setWishlist} from '../../redux/wishlist/actions';
+import {getWishlistState} from '../../redux/wishlist/selectors';
+import ProductServices from '../../services/ProductServices';
 
-   return data.filter(item => item.id === id)[0]
-}
+const useGetProductById = () => {
+  const [res, setRes] = useState();
+  const cart = useSelector(getWishlistState);
 
-export default useGetProductById
+  const getProduct = (id: string) => {
+    ProductServices.getProductDetail(id)
+      .then(res => {
+        let arr = cart;
+        arr.push(res.data)
+        setRes(arr);
+      })
+      .catch(err => console.log(err));
+  };
+
+  return {
+    product: res,
+    getProduct,
+  };
+};
+
+export default useGetProductById;
